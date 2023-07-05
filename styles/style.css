@@ -1,0 +1,272 @@
+.layout {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.game-frame {
+    width: 90%;
+    height: 90%;
+    border: 2px solid #000;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    position: relative;
+}
+
+.login-screen {
+    width: 50%;
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+.loginContainer {
+    padding: 2rem;
+    background-color: #ecf0f1;
+    border: 2px solid #34495e;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-login {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    border: 1px solid #95a5a6;
+    border-radius: 4px;
+}
+
+.button-login {
+    padding: 0.5rem 1rem;
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    transform-origin: center center;
+
+    &:hover {
+        background-color: #1a5276;
+    }
+
+    &:active {
+        background-color: #154360;
+    }
+}
+
+.image-login {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 1rem;
+}
+
+.btn-menu {
+    padding: 2rem;
+    background-color: #2980b9;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 1rem;
+  
+    &:hover {
+      background-color: #1a5276;
+    }
+  
+    &:active {
+      background-color: #154360;
+    }
+}
+
+.circular-button{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #eaeaea00;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s;
+    transform-origin: center center;
+}
+
+.circular-button:hover {
+    transform: scale(1.1);
+  }
+
+.circular-button-one {
+    top: 40%;
+    left: 100px;
+  }
+
+  .circular-button-two {
+    top: 65%;
+    left: 500px;
+  }
+  .circular-button-three {
+    top: 15%;
+    right: 500px;
+  }
+  .circular-button-four {
+    top: 40%;
+    right: 100px;
+  }
+  
+  .circular-image {
+    border-radius: 50%;
+  }
+
+
+  .loading-container {
+    position: absolute;
+    border-radius: 2%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.942); /* Define um fundo semi-transparente */
+    z-index: 9999; /* Certifique-se de que o loading fique acima dos outros elementos */
+  }
+  
+  .spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #7986cb;
+    animation: spin 1s infinite linear;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+
+.dialogoBox {
+  font-size: 10px;
+  position: absolute;
+  top: 10%;
+  left: 5%;
+  padding: 10px;
+  color: rgb(15, 5, 5);
+  font-size: 16px;
+  border: 1px solid #0a0a0a;
+  height: auto;
+  width: 900px;
+  min-height: 100px; 
+  z-index: 9999;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+};
+
+.centerDown {
+position: fixed;
+left: 50%;
+top: 20%;
+}
+
+.nextButton {
+  position: absolute;
+  top: 50%;
+  right: 20px;
+}
+
+.personagem {
+  position: absolute;
+  top: 30%;
+  right: 30%;
+}
+
+.mentor {
+  position: absolute;
+  top: 30%;
+  right: 30%;
+}
+
+.inverter {
+  transform: scaleX(-1);
+}
+
+.confirmation-box {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translateX(-50%);
+  background-color: #f1f1f1;
+  border: 1px solid #0a0a0a;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.buttons button {
+  margin-right: 10px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buttons button:hover {
+  background-color: #ddd;
+}
+
+.btn-yes {
+  color: #fff;
+  background-color: #27ae60;
+}
+
+.btn-no {
+  color: #fff;
+  background-color: #c0392b;
+}
+
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.ganhador-moedas {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #ffd700;
+  color: #ffffff;
+  font-size: 18px;
+  border-radius: 8px;
+  animation: fadeInOut 3s;
+  z-index: 999999;
+}
