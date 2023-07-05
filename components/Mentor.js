@@ -5,8 +5,8 @@ const Mentor = ({img, posicao, inverter}) => {
   return (
     <div>
         <Image
-              className={`mentor ${inverter ? 'inverter' : ''}`}
-              style={{ right: `${posicao}` }}
+              className={`${inverter ? 'inverter' : ''}`}
+              style={{ right: `${posicao}`, position: 'absolute', bottom: '0%' }}
               src ={`/src/personagens/${img}.svg`}
               width={450}
               height={450}

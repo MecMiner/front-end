@@ -194,17 +194,6 @@ top: 20%;
   right: 20px;
 }
 
-.personagem {
-  position: absolute;
-  top: 30%;
-  right: 30%;
-}
-
-.mentor {
-  position: absolute;
-  top: 30%;
-  right: 30%;
-}
 
 .inverter {
   transform: scaleX(-1);

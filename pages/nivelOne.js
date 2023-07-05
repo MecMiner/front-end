@@ -14,6 +14,7 @@ export default function Jogar({ data }) {
   const linhas = fraseGrande.split('\r\n');
   const [showMessage, setShowMessage] = useState(false);
   const [animationEnded, setAnimationEnded] = useState(false);
+  const [usouDica, setUsouDica] = useState(false);
 
   const router = useRouter();
   const { id } = router.query;
@@ -32,6 +33,7 @@ export default function Jogar({ data }) {
   }
 
   const setPoint = async (valor, zerar) => {
+    /* const response = fetch({''}) */
     if (zerar) {
       localStorage.setItem('pontos', '0');
     }
@@ -57,7 +59,17 @@ export default function Jogar({ data }) {
     }
   };
 
- 
+ const exibirDica = () => {
+  if(!usouDica){
+    setUsouDica(true);
+  }
+  setShowMessage(true);
+      setTimeout(() => {
+        setShowMessage(false);
+        setAnimationEnded(true);
+        handleNextPag();
+      }, 5000);
+ }
 
 
   const renderPag = () => {
@@ -284,7 +296,12 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox posicao={"1%"} tamanho={"20%"} dialogText={`Mentor: Você pode solicitar uma dica se quiser!`} />
             <Personagem img={"p1/imagem3"} posicao={"0%"} />
-            <SortingGame frasesIniciais={linhas} onSuccess={() => handleNextPag()} dica={data.dataDesafio.dica}/>
+            <SortingGame frasesIniciais={linhas} onSuccess={() => handleNextPag()} dica={() => exibirDica()}/>
+            {showMessage && (
+              <div className="ganhador-moedas">
+                {data.dataDesafio.dica}
+              </div>
+            )}
             <Mentor img={"m1/imagem3"} posicao={"70%"} />
             
           </div>)

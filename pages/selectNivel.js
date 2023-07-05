@@ -43,6 +43,7 @@ export default function Jogar() {
         const dados = await response.json();
         if (dados) {
           setData(dados);
+          setIsLoading(false);
         } else {
           router.push('/menu');
         }
@@ -52,7 +53,6 @@ export default function Jogar() {
     } catch (error) {
       console.error('Erro ao buscar dados:', error);
     }
-    setIsLoading(false);
   };
 
 
@@ -80,36 +80,76 @@ export default function Jogar() {
               priority
             />
           </button>
-          <button className='circular-button circular-button-two' onClick={() => handleButtonClick('nivelTwo')}>
+          {data && data.response && data.response.pontos > 50  ?  (
+            <button className='circular-button circular-button-two' onClick={() => handleButtonClick('nivelThree')}>
             <Image
               className='circular-image'
-              src={data && data.dataRespostas && data.dataRespostas.statusNivel1 === 2 ? "/src/mapa/numero2.png" : "/src/mapa/numero2ds.png"}
-              width={150}
-              height={150}
-              alt="numero2"
-              priority
-            />
-          </button>
-          <button className='circular-button circular-button-three' onClick={() => handleButtonClick('nivelThree')}>
-            <Image
-              className='circular-image'
-              src={data && data.dataRespostas && data.dataRespostas.statusNivel2 === 2 ? "/src/mapa/numero3.png" : "/src/mapa/numero3ds.png"}
+              src="/src/mapa/numero2.png"
               width={150}
               height={150}
               alt="numero3"
               priority
             />
           </button>
-          <button className='circular-button circular-button-four' onClick={() => handleButtonClick('nivelFour')}>
+          ) : (
+            <button className='circular-button circular-button-two'>
             <Image
               className='circular-image'
-              src={data && data.dataRespostas && data.dataRespostas.statusNivel3 === 2 ? "/src/mapa/numero4.png" : "/src/mapa/numero4ds.png"}
+              src="/src/mapa/numero2ds.png"
               width={150}
               height={150}
-              alt="numero4"
+              alt="numero3"
               priority
             />
           </button>
+          )}
+          {data && data.response && data.response.pontos > 50  ?  (
+            <button className='circular-button circular-button-three' onClick={() => handleButtonClick('nivelThree')}>
+            <Image
+              className='circular-image'
+              src="/src/mapa/numero3.png"
+              width={150}
+              height={150}
+              alt="numero3"
+              priority
+            />
+          </button>
+          ) : (
+            <button className='circular-button circular-button-three'>
+            <Image
+              className='circular-image'
+              src="/src/mapa/numero3ds.png"
+              width={150}
+              height={150}
+              alt="numero3"
+              priority
+            />
+          </button>
+          )}
+          
+          {data && data.response && data.response.pontos > 50  ?  (
+            <button className='circular-button circular-button-four' onClick={() => handleButtonClick('nivelFour')}>
+              <Image
+                className='circular-image'
+                src={ "/src/mapa/numero4.png"}
+                width={150}
+                height={150}
+                alt="numero4"
+                priority
+              />
+            </button>
+          ) : (
+            <button className='circular-button circular-button-four'>
+              <Image
+                className='circular-image'
+                src={ "/src/mapa/numero4ds.png"}
+                width={150}
+                height={150}
+                alt="numero4"
+                priority
+              />
+            </button>
+          )}
       </Layout>    
     </div>
   );

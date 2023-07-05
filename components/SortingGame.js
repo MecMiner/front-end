@@ -7,7 +7,7 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica }) => {
     const [ordemCorreta, setOrdemCorreta] = useState([]);
     const [verificar, setVerificar] = useState(false);
     const [erroMsg, setErroMsg] = useState(false);
-    const [exibirDica, setExibirDica] = useState(false);
+
 
     useEffect(() => {
         // Embaralhar as frases recebidas como parâmetro
@@ -60,7 +60,7 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica }) => {
     };
 
     const handleExibirDica = () => {
-        setExibirDica(true);
+        dica();
     };
 
 
@@ -100,10 +100,9 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica }) => {
                 {erroMsg && (
                     <p className="erro-message">Ops! A ordem está incorreta. Tente novamente.</p>
                 )}
-                {!exibirDica && <button className="dica-button" onClick={handleExibirDica}>
+                <button className="dica-button" onClick={handleExibirDica}>
                     <Image src={'/src/dica.svg'} alt="Dica do professor" width={40} height={40} />
-                </button>}
-                {exibirDica && <div className="dica-texto"><span>{dica}</span></div>}
+                </button>
             </div>
 
             <style jsx>{`
@@ -190,22 +189,6 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica }) => {
         background: none;
         border: none;
         cursor: pointer;
-      }
-      .dica-texto {
-        font-size: 20px;
-        position: fixed;
-        top: 0%;
-        padding: 10px;
-        color: rgb(15, 5, 5);
-        font-size: 16px;
-        border: 1px solid #0a0a0a;
-        height: auto;
-        width: 70%;
-        min-height: 100px; 
-        z-index: 9999;
-        background-color: red;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       }
       .dica-button:hover {
         transform: scale(1.1);
