@@ -27,7 +27,7 @@ const DialogScreen = ({tamanho, posicao, dialogText, cor, complete }) => {
         <div className='centerDown'>
             {dialogVisible && (
                 <div className='dialogoBox' style={{width: `${tamanho}`, left: `${posicao}`, backgroundColor: `${cor}`}}>
-                    <span style={{ whiteSpace: 'pre-wrap' , fontSize: '20px'}}>{currentText}</span>
+                    <span style={{ whiteSpace: 'pre-wrap' , fontSize: '18px'}}>{currentText}</span>
                 </div>
             )}
         </div>

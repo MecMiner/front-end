@@ -5,10 +5,12 @@ import Layout from '@/components/MyLayout'
 import { useRouter } from 'next/router';
 import CheckUser from '@/components/CheckUser';
 import Loading from '@/components/Loading';
+import config from '@/config';
 
 
 
-export default function Home(/* {data} */) {
+export default function Home() {
+  const apiUrl = config.apiUrl
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -24,7 +26,7 @@ export default function Home(/* {data} */) {
     setIsLoading(true);
   
     try {
-      const response = await fetch('http://localhost:8080/login', {
+      const response = await fetch(`${apiUrl}/login`, {
         method: 'POST',
         body: JSON.stringify(content),
         headers: { 'Content-Type': 'application/json' }
@@ -77,12 +79,60 @@ export default function Home(/* {data} */) {
         </div>
         
       </Layout>
+      <style jsx>{`
+      .login-screen {
+          width: 50%;
+          height: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+      }
+      
+      .loginContainer {
+          padding: 2rem;
+          background-color: #ecf0f1;
+          border: 2px solid #34495e;
+          border-radius: 4px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+      
+      .input-login {
+          padding: 0.5rem;
+          margin-bottom: 1rem;
+          width: 100%;
+          border: 1px solid #95a5a6;
+          border-radius: 4px;
+      }
+      
+      .button-login {
+          padding: 0.5rem 1rem;
+          background-color: #2980b9;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          cursor: pointer;
+          transform-origin: center center;
+      
+          &:hover {
+              background-color: #1a5276;
+          }
+      
+          &:active {
+              background-color: #154360;
+          }
+      }
+      
+      .image-login {
+          width: 200px;
+          height: 200px;
+          margin-bottom: 1rem;
+      }      
+      `}</style>
     </div>
   )
 }
-
-/* export async function getServerSideProps(){
-  const response = await fetch('http://localhost:8080');
-  const data = await response.json();
-  return{props: {data}};
-} */

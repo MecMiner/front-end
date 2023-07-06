@@ -48,7 +48,16 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica, onFailed }) => {
 
     const handleVerificarOrdem = () => {
         if (JSON.stringify(frasesOrdenadas) === JSON.stringify(ordemCorreta)) {
-            onSuccess();
+            if(!tentativaOne){
+                onSuccess(50,10,false);
+            } else {
+                if(!tentativaOne){
+                    onSuccess(45,5,false)
+                } else {
+                    onSuccess(30,3,false)
+                }
+            }
+            
         } else {
             if(!tentativaOne){
                 setTentativaOne(true);

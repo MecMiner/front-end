@@ -1,3 +1,4 @@
+import CoinsXP from "@/components/CoinsXp";
 import SortingGame from "@/components/SortingGame";
 
 const YourPage = ({data}) => {
@@ -5,7 +6,7 @@ const YourPage = ({data}) => {
     const linhas = fraseGrande.split('\r\n');
   return (
     <div>
-      <SortingGame frasesIniciais={linhas} dica={"ola"}/>
+      <CoinsXP coin={23} xp={30}/>
     </div>
   );
 };
