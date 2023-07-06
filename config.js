@@ -1,5 +1,10 @@
 const config = {
-    apiUrl: 'http://localhost:8080', // URL do servidor local
+    apiUrl: 'http://localhost:8080',
+    personagem: {nome: 'Maria', cor: ''},
+    mentor: {
+      nome: 'Ana',
+      cor: 'cornsilk'
+    }
   };
   
 export default config;

@@ -8,17 +8,25 @@ import Mentor from '@/components/Mentor';
 import Personagem from '@/components/Personagem';
 import ButtonAdvance from '@/components/ButtonAdvance';
 import SortingGame from '@/components/SortingGame';
+import config from '@/config';
+
 
 export default function Jogar({ data }) {
   const fraseGrande = data.dataDesafio.etapasSolucao
   const linhas = fraseGrande.split('\r\n');
   const [showMessage, setShowMessage] = useState(false);
+  const [showMessageFailed, setShowMessageFailed] = useState(false);
   const [animationEnded, setAnimationEnded] = useState(false);
   const [usouDica, setUsouDica] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+  const [pontos, setPontos] = useState(0);
+  const personagem = config.personagem;
+  const mentor = config.mentor;
 
   const router = useRouter();
   const { id } = router.query;
   const [pag, setPag] = useState(1);
+
 
   const handleNextPag = () => {
     if (!animationEnded) {
@@ -28,35 +36,46 @@ export default function Jogar({ data }) {
   }
 
   const advancePag = (atPg) => {
+    console.log("opa");
     setPag(prevPag => prevPag + atPg);
+  }
+
+  const handleButtonClick = () =>{
+    setShowButton(false);
     handleNextPag();
   }
 
-  const setPoint = async (valor, zerar) => {
-    /* const response = fetch({''}) */
-    if (zerar) {
-      localStorage.setItem('pontos', '0');
+  const resetGame = () => {
+    if (!animationEnded) {
+      setPag(1);
+      setAnimationEnded(false);
     }
-    const pontos = localStorage.getItem('pontos');
+    
+  }
 
-    if (pontos) {
-      // Atribui valor
-      const pontosAtualizados = parseInt(pontos) + valor;
+  const handleResetGame = () => {
+    setShowMessageFailed(true);
+      setTimeout(() => {
+        setShowMessageFailed(false);
+        setAnimationEnded(true);
+        resetGame();
+      }, 3000);
+  }
 
-      localStorage.setItem('pontos', pontosAtualizados.toString());
-
-      // Ocultar a mensagem após 3 segundos
+  const handleSetPontos = async (valor, zerar) => {
+    if (zerar) {
+      if (pontos !== 0){
+        setPontos(0);
+      }
+    } 
+    setPontos(pontos => pontos + valor);
+   // Ocultar a mensagem após 3 segundos
       setShowMessage(true);
       setTimeout(() => {
         setShowMessage(false);
         setAnimationEnded(true);
         handleNextPag();
       }, 3000); // Aguardar 3 segundos antes de avançar
-
-    } else {
-      // Se não existir nenhum valor, simplesmente define o valor inicial
-      localStorage.setItem('pontos', valor.toString());
-    }
   };
 
  const exibirDica = () => {
@@ -67,7 +86,6 @@ export default function Jogar({ data }) {
       setTimeout(() => {
         setShowMessage(false);
         setAnimationEnded(true);
-        handleNextPag();
       }, 5000);
  }
 
@@ -77,57 +95,62 @@ export default function Jogar({ data }) {
       case 1:
         return (
           <div>
-            <DialogoBox tamanho={'700px'} dialogText={"Personagem é aluna do Segundo ano de Ciência da Computação.\n\nEla  fez um trabalho sobre projetos de Software Livre (SL) e se interessou muito pelo assunto, querendo se aprofundar mais para futuramente tentar fazer contribuições e ingressar em uma comunidade de SL."} />
-            <Personagem img={'p1/imagem3'} posicao={'50%'} />
-            <ButtonAdvance buttonClick={() => handleNextPag()} />
+            <DialogoBox cor={personagem.cor} tamanho={'700px'} complete={() => setShowButton(true)} dialogText={`${personagem.nome} é aluna do Segundo ano de Ciência da Computação.\n\nEla  fez um trabalho sobre projetos de Software Livre (SL) e se interessou muito pelo assunto, querendo se aprofundar mais para futuramente tentar fazer contribuições e ingressar em uma comunidade de SL.`} />
+            <Personagem img={'p1/imagem2'} posicao={'50%'} />
+            {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 2:
         return (
           <div>
-            <DialogoBox tamanho={'700px'} dialogText={"Mentor já desenvolveu diversas pesquisas relacionadas aos projetos de SL e suas comunidades, e trabalhou em alguns projetos, fazendo contribuições importantes. Mentor adora falar sobre esse universo para outras pessoas, e compartilhar o conhecimento que adquiriu ao longo dos anos."} />
-            <Mentor posicao={"50%"} img={"m1/imagem3"} />
-            <ButtonAdvance buttonClick={() => handleNextPag()} />
+            <DialogoBox  cor={mentor.cor} complete={() => setShowButton(true)}  tamanho={'700px'} dialogText={`${mentor.nome} já desenvolveu diversas pesquisas relacionadas aos projetos de SL e suas comunidades, e trabalhou em alguns projetos, fazendo contribuições importantes. ${mentor.nome} adora falar sobre esse universo para outras pessoas, e compartilhar o conhecimento que adquiriu ao longo dos anos.`} />
+            <Mentor  posicao={"70%"} img={"m1/imagem2"} />
+            {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 3:
         return (
           <div>
-            <DialogoBox dialogText={"Como Personagem gostaria de aprender mais sobre os projetos de SL e Mentor adora ensinar, elas combinaram um encontro para que Mentor possa ajudar Personagem a entender mais desse mundo."} />
-            <Personagem img={"p1/imagem4"} posicao={"50%"} />
-            <Mentor img={"m1/imagem3"} posicao={"30%"} />
-            <ButtonAdvance buttonClick={() => handleNextPag()} />
+            <DialogoBox cor={''} tamanho={'400px'} complete={() => setShowButton(true)} dialogText={`Como ${personagem.nome} gostaria de aprender mais sobre os projetos de SL e Mentor adora ensinar, elas combinaram um encontro para que Mentor possa ajudar Personagem a entender mais desse mundo.`} />
+            <Personagem img={"p1/imagem5"} posicao={"30%"} />
+            <Mentor img={"m1/imagem3"} posicao={"10%"} />
+            {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showMessage && (
+              <div className="ganhador-moedas">
+                Você ganhou 20 moedas e 5 XP
+              </div>
+            )}
           </div>)
       case 4:
         return (
           <div>
-            <DialogoBox tamanho={"200px"} posicao={"10%"} dialogText={"Mentor: Olá P, como vai?"} />
-            <DialogoBox tamanho={"200px"} dialogText={"Personagem: Estou ótima, e você como vai?"} posicao={"60%"} />
-            <Mentor img={"m1/imagem3"} posicao={"50%"} />
-            <Personagem className='inverter' img={"p1/imagem4"} inverter={true} />
+            <DialogoBox cor={mentor.cor} tamanho={"200px"} posicao={"10%"} dialogText={`Olá ${personagem.nome}, como vai?`} />
+            <DialogoBox cor={personagem.cor} tamanho={"200px"} dialogText={"Estou ótima, e você como vai?"} posicao={"60%"} />
+            <Mentor img={"m1/imagem6"} posicao={"50%"} />
+            <Personagem className='inverter' img={"p1/imagem5"} posicao={'10%'} inverter={true} />
             <ButtonAdvance buttonClick={() => handleNextPag()} />
           </div>)
       case 5:
         return (
           <div>
-            <DialogoBox tamanho={"300px"} posicao={"10%"} dialogText={"Mentor: Muito bem. Está pronta para começarmos a nossa jornada em busca do conhecimento?"} />
-            <DialogoBox tamanho={"200px"} posicao={"60%"} dialogText={"Personagem: Claro que sim, estou muito empolgada.\nEsse assunto me interessa muito"} />
-            <Mentor img={"m1/imagem3"} posicao={"50%"} />
-            <Personagem img={"p1/imagem5"} posicao={"30%"} />
+            <DialogoBox cor={mentor.cor} tamanho={"300px"} posicao={"10%"} dialogText={"Muito bem. Está pronta para começarmos a nossa jornada em busca do conhecimento?"} />
+            <DialogoBox cor={personagem.cor} tamanho={"200px"} posicao={"60%"} dialogText={"Claro que sim, estou muito empolgada.\nEsse assunto me interessa muito"} />
+            <Mentor img={"m1/imagem6"} posicao={"50%"} />
+            <Personagem img={"p1/imagem4"} posicao={"10%"} />
             <ButtonAdvance buttonClick={() => handleNextPag()} />
           </div>)
       case 6:
         return (
           <div>
-            <DialogoBox tamanho={"400px"} posicao={"10%"} dialogText={"Mentor: Eu também estou bem empolgada, falar sobre projetos de Software Livre para mim é muito legal"} />
-            <DialogoBox tamanho={"400px"} posicao={"60%"} dialogText={"Personagem: Que bom, pelo menos me ajudar não vai ser um problema tão grande para você."} />
-            <Mentor img={"m1/imagem3"} posicao={"50%"} />
-            <Personagem img={"p1/imagem5"} posicao={"30%"} />
+            <DialogoBox tamanho={"300px"} posicao={"10%"} dialogText={"Eu também estou bem empolgada, falar sobre projetos de Software Livre para mim é muito legal"} />
+            <DialogoBox tamanho={"300px"} posicao={"60%"} dialogText={"Que bom, pelo menos me ajudar não vai ser um problema tão grande para você."} />
+            <Mentor img={"m1/imagem6"} posicao={"60%"} />
+            <Personagem img={"p1/imagem4"} posicao={"10%"} />
             <ButtonAdvance buttonClick={() => handleNextPag()} />
           </div>)
       case 7:
         return (
           <div>
             <DialogoBox dialogText={"Mentor: Claro que não, mas vamos lá, primeirou vou te explicar como vai funcionar nosso enconstro\n\nPronta para começar?"} />
-            <Mentor img={"m1/imagem3"} posicao={"50%"} />
+            <Mentor img={"m1/imagem6"} posicao={"50%"} />
             <Personagem img={"p1/imagem5"} posicao={"30%"} />
             <ConfirmationBox onYes={() => setPoint(10, true)} onNo={() => { console.log("Nãooo") }} />
             {showMessage && (
@@ -296,14 +319,18 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox posicao={"1%"} tamanho={"20%"} dialogText={`Mentor: Você pode solicitar uma dica se quiser!`} />
             <Personagem img={"p1/imagem3"} posicao={"0%"} />
-            <SortingGame frasesIniciais={linhas} onSuccess={() => handleNextPag()} dica={() => exibirDica()}/>
+            <SortingGame frasesIniciais={linhas} onSuccess={() => handleNextPag()} dica={() => exibirDica()} onFailed={() => handleResetGame()}/>
             {showMessage && (
               <div className="ganhador-moedas">
                 {data.dataDesafio.dica}
               </div>
             )}
+            {showMessageFailed && (
+              <div className="ganhador-moedas">
+                Não foi dessa vez
+              </div>
+            )}
             <Mentor img={"m1/imagem3"} posicao={"70%"} />
-            
           </div>)
       case 27:
         return (

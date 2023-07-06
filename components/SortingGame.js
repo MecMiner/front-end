@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const SortingGame = ({ onSuccess, frasesIniciais, dica }) => {
+const SortingGame = ({ onSuccess, frasesIniciais, dica, onFailed }) => {
     const [frases, setFrases] = useState([]);
     const [frasesOrdenadas, setFrasesOrdenadas] = useState([]);
     const [ordemCorreta, setOrdemCorreta] = useState([]);
     const [verificar, setVerificar] = useState(false);
     const [erroMsg, setErroMsg] = useState(false);
+    const [tentativaOne, setTentativaOne] = useState(false);
+    const [tentativaTwo, setTentativaTwo] = useState(false);
 
 
     useEffect(() => {
@@ -48,8 +50,22 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica }) => {
         if (JSON.stringify(frasesOrdenadas) === JSON.stringify(ordemCorreta)) {
             onSuccess();
         } else {
-            setErroMsg(true);
-            reiniciarJogo();
+            if(!tentativaOne){
+                setTentativaOne(true);
+                setErroMsg(true)
+                reiniciarJogo();
+            } else {
+                if(!tentativaTwo){
+                    setTentativaTwo(true)
+                    reiniciarJogo();
+                }
+            }
+            
+            if(tentativaTwo){
+                onFailed();
+            }
+        
+            
         }
     };
 
@@ -68,7 +84,7 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica }) => {
         <div className="sorting-game-container">
             <div className='quadros-frases'>
                 <div>
-                    <h2>Frases para ordenar:</h2>
+                    <h2>Ordene as estapas:</h2>
                     <div className="frases-container">
                         <ul className="frases-lista">
                             {frases.map((frase, index) => (
@@ -81,7 +97,7 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica }) => {
 
                 </div>
                 <div>
-                    <h2>Frases ordenadas:</h2>
+                    <h2>Etapas ordenadas:</h2>
                     <div className="frases-ordenadas-container">
                         <ul className="frases-ordenadas-lista">
                             {frasesOrdenadas.map((frase, index) => (
@@ -191,7 +207,7 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica }) => {
         cursor: pointer;
       }
       .dica-button:hover {
-        transform: scale(1.1);
+        transform: scale(2.0);
       }
     `}</style>
         </div>

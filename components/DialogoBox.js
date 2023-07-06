@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const DialogScreen = ({tamanho, posicao, dialogText }) => {
+const DialogScreen = ({tamanho, posicao, dialogText, cor, complete }) => {
     const [currentText, setCurrentText] = useState('');
     const [dialogVisible, setDialogVisible] = useState(true);
 
@@ -14,8 +14,9 @@ const DialogScreen = ({tamanho, posicao, dialogText }) => {
                 currentLength++;
             } else {
                 clearInterval(interval);
+                complete();
             }
-        }, 50);
+        }, 1);
 
         return () => {
             clearInterval(interval);
@@ -25,7 +26,7 @@ const DialogScreen = ({tamanho, posicao, dialogText }) => {
     return (
         <div className='centerDown'>
             {dialogVisible && (
-                <div className='dialogoBox' style={{width: `${tamanho}`, left: `${posicao}`}}>
+                <div className='dialogoBox' style={{width: `${tamanho}`, left: `${posicao}`, backgroundColor: `${cor}`}}>
                     <span style={{ whiteSpace: 'pre-wrap' , fontSize: '20px'}}>{currentText}</span>
                 </div>
             )}
