@@ -1,4 +1,5 @@
 import CoinsXP from "@/components/CoinsXp";
+import Desempenho from "@/components/Desempenho";
 import SortingGame from "@/components/SortingGame";
 
 const YourPage = ({data}) => {
@@ -6,7 +7,7 @@ const YourPage = ({data}) => {
     const linhas = fraseGrande.split('\r\n');
   return (
     <div>
-      <CoinsXP coin={23} xp={30}/>
+      <Desempenho/>
     </div>
   );
 };

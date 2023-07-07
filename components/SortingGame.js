@@ -49,12 +49,12 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica, onFailed }) => {
     const handleVerificarOrdem = () => {
         if (JSON.stringify(frasesOrdenadas) === JSON.stringify(ordemCorreta)) {
             if(!tentativaOne){
-                onSuccess(50,10,false);
+                onSuccess(50,10,false,true,false);
             } else {
-                if(!tentativaOne){
-                    onSuccess(45,5,false)
+                if(!tentativaTwo){
+                    onSuccess(45,5,true,false,false)
                 } else {
-                    onSuccess(30,3,false)
+                    onSuccess(30,3,true,false,false)
                 }
             }
             
@@ -67,13 +67,10 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica, onFailed }) => {
                 if(!tentativaTwo){
                     setTentativaTwo(true)
                     reiniciarJogo();
+                } else {
+                    onSuccess(0,0,false,false,true);
                 }
-            }
-            
-            if(tentativaTwo){
-                onFailed();
-            }
-        
+            }        
             
         }
     };
@@ -85,6 +82,7 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica, onFailed }) => {
     };
 
     const handleExibirDica = () => {
+        reiniciarJogo();
         dica();
     };
 

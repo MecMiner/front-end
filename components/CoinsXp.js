@@ -5,7 +5,7 @@ const CoinsXP = ({coin, xp}) => {
     return (
         <div className="coins-xp-bar">
       <div className="coin">
-      <Image src={'/src/coin.jpg'} width={20} height={20} priority/>
+      <Image src={'/src/coin.jpg'} width={20} height={20} alt='moeda' priority/>
         <span className="value">{coin} Moedas</span>
       </div>
       <div className="experience-bar">

@@ -10,7 +10,7 @@ const Personagem = ({img, posicao, inverter}) => {
               src ={`/src/personagens/${img}.svg`}
               width={450}
               height={450}
-              alt="mentor"
+              alt="personagem"
               priority
             />
     </div>
