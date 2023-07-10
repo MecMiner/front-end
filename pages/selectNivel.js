@@ -81,7 +81,7 @@ export default function Jogar() {
             />
           </button>
           {data && data.response && data.response.pontos > 50  ?  (
-            <button className='circular-button circular-button-two' onClick={() => handleButtonClick('nivelThree')}>
+            <button className='circular-button circular-button-two' onClick={() => handleButtonClick('nivelTwo')}>
             <Image
               className='circular-image'
               src="/src/mapa/numero2.png"
@@ -103,7 +103,7 @@ export default function Jogar() {
             />
           </button>
           )}
-          {data && data.response && data.response.pontos > 50  ?  (
+          {data && data.response && data.response.pontos > 90  ?  (
             <button className='circular-button circular-button-three' onClick={() => handleButtonClick('nivelThree')}>
             <Image
               className='circular-image'
@@ -127,7 +127,7 @@ export default function Jogar() {
           </button>
           )}
           
-          {data && data.response && data.response.pontos > 50  ?  (
+          {data && data.response && data.response.pontos > 130  ?  (
             <button className='circular-button circular-button-four' onClick={() => handleButtonClick('nivelFour')}>
               <Image
                 className='circular-image'

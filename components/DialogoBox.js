@@ -34,19 +34,17 @@ const DialogScreen = ({tamanho, posicao, dialogText, cor, complete }) => {
                 .dialogoBox {
                     font-size: 10px;
                     position: absolute;
-                    width: ${tamanho};
-                    left: ${posicao};
-                    backgroundColor: ${cor};
+                    width: ${tamanho ? tamanho : '20%'};
+                    left: ${posicao ? posicao : '5%'};
+                    background-color: ${cor? cor: 'blue'};
                     top: 10%;
-                    left: 5%;
                     padding: 10px;
                     color: rgb(15, 5, 5);
                     font-size: 16px;
                     border: 1px solid #0a0a0a;
                     height: auto;
                     min-height: 100px; 
-                    z-index: 9999;
-                    background-color: #f1f1f1;
+                    z-index: 999;
                     border-radius: 5px;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                   };
