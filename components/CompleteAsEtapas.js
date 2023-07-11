@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-function CompleteAsEtapa({frase1, frase2, onSucess, setResposta}) {
+function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
   const [etapa2, setEtapa2] = useState('');
   const [etapa4, setEtapa4] = useState('');
 
-  useEffect(()=> {
-    setResposta('Etapa 2:' + etapa2);
-  }),[etapa2,etapa4]
+  useEffect(() =>{
+    setInfo('Etapa 2: ' + etapa2 + '\nEtapa 4: ' + etapa4);
+  },[etapa2 , etapa4]);
 
   const handleInputChange = (event, etapa) => {
     const { value } = event.target;
@@ -21,13 +21,13 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setResposta}) {
       default:
         break;
     }
+    
   };
   
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const resposta = 'Etapa 2: ' + etapa2 + '\n' + 'Etapa 4: '  + etapa4;
-    onSucess(resposta);
+    onSucess();
   };
 
   return (
@@ -90,8 +90,10 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setResposta}) {
           
           .step-title {
             color: black;
-            font-size: 18px;
+            font-size: 12px;
             margin-bottom: 10px;
+            margin-right: 20px;
+            margin-left: 20px;
           }
           
           .textarea {
@@ -101,12 +103,13 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setResposta}) {
             border-radius: 4px;
             font-size: 14px;
             resize: vertical; /* Permite redimensionamento vertical */
-            min-height: 100px; /* Altura mínima inicial */
+            min-height: 50px; /* Altura mínima inicial */
             overflow: auto; /* Adiciona barra de rolagem quando o conteúdo excede a altura */
           }
           
           .button {
             padding: 10px 20px;
+            margin-bottom: 10px;
             background-color: #ff9800;
             color: white;
             border: none;
