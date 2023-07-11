@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 import React from 'react';
 
-const Loading = ({texto}) => {
+const Loading = ({texto, infinite}) => {
     const [isLoading, setIsLoading] = useState(true);
-  
+    
     useEffect(() => {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 3000);
-    }, []);
+      if (infinite) {
+        
+      } else {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 3000);
+      }
+    }, [infinite]);
   
     if (isLoading) {
       return (

@@ -12,6 +12,7 @@ import config from '@/config';
 import CoinsXP from '@/components/CoinsXp';
 import Desempenho from '@/components/Desempenho';
 import Loading from '@/components/Loading';
+import CompleteAsEtapa from '@/components/CompleteAsEtapas';
 
 
 export default function Jogar({ data }) {
@@ -28,12 +29,15 @@ export default function Jogar({ data }) {
     bomDesempenho: false,
     otimoDesempenho: false,
     zerar: true,
+    resposta2: null,
+    statusNivel2: null,
   });
   const personagem = config.personagem;
   const mentor = config.mentor;
   const router = useRouter();
   const { id } = router.query;
-  const [pag, setPag] = useState(1);
+  const [pag, setPag] = useState(25);
+  const [checkBanco, setCheckBanco] = useState(false);
 
 
   useEffect(() => {
@@ -56,22 +60,51 @@ export default function Jogar({ data }) {
 
           if (response.ok) {
             console.log('Dados recuperados:', dados);
-            if (dados.response.pontos < 60) {
+            if(!checkBanco){
+              setInfo(prevState => ({ ...prevState, coin: dados.response.pontos }));
+              setInfo(prevState => ({ ...prevState, xp: dados.response.xp}));
+              
+            } else {
+              if(dados.response.statusNivel2 && dados.response.statusNivel2 === 1){
+                setInfo(prevState => ({ ...prevState, statusNivel2: dados.response.statusNivel2 }));
+                setShowButton(true);
+                setCheckBanco(false);
+              }
+              if(dados.response.statusNivel2 && dados.response.statusNivel2 === 2){
+                setInfo(prevState => ({ ...prevState, statusNivel2: dados.response.statusNivel2 }));
+                setShowButton(true);
+                setCheckBanco(false);
+              }
+            }
+            
+            if (dados.response.statusNivel2) {
               console.log("Você não tem pontos para esse nível")
+            } else {
+              if(dados.response.statusNivel2 === 0){
+                setCheckBanco(true);
+                setPag(26);
+              }
             }
           } else {
             router.push('/');
-            // Trate o erro de acordo com suas necessidades
           }
         } catch (error) {
           console.error('Erro na requisição:', error);
-          // Trate o erro de acordo com suas necessidades
         }
       }
     };
 
-    fetchData();
-  }, [id]);
+    const interval = setInterval(fetchData, 5000); 
+
+    if (!checkBanco) {
+      fetchData();
+      clearInterval(interval); // Limpar o intervalo quando a verificação não estiver habilitada
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [id, checkBanco]);
 
 
   const handleNextPag = () => {
@@ -105,6 +138,7 @@ export default function Jogar({ data }) {
     router.reload();
   }
 
+
   const handleSetCoin = (valor, exp) => {
     setShowButton(false);
     setInfo(prevState => ({ ...prevState, coin: prevState.coin + valor }));
@@ -117,37 +151,9 @@ export default function Jogar({ data }) {
       handleNextPag();
     }, 3000); // Aguardar 3 segundos antes de avançar
   };
-
-  const handelCorrigirGame = (valor, exp, bom, otimo, errado) => {
-    setInfo(prevState => ({ ...prevState, coin: prevState.coin + valor }));
-    setInfo(prevState => ({ ...prevState, xp: prevState.xp + exp }));
-    if (bom) {
-      setInfo(prevState => ({ ...prevState, bomDesempenho: true }));
-      setShowButton(true);
-      advancePag(4);
-    }
-    if (otimo) {
-      setInfo(prevState => ({ ...prevState, otimoDesempenho: true }));
-      setShowButton(true);
-      advancePag(4);
-    }
-    if (errado) {
-      handleNextPag();
-    }
-  }
-
-  const exibirDica = () => {
-    if (!usouDica) {
-      setUsouDica(true);
-    }
-    showMessage(true);
-    setTimeout(() => {
-      setShowMessage(false);
-      setAnimationEnded(true);
-    }, 5000);
-  }
-
+  
   const handleSetBanco = async () => {
+    console.log(info.resposta2);
     const token = localStorage.getItem('token');
     try {
       const response = await fetch(`${apiUrl}/respostas/${id}`, {
@@ -166,6 +172,30 @@ export default function Jogar({ data }) {
       console.error('Erro ao fazer a requisição:', error);
     }
   }
+
+
+
+  const handelCorrigirGame = async (valor) => {
+    setShowButton(false);
+    console.log(valor);
+    setInfo(prevState => ({...prevState, statusNivel2: 0, resposta2: valor}))
+    setTimeout(async () => {
+      await handleSetBanco(); // Aguarda um pequeno atraso antes de chamar handleSetBanco
+      handleNextPag();
+    }, 2000);
+  }
+
+  const exibirDica = () => {
+    if (!usouDica) {
+      setUsouDica(true);
+    }
+    showMessage(true);
+    setTimeout(() => {
+      setShowMessage(false);
+      setAnimationEnded(true);
+    }, 5000);
+  }
+
 
 
   const renderPag = () => {
@@ -376,26 +406,35 @@ export default function Jogar({ data }) {
       case 24:
         return (
           <div>
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"70%"} dialogText={`Essas são as etapas, mas está faltando a etapa 2 e 4, quais informações deveriam estar nessas etapas?`} />
+            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"50%"} dialogText={`Essas são as etapas, mas está faltando a etapa 2 e 4, quais informações deveriam estar nessas etapas?`} />
             <Mentor img={"m1/imagem1"} posicao={"70%"} />
             <Personagem img={"p1/imagem4"} posicao={"20%"} />
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 25:
         return (
-          <div>
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"10%"} tamanho={"30%"} dialogText={`Mas agora eu tenho um desafio para você, não achou que ia ser só ficar me ouvindo né.`} />
-            <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={"55%"} tamanho={"10%"} dialogText={`Ok!`} />
-            <Mentor img={"m1/imagem3"} inverter={true} posicao={"60%"} />
-            <Personagem img={"p1/imagem5"} inverter={true} posicao={"20%"} />
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+          <div style={{width: '50%', border: '1px solid black', borderRadius: '4px'}}>
+              <DialogoBox cor={mentor.cor} complete={()=> setShowButton(true)} tamanho={'10%'} dialogText={`Você pode solicitar uma dica caso se sinta confuso sobre como devem ser a etapas de solução de desse problema`}/>
+              <DialogoBox posicaoY={'40%'} cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"10%"} dialogText={`Essa dica pode ser uma dica do professor, ou uma dica de um colega, você pode escolher.`} />
+              <CompleteAsEtapa frase1={linhas[0]} frase2={linhas[2]} onSucess={handelCorrigirGame} />
           </div>)
       case 26:
         return (
           <div>
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"10%"} tamanho={"30%"} dialogText={`Já te disse como resolveram o problema, agora você deve organizar as etapas da solução.`} />
+            <div style={{width: '200px', border: '1px solid black', borderRadius: '4px', position: 'relative', height: '200px', left: '100%'}}>
+            {checkBanco && (
+              <Loading infinite={true}/>
+            )}
+            {info.statusNivel2 === 1 && (
+              <Mentor largura={200} altura={200} img={'m2/imagem9'}/>
+            )}
+            {info.statusNivel2 === 2 && (
+              <Mentor largura={200} altura={200} img={'m2/imagem6'}/>
+            )}
+            </div>
+            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"10%"} tamanho={"30%"} dialogText={`Agora vou pedir a ajuda de um amigo mais experiente para verificar se a sua proposta de solução está correta, ok. Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <Mentor img={"m1/imagem3"} inverter={true} posicao={"60%"} />
-            <Personagem img={"p1/imagem3"} posicao={"20%"} />
+            <Personagem img={"p1/imagem3"} posicao={"45%"} />
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 27:
@@ -519,7 +558,7 @@ export default function Jogar({ data }) {
 export async function getServerSideProps(context) {
   const apiUrl = config.apiUrl
   const { id } = context.query;
-  const response = await fetch(`${apiUrl}/desafio1/${id}`);
+  const response = await fetch(`${apiUrl}/desafio2/${id}`);
   const data = await response.json();
   console.log(data);
   return { props: { data } };

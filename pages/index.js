@@ -13,6 +13,7 @@ export default function Home() {
   const apiUrl = config.apiUrl
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoad, setIsLoad] = useState(true)
 
   const [content, setContent] = useState({
     email: '',
@@ -56,7 +57,7 @@ export default function Home() {
       <MyHead />
       <Layout>
         <CheckUser/>
-        <Loading/>
+         <Loading/>
         <div className="login-screen">
         <div className= "loginContainer">
           <div className="image-login">

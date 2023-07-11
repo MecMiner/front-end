@@ -20,7 +20,6 @@ export default function Jogar({ data }) {
   const linhas = fraseGrande.split('\r\n');
   const [showMessage, setShowMessage] = useState(false);
   const [animationEnded, setAnimationEnded] = useState(false);
-  const [usouDica, setUsouDica] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [info, setInfo] = useState({
     coin: 0,
@@ -135,9 +134,7 @@ export default function Jogar({ data }) {
   }
 
  const exibirDica = () => {
-  if(!usouDica){
-    setUsouDica(true);
-  }
+  setInfo(prevState => ({ ...prevState, coin: prevState.coin - 10 }));
   showMessage(true);
       setTimeout(() => {
         setShowMessage(false);
@@ -185,7 +182,7 @@ export default function Jogar({ data }) {
       case 3:
         return (
           <div>
-            <DialogoBox cor={personagem.cor} posicao={'5%'} tamanho={'30%'} complete={() => setShowButton(true)} dialogText={`Como ${personagem.nome} gostaria de aprender mais sobre os projetos de SL e Mentor adora ensinar, elas combinaram um encontro para que Mentor possa ajudar Personagem a entender mais desse mundo.`} />
+            <DialogoBox cor={personagem.cor} posicao={'5%'} tamanho={'30%'} complete={() => setShowButton(true)} dialogText={`Como ${personagem.nome} gostaria de aprender mais sobre os projetos de SL e ${mentor.nome} adora ensinar, elas combinaram um encontro para que ${mentor.nome} possa ajudar Personagem a entender mais desse mundo.`} />
             <Personagem img={"p1/imagem5"} posicao={"30%"} />
             <Mentor img={"m1/imagem3"} posicao={"10%"} />
             {showButton &&  <ButtonAdvance buttonClick={() => handleSetCoin(20, 5,true)} />}
@@ -225,7 +222,7 @@ export default function Jogar({ data }) {
       case 7:
         return (
           <div>
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} dialogText={"Claro que não, mas vamos lá, primeirou vou te explicar como vai funcionar nosso enconstro\n\nPronta para começar?"} />
+            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} dialogText={"Claro que não, mas vamos lá, primeiro vou te explicar como vai funcionar nosso encontro\n\nPronta para começar?"} />
             <Mentor img={"m1/imagem6"} posicao={"50%"} />
             <Personagem img={"p1/imagem5"} posicao={"30%"} inverter={true}/>
             {showButton && <ConfirmationBox onYes={() => handleSetCoin(10,0,false)} onNo={() => {router.push(`/selectNivel?id=${id}`)}} />}
@@ -247,7 +244,7 @@ export default function Jogar({ data }) {
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} dialogText={"Mais especificamente, um problema que aconteceu, e foi resolvido pela comunidade, ok."} />
-            <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"200px"} posicao={"55%"} dialogText={"Personagem: Ok, legal!"} />
+            <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"200px"} posicao={"55%"} dialogText={"Ok, legal!"} />
             <Mentor img={"m1/imagem6"} posicao={"60%"} />
             <Personagem img={"p1/imagem5"} posicao={"20%"} inverter={true} />
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}
@@ -281,7 +278,7 @@ export default function Jogar({ data }) {
       case 13:
         return (
           <div>
-            <DialogoBox cor={mentor.cor} posicao={"20%"} tamanho={'40%'} complete={() => setShowButton(true)} dialogText={`${data.dataDesafio.dadosProj}`} />
+            <DialogoBox cor={mentor.cor} posicao={"30%"} tamanho={'40%'} complete={() => setShowButton(true)} dialogText={`${data.dataDesafio.dadosProj}`} />
             <Mentor img={"m1/imagem6"} posicao={"70%"} />
             <Personagem img={"p1/imagem4"} posicao={"10%"} />
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
@@ -298,7 +295,7 @@ export default function Jogar({ data }) {
       case 15:
         return (
           <div>
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"70%"} posicao={"12%"} dialogText={`${data.dataDesafio.descProblema}`} />
+            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"60%"} posicao={"20%"} dialogText={`${data.dataDesafio.descProblema}`} />
             <Mentor img={"m1/imagem1"} posicao={"75%"} />
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)

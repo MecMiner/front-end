@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const DialogScreen = ({tamanho, posicao, dialogText, cor, complete }) => {
+const DialogScreen = ({tamanho, posicao, dialogText, cor, complete, posicaoY }) => {
     const [currentText, setCurrentText] = useState('');
     const [dialogVisible, setDialogVisible] = useState(true);
 
@@ -36,8 +36,8 @@ const DialogScreen = ({tamanho, posicao, dialogText, cor, complete }) => {
                     position: absolute;
                     width: ${tamanho ? tamanho : '20%'};
                     left: ${posicao ? posicao : '5%'};
-                    background-color: ${cor? cor: 'blue'};
-                    top: 10%;
+                    background-color: ${cor ? cor: 'blue'};
+                    top: ${posicaoY ? posicaoY : '10%'};
                     padding: 10px;
                     color: rgb(15, 5, 5);
                     font-size: 16px;

@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-function CompleteAsEtapa() {
+function CompleteAsEtapa({frase1, frase2, onSucess, setResposta}) {
   const [etapa2, setEtapa2] = useState('');
   const [etapa4, setEtapa4] = useState('');
+
+  useEffect(()=> {
+    setResposta('Etapa 2:' + etapa2);
+  }),[etapa2,etapa4]
 
   const handleInputChange = (event, etapa) => {
     const { value } = event.target;
@@ -18,38 +22,39 @@ function CompleteAsEtapa() {
         break;
     }
   };
+  
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Faça o que desejar com os valores das etapas
-    console.log('Etapa 2:', etapa2);
-    console.log('Etapa 4:', etapa4);
+    const resposta = 'Etapa 2: ' + etapa2 + '\n' + 'Etapa 4: '  + etapa4;
+    onSucess(resposta);
   };
 
   return (
     <div className="complete-as-etapa">
-      <h1 className="title">Jogo de Complete as Etapas</h1>
+      <h1 className="title">Complete as Etapas</h1>
       <form className="form" onSubmit={handleSubmit}>
         <div className="step">
-          <h2 className="step-title">Etapa 1</h2>
-          {/* Conteúdo da primeira etapa */}
+          <h2 className="step-title">{frase1}</h2>
         </div>
         <div className="step">
-          <h2 className="step-title">Etapa 2</h2>
+          <h2 className="step-title"></h2>
           <textarea
             className="textarea"
+            placeholder='Digite a etapa 2'
             value={etapa2}
             onChange={(e) => handleInputChange(e, 2)}
           />
         </div>
         <div className="step">
-          <h2 className="step-title">Etapa 3</h2>
-          {/* Conteúdo da terceira etapa */}
+          <h2 className="step-title">{frase2}</h2>
+  
         </div>
         <div className="step">
-          <h2 className="step-title">Etapa 4</h2>
+          <h2 className="step-title"></h2>
           <textarea
             className="textarea"
+            placeholder='Digite a etapa 4'
             value={etapa4}
             onChange={(e) => handleInputChange(e, 4)}
           />
@@ -84,13 +89,13 @@ function CompleteAsEtapa() {
           }
           
           .step-title {
-            color: #ff9800;
+            color: black;
             font-size: 18px;
             margin-bottom: 10px;
           }
           
           .textarea {
-            width: 200px;
+            width: 500px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;

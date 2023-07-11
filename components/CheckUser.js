@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-const CheckUser = () => {
+const CheckUser = ({onFunction}) => {
     const router = useRouter();
 
     useEffect(() => {
@@ -22,6 +22,7 @@ const CheckUser = () => {
           })
             .then((response) => response.json())
             .then((data) => {
+              
               if (data.valid) {
                 // Token válido, continue com o fluxo normal
                 console.log(router.asPath);

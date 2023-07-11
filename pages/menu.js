@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import MyHead from '@/components/MyHead'
 import Layout from '@/components/MyLayout'
 import { useRouter } from 'next/router';
@@ -7,7 +7,6 @@ import Loading from '@/components/Loading';
 
 
 export default function Menu({ data }) {
-
   const router = useRouter();
 
   const handleStart = (id) => {
