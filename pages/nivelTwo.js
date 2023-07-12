@@ -7,7 +7,6 @@ import ConfirmationBox from '@/components/ConfirmationBox';
 import Mentor from '@/components/Mentor';
 import Personagem from '@/components/Personagem';
 import ButtonAdvance from '@/components/ButtonAdvance';
-import SortingGame from '@/components/SortingGame';
 import config from '@/config';
 import CoinsXP from '@/components/CoinsXp';
 import Desempenho from '@/components/Desempenho';
@@ -58,8 +57,9 @@ export default function Jogar({ data }) {
             console.log('Dados recuperados:', dados);
                       
             if (dados.response.pontos >= 50) {
-              if(inicio){
-                setInfo(dados.response); 
+              if(!dados.response.statusNivel2.jogou){
+                setInfo(prevInfo=> ({...prevInfo, pontos: dados.response.pontos})); 
+                setInfo(prevInfo=> ({...prevInfo, xp: dados.response.xp})); 
                 setInfo(prevInfo => {
                   const updatedStatusNivel2 = {
                     ...prevInfo.statusNivel2,
@@ -74,14 +74,17 @@ export default function Jogar({ data }) {
                     statusNivel2: updatedStatusNivel2
                   };
                 });    
-                if(dados.response.statusNivel2.jogou && !dados.response.statusNivel2.corrigido){
+              } else {
+                setInfo(prevInfo=> ({...prevInfo, pontos: dados.response.pontos})); 
+                setInfo(prevInfo=> ({...prevInfo, xp: dados.response.xp})); 
+                setInfo(prevInfo=> ({...prevInfo, statusNivel2: dados.response.statusNivel2})); 
+
+                if(!dados.response.statusNivel2.corrigido){
                   setPag(26);
                   setCheckBanco(true);
-                }   
-                setInicio(false);      
-              } else {
+                } 
                 if(dados.response.statusNivel2.corrigido){
-                  setInfo(dados.response);
+                  setPag(26);
                   setCheckBanco(false);
                   setShowButton(true);
                 }
