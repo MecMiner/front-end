@@ -18,6 +18,7 @@ const Layout = ({ children }) => {
       
         .game-frame {
             width: 90%;
+            max-width: 90%;
             height: 90%;
             border: 2px solid #000;
             border-radius: 10px;
