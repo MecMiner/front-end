@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react';
 
-function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
+function CompleteAsEtapa3({onSucess, setInfo}) {
+  const [etapa1, setEtapa1] = useState('');
   const [etapa2, setEtapa2] = useState('');
+  const [etapa3, setEtapa3] = useState('');
   const [etapa4, setEtapa4] = useState('');
 
   useEffect(() =>{
-    setInfo('Etapa 2: ' + etapa2 + '\nEtapa 4: ' + etapa4);
-  },[etapa2 , etapa4]);
+    setInfo('Etapa 1: ' + etapa1 + '\nEtapa 2: ' + etapa2 + '\nEtapa 3: ' + etapa3 + '\nEtapa 4: ' + etapa4);
+  },[etapa1, etapa2 , etapa3, etapa4]);
 
   const handleInputChange = (event, etapa) => {
     const { value } = event.target;
 
     switch (etapa) {
+      case 1:
+        setEtapa1(value);
+        break;
       case 2:
         setEtapa2(value);
         break;
+      case 3:
+        setEtapa3(value);
+        break
       case 4:
         setEtapa4(value);
         break;
@@ -34,8 +42,13 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
     <div className="complete-as-etapa">
       <h1 className="title">Complete as Etapas</h1>
       <form className="form" onSubmit={handleSubmit}>
-        <div className="step">
-          <h2 className="step-title">{frase1}</h2>
+      <div className="step">
+          <textarea
+            className="textarea"
+            placeholder='Digite a etapa 1'
+            value={etapa1}
+            onChange={(e) => handleInputChange(e, 1)}
+          />
         </div>
         <div className="step">
           <textarea
@@ -46,8 +59,12 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
           />
         </div>
         <div className="step">
-          <h2 className="step-title">{frase2}</h2>
-  
+          <textarea
+            className="textarea"
+            placeholder='Digite a etapa 3'
+            value={etapa3}
+            onChange={(e) => handleInputChange(e, 3)}
+          />
         </div>
         <div className="step">
           <textarea
@@ -129,4 +146,4 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
   );
 }
 
-export default CompleteAsEtapa;
+export default CompleteAsEtapa3;

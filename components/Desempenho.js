@@ -1,13 +1,15 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 
-const Desempenho = ({des}) => {
+const Desempenho = ({des, col}) => {
   return (
     <div className="container">
       <div className="imagesContainer">
         <img src={`src/personagens/${des}Desempenho.png`} alt="Imagem 1" />
+        {col && <img src={`src/personagens/colaboracao.png`} alt="Imagem 1" />}
       </div>
       <p className="texto">{`Parabéns, você teve um ${des} Desempenho`}</p>
+      {col && <p className="texto">{`E um badge de colaboração`}</p>}
 
       <style jsx>{`
         .container {

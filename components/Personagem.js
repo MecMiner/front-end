@@ -1,14 +1,14 @@
 import React from 'react';
 import Image from 'next/image';
 
-const Personagem = ({img, posicao, inverter, largura, altura}) => {
+const Personagem = ({img, posicao, inverter, tamanho}) => {
   return (
     <div className="personagem">
         <Image
               className={`${inverter ? 'inverter' : ''}`}
               src ={`/src/personagens/${img}.svg`}
-              width={largura? largura : 380}
-              height={altura? altura: 380}
+              width={tamanho? tamanho : 380}
+              height={tamanho? tamanho: 380}
               alt="persongem"
               priority
             />

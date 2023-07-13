@@ -80,7 +80,7 @@ export default function Jogar() {
               priority
             />
           </button>
-          {data && data.response && data.response.pontos > 50  ?  (
+          {data && data.response && data.response.nivel >= 1  ?  (
             <button className='circular-button circular-button-two' onClick={() => handleButtonClick('nivelTwo')}>
             <Image
               className='circular-image'
@@ -103,7 +103,7 @@ export default function Jogar() {
             />
           </button>
           )}
-          {data && data.response && data.response.pontos > 90  ?  (
+          {data && data.response && data.response.nivel >= 2  ?  (
             <button className='circular-button circular-button-three' onClick={() => handleButtonClick('nivelThree')}>
             <Image
               className='circular-image'
@@ -127,7 +127,7 @@ export default function Jogar() {
           </button>
           )}
           
-          {data && data.response && data.response.pontos > 130  ?  (
+          {data && data.response && data.response.nivel >= 3  ?  (
             <button className='circular-button circular-button-four' onClick={() => handleButtonClick('nivelFour')}>
               <Image
                 className='circular-image'

@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ConfirmationBox = ({ onYes, onNo, texto1, texto2, posicaoX, posicaoY, link, tamanho, textoLink }) => {
+const Button = ({ onYes, onNo, texto1, texto2, posicaoX, posicaoY, link, tamanho }) => {
   return (
     <div className="confirmation-box">
         {link && (
-          <a href={link} target="_blank">{textoLink? textoLink: link}</a>
+          <a href={link} target="_blank">{link}</a>
         )}  
       <div className="buttons">      
         {onYes && <button className="btn-yes" onClick={onYes}>{texto1 ? texto1 : 'Sim'}</button>}
@@ -17,11 +17,6 @@ const ConfirmationBox = ({ onYes, onNo, texto1, texto2, posicaoX, posicaoY, link
           top: ${posicaoY ? posicaoY : '50%'};
           right: ${posicaoX ? posicaoX : '10%'};
           transform: translateX(-50%);
-          background-color: #f1f1f1;
-          border: 1px solid #0a0a0a;
-          padding: 20px;
-          border-radius: 5px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .buttons {
@@ -64,4 +59,4 @@ const ConfirmationBox = ({ onYes, onNo, texto1, texto2, posicaoX, posicaoY, link
   );
 };
 
-export default ConfirmationBox;
+export default Button;

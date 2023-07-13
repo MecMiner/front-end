@@ -44,7 +44,7 @@ const DialogScreen = ({tamanho, posicao, dialogText, cor, complete, posicaoY }) 
                     border: 1px solid #0a0a0a;
                     height: auto;
                     min-height: 100px; 
-                    z-index: 999;
+                    z-index: 100;
                     border-radius: 5px;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
                   };
