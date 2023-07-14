@@ -7,18 +7,19 @@ import Loading from '@/components/Loading';
 
 
 export default function Menu({ data }) {
+  const [isLoad,setIsLoad] = useState(true);
   const router = useRouter();
 
   const handleStart = (id) => {
-    router.push(`/selectNivel?id=${id}`)
+    router.push(`/selecao-nivel?id=${id}`)
   };
 
   return (
     <div>
       <MyHead />
       <Layout>
-        <CheckUser/>
-        <Loading/>
+        <CheckUser onFunction={() => setIsLoad(false)}/>
+        {isLoad && <Loading/>}
         <div className="game-screen">
 
           <div>
@@ -30,6 +31,26 @@ export default function Menu({ data }) {
           </div>
         </div>
       </Layout>
+      <style jsx>{`
+        .btn-menu {
+          padding: 2rem;
+          background-color: #2980b9;
+          color: #fff;
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          margin: 0 1rem;
+        
+          &:hover {
+            background-color: #1a5276;
+          }
+        
+          &:active {
+            background-color: #154360;
+          }
+        }
+      `}</style>
     </div>
   )
 }

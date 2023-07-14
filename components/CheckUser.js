@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import config from '@/config';
 
 const CheckUser = ({onFunction}) => {
+    const apiUrl = config.apiUrl;
     const router = useRouter();
 
     useEffect(() => {
@@ -13,7 +15,7 @@ const CheckUser = ({onFunction}) => {
           router.push('/');
         } else {
           // Verifique a validade do token no servidor
-          fetch('http://localhost:8080/verify-token', {
+          fetch(`${apiUrl}/verify-token`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -25,11 +27,9 @@ const CheckUser = ({onFunction}) => {
               
               if (data.valid) {
                 // Token válido, continue com o fluxo normal
-                console.log(router.asPath);
                 if(router.asPath === '/'){
                   router.push('/menu');
                 }
-                console.log('Token válido');
               } else {
                 // Token inválido, redirecione para a página de login
                 router.push('/');
@@ -41,6 +41,7 @@ const CheckUser = ({onFunction}) => {
               router.push('/');
             });
         }
+        onFunction();
       }, []);
 
 

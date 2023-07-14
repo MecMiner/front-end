@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 
-const SortingGame = ({ onSuccess, frasesIniciais, dica, onFailed }) => {
+const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica, onFailed }) => {
     const [frases, setFrases] = useState([]);
     const [frasesOrdenadas, setFrasesOrdenadas] = useState([]);
     const [ordemCorreta, setOrdemCorreta] = useState([]);
@@ -221,4 +221,4 @@ const SortingGame = ({ onSuccess, frasesIniciais, dica, onFailed }) => {
     );
 };
 
-export default SortingGame;
+export default ExercicioNivel1;

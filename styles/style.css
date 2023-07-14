@@ -1,24 +1,5 @@
 html, body{ margin: 0}
 
-.btn-menu {
-    padding: 2rem;
-    background-color: #2980b9;
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin: 0 1rem;
-  
-    &:hover {
-      background-color: #1a5276;
-    }
-  
-    &:active {
-      background-color: #154360;
-    }
-}
-
 .circular-button{
     position: absolute;
     width: 150px;

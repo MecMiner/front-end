@@ -4,10 +4,10 @@ import MyHead from '@/components/MyHead';
 import Layout from '@/components/MyLayout';
 import { useRouter } from 'next/router';
 import Loading from '@/components/Loading';
-
+import config from '@/config';
 
 export default function Jogar() {
-  
+  const apiUrl = config.apiUrl;
   const [data, setData] = useState(null);
 
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function Jogar() {
         return;
       }
 
-      const response = await fetch(`http://localhost:8080/respostas/${id}`, {
+      const response = await fetch(`${apiUrl}/respostas/${id}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: token,
@@ -60,17 +60,14 @@ export default function Jogar() {
     router.push(`/${name}?id=${id}`);
   };
 
-  
-  if (isLoading) {
-    return <Loading/>; // Exibir um componente de loading enquanto carrega os dados do banco
-  }
 
  
   return (
     <div>
       <MyHead/>
       <Layout>
-          <button className='circular-button circular-button-one' onClick={() => handleButtonClick('nivelOne')}>
+          {isLoading && <Loading/>}
+          <button className='circular-button circular-button-one' onClick={() => handleButtonClick('nivel-1')}>
             <Image
               className='circular-image'
               src="/src/mapa/numero1.png"
@@ -81,7 +78,7 @@ export default function Jogar() {
             />
           </button>
           {data && data.response && data.response.nivel >= 1  ?  (
-            <button className='circular-button circular-button-two' onClick={() => handleButtonClick('nivelTwo')}>
+            <button className='circular-button circular-button-two' onClick={() => handleButtonClick('nivel-2')}>
             <Image
               className='circular-image'
               src="/src/mapa/numero2.png"
@@ -104,7 +101,7 @@ export default function Jogar() {
           </button>
           )}
           {data && data.response && data.response.nivel >= 2  ?  (
-            <button className='circular-button circular-button-three' onClick={() => handleButtonClick('nivelThree')}>
+            <button className='circular-button circular-button-three' onClick={() => handleButtonClick('nivel-3')}>
             <Image
               className='circular-image'
               src="/src/mapa/numero3.png"
@@ -128,7 +125,7 @@ export default function Jogar() {
           )}
           
           {data && data.response && data.response.nivel >= 3  ?  (
-            <button className='circular-button circular-button-four' onClick={() => handleButtonClick('nivelFour')}>
+            <button className='circular-button circular-button-four' onClick={() => handleButtonClick('nivel-4')}>
               <Image
                 className='circular-image'
                 src={ "/src/mapa/numero4.png"}

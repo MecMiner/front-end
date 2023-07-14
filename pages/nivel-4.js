@@ -12,7 +12,7 @@ import CoinsXP from '@/components/CoinsXp';
 import Desempenho from '@/components/Desempenho';
 import Loading from '@/components/Loading';
 import Button from '@/components/Buttons';
-import CompleteAsEtapa3 from '@/components/CompleteAsEtapas3';
+import CompleteAsEtapa3 from '@/components/ExercicioNivel3';
 import ExercicioNivel4 from '@/components/ExercicioNivel4';
 import BarradeProgresso from '@/components/BarradeProgresso';
 

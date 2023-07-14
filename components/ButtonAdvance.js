@@ -7,7 +7,7 @@ const ButtonAdvance = ({buttonClick}) => {
         <button className='circular-button nextButton' onClick={buttonClick}>
               <Image
                 className='circular-image'
-                src="/src/mapa/seta.png"
+                src="/src/mapa/seta.svg"
                 width={100}
                 height={100}
                 alt="numero1"
