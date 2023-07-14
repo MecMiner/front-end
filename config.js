@@ -8,9 +8,3 @@ const config = {
   };
   
 export default config;
-
-//import config from './config';
-
-// ...
-
-//const apiUrl = config.apiUrl;
