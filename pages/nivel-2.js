@@ -329,7 +329,7 @@ export default function Jogar({ data }) {
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} dialogText={`Muito bom, só vamos relembrar então quais os objetivos dele, ok?`} />
-            <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={'60%'} tamanho={'10%'} dialogText={'Ok'} />
+            <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={'60%'} tamanho={'10%'} dialogText={'Ok!'} />
             <Personagem img={"m2/imagem8"} posicao={"10%"} tamanho={330}/>
             <Personagem img={"p2/imagem2"} posicao={"60%"} tamanho={330}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
@@ -356,7 +356,7 @@ export default function Jogar({ data }) {
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} dialogText={`Agora vamos ver primeiro a parte conceitual do problema que vamos estudar.`} />
-            <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"200px"} posicao={"55%"} dialogText={"Está bem"} />
+            <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"200px"} posicao={"55%"} dialogText={"Está bem."} />
             <Personagem img={"m2/imagem1"} posicao={"10%"} tamanho={330}/>
             <Personagem img={"p2/imagem3"} posicao={"60%"} tamanho={330}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
@@ -388,7 +388,7 @@ export default function Jogar({ data }) {
       case 15:
         return (
           <div>
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"20%"} dialogText={`Que bom, agora vamo ver esse problema na prática, dentro do projeto ${data.dataDesafio.nomeProjeto}`} />
+            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"20%"} dialogText={`Que bom, agora vamos ver esse problema na prática, dentro do projeto ${data.dataDesafio.nomeProjeto}.`} />
             <Personagem img={"m2/imagem7"} posicao={"10%"} tamanho={330}/>
             <Personagem img={"p2/imagem2"} posicao={"60%"} tamanho={330}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
@@ -474,13 +474,13 @@ export default function Jogar({ data }) {
       case 25:
         return (
           <div>
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={'15%'} dialogText={`Você pode solicitar uma dica caso se sinta confuso sobre como devem ser a etapas de solução de desse problema`} />
-            <DialogoBox posicaoY={'40%'} cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"15%"} dialogText={`Essa dica pode ser uma dica do professor, ou uma dica de um colega, você pode escolher.`} />
+            <p>Você pode solicitar uma dica caso se sinta confuso sobre como devem ser a etapas de solução de desse problema.</p>
+            <p>Pode ser um dica do professor, ou do colega, cada uma tem um custo em moedas.</p>
             <ExercicioNivel2 frase1={linhas[0]} frase2={linhas[2]} onSucess={handelCorrigirGame} setInfo={onChaneResposta2} />
             <Button onYes={()=>exibirDica(true)} texto1={'Dica do Professor'} posicaoY={'90%'} posicaoX={'20%'}/>
             <Button onYes={()=>exibirDica(false)} texto1={'Dica do Aluno'} posicaoY={'90%'} posicaoX={'60%'}/>
             {info.statusNivel2 && !info.statusNivel2.certo && info.statusNivel2.erros < 3 && (
-              <div style={{ position: 'absolute', top: '2%', width: '50%', backgroundColor: 'blue', borderRadius: '4px', textAlign: 'center', fontSize: '18px' }}>
+              <div style={{ position: 'absolute', top: '2%', width: '50%', backgroundColor: 'white', borderRadius: '4px', textAlign: 'center', fontSize: '18px' }}>
                 Você tem {3 - info.statusNivel2.erros} tentativa(s)
               </div>
             )}
@@ -511,7 +511,8 @@ export default function Jogar({ data }) {
                 />
               )}
             </div>
-            <DialogoBox cor={mentor.cor} complete={() => { }} posicao={"10%"} tamanho={"30%"} dialogText={`Agora vou pedir a ajuda de um amigo mais experiente para verificar se a sua proposta de solução está correta, ok. Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
+            <DialogoBox cor={mentor.cor} complete={() => { }} posicao={"10%"} tamanho={"30%"} dialogText={`Agora vou pedir a ajuda de um amigo mais experiente para verificar se a sua proposta de solução está correta, ok.
+Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <Personagem img={"m2/imagem7"} posicao={"10%"} tamanho={330}/>
             <Personagem img={"p2/imagem2"} posicao={"40%"} tamanho={330}/>
             {info.statusNivel2.corrigido && !info.statusNivel2.certo && info.statusNivel2.erros < 3 && (
@@ -522,7 +523,7 @@ export default function Jogar({ data }) {
             )}
             {info.statusNivel2.corrigido && info.statusNivel2.certo && <ButtonAdvance buttonClick={() => advancePag(2)} />}
             {!info.statusNivel2.certo && info.statusNivel2.erros < 3 && (
-              <div style={{ transform: 'translateX(-50%)', position: 'absolute', top: '2%', left: '50%', width: '50%', backgroundColor: 'SlateBlue', borderRadius: '4px', textAlign: 'center', fontSize: '18px' }}>
+              <div style={{ transform: 'translateX(-50%)', position: 'absolute', top: '2%', left: '50%', width: '50%', backgroundColor: 'white', borderRadius: '4px', textAlign: 'center', fontSize: '18px' }}>
                 Você tem {3 - info.statusNivel2.erros} tentativa(s)
               </div>
             )}
@@ -560,7 +561,7 @@ export default function Jogar({ data }) {
       case 30:
         return (
           <div>
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`Vamos prosseguir, vou te mostra quais os impactos que a resolução desse tipo de problema pode ter no projeto`} />
+            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`Vamos prosseguir, vou te mostrar quais os impactos que a resolução desse tipo de problema pode ter no projeto.`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={"55%"} tamanho={"20%"} dialogText={`Está bem, vamos lá`} />
             <Personagem img={"m2/imagem7"} posicao={"10%"} tamanho={330}/>
             <Personagem img={"p2/imagem2"} posicao={"60%"} tamanho={330}/>
@@ -583,7 +584,7 @@ export default function Jogar({ data }) {
             <AvaliacaoStar complete={() => handleAvaliacao()}/>
             {showMessage && (
               <div className="ganhador-moedas">
-                Você ganhou 10 moedas, 2 XP  e um Badge de Colaboração.
+                Você ganhou 10 moedas, 2 XP  e um Badge de Colaboração pela avaliação.
               </div>
             )}
           </div>)
