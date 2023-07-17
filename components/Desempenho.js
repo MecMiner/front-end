@@ -24,7 +24,7 @@ const Desempenho = ({ des, col }) => {
           />
         }
       </div>
-      <p className="texto">{`Parabéns, você teve um ${des} Desempenho`}</p>
+      <p className="texto">{`Parabéns, você recebeu um Badge de ${des} Desempenho.`}</p>
       {col && <p className="texto">{`E um badge de colaboração`}</p>}
 
       <style jsx>{`
