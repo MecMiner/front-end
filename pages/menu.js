@@ -4,6 +4,8 @@ import Layout from '@/components/MyLayout'
 import { useRouter } from 'next/router';
 import CheckUser from '@/components/CheckUser';
 import Loading from '@/components/Loading';
+import config from '@/config';
+
 
 
 export default function Menu({ data }) {
@@ -56,7 +58,8 @@ export default function Menu({ data }) {
 }
 
 export async function getServerSideProps() {
-  const response = await fetch('http://localhost:8080/desafio');
+  const apiUrl = config.apiUrl
+  const response = await fetch(`${apiUrl}/desafio`);
   const data = await response.json();
   return { props: { data } };
 }
