@@ -30,6 +30,7 @@ const CheckUser = ({onFunction}) => {
                 if(router.asPath === '/login'){
                   router.push('/');
                 }
+                onFunction();
               } else {
                 // Token inválido, redirecione para a página de login
                 router.push('/login');
@@ -39,9 +40,10 @@ const CheckUser = ({onFunction}) => {
               console.error('Erro ao verificar o token:', error);
               // Em caso de erro na verificação do token, redirecione para a página de login
               router.push('/');
+              
             });
         }
-        onFunction();
+       
       }, []);
 
 

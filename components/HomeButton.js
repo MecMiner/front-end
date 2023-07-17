@@ -16,7 +16,7 @@ const HomeButton = () => {
       <style jsx>{`
         .homeButton {
           position: absolute;
-          bottom: 20px;
+          top: 20px;
           left: 20px;
           z-index: 9999;
           cursor: pointer;
