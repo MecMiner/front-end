@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import React, { useState } from 'react';
 import MyHead from '@/components/MyHead'
 import Layout from '@/components/MyLayout'
