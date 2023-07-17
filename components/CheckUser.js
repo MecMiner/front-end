@@ -12,7 +12,7 @@ const CheckUser = ({onFunction}) => {
     
         // Se o token não estiver presente, redirecione para a página de login
         if (!token) {
-          router.push('/');
+          router.push('/login');
         } else {
           // Verifique a validade do token no servidor
           fetch(`${apiUrl}/verify-token`, {
