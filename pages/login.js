@@ -40,7 +40,7 @@ export default function Home() {
         // Faça o que desejar com o token retornado, como armazená-lo no localStorage
         localStorage.setItem('token', data.token);
         // Redirecione para a página de menu
-        router.push('/menu');
+        router.push('/');
       } else {
         setIsSenhaIncorreta(true);
         const errorData = await response.json();
