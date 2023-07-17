@@ -27,12 +27,12 @@ const CheckUser = ({onFunction}) => {
               
               if (data.valid) {
                 // Token válido, continue com o fluxo normal
-                if(router.asPath === '/'){
-                  router.push('/menu');
+                if(router.asPath === '/login'){
+                  router.push('/');
                 }
               } else {
                 // Token inválido, redirecione para a página de login
-                router.push('/');
+                router.push('/login');
               }
             })
             .catch((error) => {

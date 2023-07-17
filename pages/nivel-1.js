@@ -4,7 +4,6 @@ import Layout from '@/components/MyLayout';
 import DialogoBox from '@/components/DialogoBox';
 import { useRouter } from 'next/router';
 import ConfirmationBox from '@/components/ConfirmationBox';
-import Mentor from '@/components/Mentor';
 import Personagem from '@/components/Personagem';
 import ButtonAdvance from '@/components/ButtonAdvance';
 import ExercicioNivel1 from '@/components/ExercicioNivel1';
@@ -13,9 +12,11 @@ import CoinsXP from '@/components/CoinsXp';
 import Desempenho from '@/components/Desempenho';
 import Loading from '@/components/Loading';
 import BarradeProgresso from '@/components/BarradeProgresso';
+import HomeButton from '@/components/HomeButton';
 
 
 export default function Jogar({ data }) {
+  const tamanhoP = 400;
   const apiUrl = config.apiUrl;
   const fraseGrande = data.dataDesafio.etapasSolucao
   const linhas = fraseGrande.split('\r\n');
@@ -32,7 +33,7 @@ export default function Jogar({ data }) {
   const mentor = config.mentor;
   const router = useRouter();
   const { id } = router.query;
-  const [pag, setPag] = useState(25);
+  const [pag, setPag] = useState(1);
   const [usouDica, setUsouDica] = useState(false);
 
 
@@ -177,22 +178,22 @@ export default function Jogar({ data }) {
         return (
           <div>
             <DialogoBox cor={personagem.cor} tamanho={'40%'} complete={() => setShowButton(true)} dialogText={`${personagem.nome} é aluna do Segundo ano de Ciência da Computação.\n\nEla  fez um trabalho sobre projetos de Software Livre (SL) e se interessou muito pelo assunto, querendo se aprofundar mais para futuramente tentar fazer contribuições e ingressar em uma comunidade de SL.`} />
-            <Personagem img={'p1/imagem2'} posicao={'10%'} tamanho={450}/>
+            <Personagem img={'p1/imagem2'} posicao={'10%'} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 2:
         return (
           <div>
             <DialogoBox  cor={mentor.cor} complete={() => setShowButton(true)} posicao={'20%'} tamanho={'50%'} dialogText={`${mentor.nome} já desenvolveu diversas pesquisas relacionadas aos projetos de SL e suas comunidades, e trabalhou em alguns projetos, fazendo contribuições importantes. ${mentor.nome} adora falar sobre esse universo para outras pessoas, e compartilhar o conhecimento que adquiriu ao longo dos anos.`} />
-            <Mentor  posicao={"10%"} img={"m1/imagem2"} />
-            {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} tamanho={450}/>}
+            <Personagem  posicao={"10%"} img={"m1/imagem2"} />
+            {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} tamanho={tamanhoP}/>}
           </div>)
       case 3:
         return (
           <div>
             <DialogoBox cor={personagem.cor} posicao={'5%'} tamanho={'30%'} complete={() => setShowButton(true)} dialogText={`Como ${personagem.nome} gostaria de aprender mais sobre os projetos de SL e ${mentor.nome} adora ensinar, elas combinaram um encontro para que ${mentor.nome} possa ajudar Personagem a entender mais desse mundo.`} />
-            <Personagem img={"p1/imagem5"} posicao={"10%"} tamanho={450} />
-            <Mentor img={"m1/imagem3"} posicao={"40%"} tamanho={450}/>
+            <Personagem img={"p1/imagem5"} posicao={"10%"} tamanho={tamanhoP} />
+            <Personagem img={"m1/imagem3"} posicao={"40%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleSetCoin(20, 5)} />}
             {showMessage && (
               <div className="ganhador-moedas">
@@ -205,8 +206,8 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"200px"} dialogText={`Olá ${personagem.nome}, como vai?`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"200px"} dialogText={"Estou ótima, e você como vai?"} posicao={"55%"} />
-            <Mentor img={"m1/imagem6"} posicao={"10%"} tamanho={450}/>
-            <Personagem className='inverter' img={"p1/imagem5"} posicao={'60%'} inverter={true} tamanho={450}/>
+            <Personagem img={"m1/imagem6"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem className='inverter' img={"p1/imagem5"} posicao={'60%'} inverter={true} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 5:
@@ -214,8 +215,8 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox complete={() => setShowButton(true)} cor={mentor.cor} tamanho={"300px"} dialogText={"Muito bem. Está pronta para começarmos a nossa jornada em busca do conhecimento?"} />
             <DialogoBox complete={() => setShowButton(true)} cor={personagem.cor} tamanho={"200px"} posicao={"55%"} dialogText={"Claro que sim, estou muito empolgada.\nEsse assunto me interessa muito"} />
-            <Mentor img={"m1/imagem6"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem6"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 6:
@@ -223,16 +224,16 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"300px"}  dialogText={"Eu também estou bem empolgada, falar sobre projetos de Software Livre para mim é muito legal"} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"300px"} posicao={"55%"} dialogText={"Que bom, pelo menos me ajudar não vai ser um problema tão grande para você."} />
-            <Mentor img={"m1/imagem6"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem6"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 7:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} dialogText={"Claro que não, mas vamos lá, primeiro vou te explicar como vai funcionar nosso encontro\n\nPronta para começar?"} />
-            <Mentor img={"m1/imagem6"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem5"} posicao={"40%"} inverter={true} tamanho={450}/>
+            <Personagem img={"m1/imagem6"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} posicao={"40%"} inverter={true} tamanho={tamanhoP}/>
             {showButton && <ConfirmationBox onYes={() => handleSetCoin(10,0)} onNo={() => {router.push(`/selectNivel?id=${id}`)}} />}
             {showMessage && (
               <div className="ganhador-moedas">
@@ -244,8 +245,8 @@ export default function Jogar({ data }) {
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} dialogText={"Vamos lá, nesse encontro vamos ver um cenário que ocorreu dentro de um projeto de SL.."} />
-            <Mentor img={"m1/imagem1"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem4"} posicao={"50%"} tamanho={450}/>
+            <Personagem img={"m1/imagem1"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem4"} posicao={"50%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 9:
@@ -253,16 +254,16 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} dialogText={"Mais especificamente, um problema que aconteceu, e foi resolvido pela comunidade, ok."} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"200px"} posicao={"55%"} dialogText={"Ok, legal!"} />
-            <Mentor img={"m1/imagem6"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem5"} posicao={"60%"} inverter={true} tamanho={450}/>
+            <Personagem img={"m1/imagem6"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} posicao={"60%"} inverter={true} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 10:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} dialogText={`O problema que vamos ver hoje ocorreu dentro do projeto ${data.dataDesafio.nomeProjeto} \nVocê já ouviu falar?`} />
-            <Mentor img={"m1/imagem6"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem5"} posicao={"60%"} inverter={true} tamanho={450}/>
+            <Personagem img={"m1/imagem6"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} posicao={"60%"} inverter={true} tamanho={tamanhoP}/>
             {showButton && <ConfirmationBox onYes={() => advancePag(2)} onNo={() => advancePag(1)} />}
           </div>)
       case 11:
@@ -270,8 +271,8 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} dialogText={`Está bem, vamos ver algumas informações sobre esse projeto`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"200px"} posicao={"55%"} dialogText={"Ok!"} />
-            <Mentor img={"m1/imagem1"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem1"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => advancePag(2)} />}
           </div>)
       case 12:
@@ -279,16 +280,16 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} dialogText={`Que bom, mas só parar relembrar, vamos algumas informações sobre esse projeto, ok.`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"200px"} posicao={"55%"} dialogText={"Ok!"} />
-            <Mentor img={"m1/imagem1"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem1"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 13:
         return (
           <div>
             <DialogoBox cor={mentor.cor} tamanho={'40%'} complete={() => setShowButton(true)} dialogText={`${data.dataDesafio.dadosProj}`} />
-            <Mentor img={"m1/imagem6"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem6"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 14:
@@ -296,30 +297,30 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"} dialogText={`Bom, acho que deu para ter uma ideia geral sobre o que se trata o projeto, certo? Agora vamos ver primeiro a parte conceitual do problema.`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"20%"} posicao={"55%"} dialogText={"Sim, está bem!"} />
-            <Mentor img={"m1/imagem6"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem5"} posicao={"60%"} inverter={true} tamanho={450}/>
+            <Personagem img={"m1/imagem6"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} posicao={"60%"} inverter={true} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 15:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"70%"} dialogText={`${data.dataDesafio.descProblema}`} />
-            <Mentor img={"m1/imagem1"} posicao={"10%"} tamanho={450}/>
+            <Personagem img={"m1/imagem1"} posicao={"10%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 16:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"20%"} dialogText={`Gostaria que eu repetisse as informações?`} />
-            <Mentor img={"m1/imagem6"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem3"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem6"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem3"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&   <ConfirmationBox onNo={() => advancePag(2)} onYes={() => handleNextPag()} />}
           </div>)
       case 17:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"70%"} dialogText={`Mentor: Está bem, vamos lá:\n${data.dataDesafio.descProblema}`} />
-            <Mentor img={"m1/imagem1"} posicao={"10%"} tamanho={450}/>
+            <Personagem img={"m1/imagem1"} posicao={"10%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 18:
@@ -327,16 +328,16 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"}  dialogText={`Agora vamos deixar as coisas mais claras, vamos ver como esse problema ocorreu na prática dentro do projeto ${data.dataDesafio.nomeProjeto}`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"20%"} posicao={"55%"} dialogText={"Ok, vamos lá!"} />
-            <Mentor img={"m1/imagem1"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem5"} posicao={"60%"} inverter={true} tamanho={450}/>
+            <Personagem img={"m1/imagem1"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} posicao={"60%"} inverter={true} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 19:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"40%"} dialogText={`${data.dataDesafio.contextoProblema}`} />
-            <Mentor img={"m1/imagem6"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem6"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 20:
@@ -344,16 +345,16 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"30%"} dialogText={`Para te ajudar eu tenho um material complementar sobre esse problema, que tal dar uma olhada e tentar entender melhor?`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={"55%"} tamanho={"10%"} dialogText={"Ok, vamos lá!"} />
-            <Mentor img={"m1/imagem6"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem6"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&<ConfirmationBox onYes={() => handleNextPag()} onNo={() => advancePag(2)} />}
           </div>)
       case 21:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"} dialogText={`Quando quiser podemos dar continuidade.`} />
-            <Mentor img={"m1/imagem3"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem3"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem3"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem3"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton && (
               <ConfirmationBox link={data.dataDesafio.materialComplementar} onYes={handleNextPag} texto1={'Pronto'} posicaoY={'20%'}/>
             )}
@@ -362,8 +363,8 @@ export default function Jogar({ data }) {
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={'30%'} dialogText={`Então podemos continuar, já vimos o problema de uma forma genérica e vimos como ele ocorreu dentro do projeto ${data.dataDesafio.materialComplementar}, mas como esse problema foi solucionado pela comunidade?`} />
-            <Mentor img={"m1/imagem1"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem1"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 23:
@@ -371,16 +372,16 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"20%"} dialogText={`Vamos ver isso agora!`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={"55%"} tamanho={"10%"} dialogText={`Vamos lá!!`} />
-            <Mentor img={"m1/imagem6"} posicao={"10%"}  tamanho={450}/>
-            <Personagem img={"p1/imagem5"} inverter={true} posicao={"60%"}  tamanho={450}/>
+            <Personagem img={"m1/imagem6"} posicao={"10%"}  tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} inverter={true} posicao={"60%"}  tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 24:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"70%"} dialogText={`${data.dataDesafio.solucao}`} />
-            <Mentor img={"m1/imagem1"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem1"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 25:
@@ -388,16 +389,16 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"} dialogText={`Mas agora eu tenho um desafio para você, não achou que ia ser só ficar me ouvindo né.`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={"55%"} tamanho={"10%"} dialogText={`Ok!`} />
-            <Mentor img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem5"} inverter={true} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} inverter={true} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>) 
       case 26:
         return (
           <div>
             <DialogoBox cor={mentor.cor}  complete={() => setShowButton(true)} posicao={"10%"} tamanho={"30%"} dialogText={`Já te disse como resolveram o problema, agora você deve organizar as etapas da solução.`} />
-            <Mentor img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem3"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem3"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 27:
@@ -414,17 +415,17 @@ export default function Jogar({ data }) {
         return (
           <div>
           <DialogoBox cor={mentor.cor}  complete={() => setShowButton(true)} posicao={"5%"} tamanho={"30%"} dialogText={`Infelizmente você teve suas três tentativas e sua resposta não está correta, mas o importante é tentar.`} />         
-          <Mentor img={"m1/imagem6"} posicao={"10%"} tamanho={450}/>
-          <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={450}/>
+          <Personagem img={"m1/imagem6"} posicao={"10%"} tamanho={tamanhoP}/>
+          <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={tamanhoP}/>
           {showButton &&  <ButtonAdvance buttonClick={() => advancePag(2)} />}          
         </div>)
       case 30:
         return (
           <div>
           <DialogoBox cor={mentor.cor}  complete={() => setShowButton(true)} posicao={"5%"} tamanho={"30%"} dialogText={`Desiste não, na próxima tu acerta.`} />         
-          <Mentor img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={450}/>
-          <Personagem img={"p1/imagem4"} posicao={"30%"} tamanho={450}/>
-          {showButton &&<ConfirmationBox texto1={'Reiniciar'} texto2={'Sair'} onYes={() => handleResetGame()} onNo={() => {router.push('/menu')}} />}       
+          <Personagem img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={tamanhoP}/>
+          <Personagem img={"p1/imagem4"} posicao={"30%"} tamanho={tamanhoP}/>
+          {showButton &&<ConfirmationBox texto1={'Reiniciar'} texto2={'Sair'} onYes={() => handleResetGame()} onNo={() => {router.push('/')}} />}       
         </div>)
       case 31:
         return (
@@ -438,8 +439,8 @@ export default function Jogar({ data }) {
           <div>
             <Loading texto={'Savando informações'}/>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`Isso ai, parabéns, sua resposta está correta.`} />
-            <Mentor img={"m1/imagem1"} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem1"} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem4"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 33:
@@ -447,8 +448,8 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`Vou ter mostrar novamente como ficam as estapas organizadas da forma correta.`} />
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"40%"} tamanho={"40%"} dialogText={`${data.dataDesafio.etapasSolucao}`} />
-            <Mentor img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem5"} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 34:
@@ -456,40 +457,40 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"20%"} dialogText={`Vamos prosseguir, vou te mostra quais os impactos que a resolução desse tipo de problema pode ter no projeto`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={"55%"} tamanho={"20%"} dialogText={`Está bem, vamos lá`} />
-            <Mentor img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem5"} inverter={true} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} inverter={true} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 35:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"70%"} dialogText={`${data.dataDesafio.resultado}`} />
-            <Mentor img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem5"} inverter={true} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} inverter={true} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} />}          
           </div>)
       case 36:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)}  tamanho={"20%"} dialogText={`E ai, o que achou? Conseguiu aprender algo no nosso encontro?`} />
-            <Mentor img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem5"} inverter={true} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} inverter={true} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ConfirmationBox onYes={() => handleButtonClick()} onNo={() => advancePag(2)} />}          
           </div>)
       case 37:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"} dialogText={`Que legal, fico muito feliz em estar te ajudando nessa caminhada.`} />
-            <Mentor img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem5"} inverter={true} posicao={"20%"} tamanho={450}/>
+            <Personagem img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} inverter={true} posicao={"20%"} tamanho={tamanhoP}/>
             {showButton &&  <ConfirmationBox texto1={'Refazer'} texto2={'Sair'} onYes={() => handleResetGame()} onNo={() => advancePag(2)} />}          
           </div>)
       case 38:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"70%"} dialogText={`E ai, o que achou? Conseguiu aprender algo no nosso encontro?`} />
-            <Mentor img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={450}/>
-            <Personagem img={"p1/imagem5"} inverter={true} posicao={"60%"} tamanho={450}/>
+            <Personagem img={"m1/imagem3"} inverter={true} posicao={"10%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem5"} inverter={true} posicao={"60%"} tamanho={tamanhoP}/>
             {showButton &&  <ConfirmationBox onYes={handleNextPag} onNo={advancePag(2)} />}          
           </div>)
 
@@ -506,6 +507,7 @@ export default function Jogar({ data }) {
         <CoinsXP coin={info.pontos} xp={info.xp}/>
         {renderPag()}
         <BarradeProgresso total={38} atual={pag}/>
+        <HomeButton/>
       </Layout>
     </div>
   );
