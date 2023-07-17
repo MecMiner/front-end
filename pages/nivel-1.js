@@ -32,7 +32,7 @@ export default function Jogar({ data }) {
   const mentor = config.mentor;
   const router = useRouter();
   const { id } = router.query;
-  const [pag, setPag] = useState(25);
+  const [pag, setPag] = useState(1);
   const [usouDica, setUsouDica] = useState(false);
 
 
