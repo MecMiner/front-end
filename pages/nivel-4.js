@@ -30,11 +30,11 @@ export default function Jogar({ data }) {
   const [checkBanco, setCheckBanco] = useState(false);
   const [isSave, setIsSave] = useState(false);
   const tamanho = 430;
-
+/* 
   useEffect(() => {
     console.log(JSON.stringify(info));
   }, [info]);
-
+ */
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem('token');
@@ -54,9 +54,9 @@ export default function Jogar({ data }) {
           const dados = await response.json();
 
           if (response.ok) {
-            console.log('Dados recuperados:', dados);
-
-            if (dados.response.pontos >= 50) {
+/*             console.log('Dados recuperados:', dados);
+ */
+            if (dados.response.pontos > 2) {
               if (!dados.response.statusNivel4.jogou) {
                 setInfo(prevInfo => ({ ...prevInfo, pontos: dados.response.pontos }));
                 setInfo(prevInfo => ({ ...prevInfo, xp: dados.response.xp }));
@@ -98,7 +98,7 @@ export default function Jogar({ data }) {
                 }
               }
             } else {
-              console.log("Você não tem pontos para esse nível")
+              router.push('/');
             }
           } else {
             router.push('/');

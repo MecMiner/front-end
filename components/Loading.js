@@ -31,7 +31,7 @@ const Loading = ({texto, infinite}) => {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                background-color: rgba(255, 255, 255, 0.942); /* Define um fundo semi-transparente */
+                background-color: rgba(255, 255, 255, 1); /* Define um fundo semi-transparente */
                 z-index: 9999; /* Certifique-se de que o loading fique acima dos outros elementos */
               }
               

@@ -18,11 +18,8 @@ import BarradeProgresso from '@/components/BarradeProgresso';
 
 export default function Jogar({ data }) {
   const apiUrl = config.apiUrl;
-  const fraseGrande = data.dataDesafio.etapasSolucao
-  const linhas = fraseGrande.split('\r\n');
   const [showMessage, setShowMessage] = useState(false);
   const [animationEnded, setAnimationEnded] = useState(false);
-  const [usouDica, setUsouDica] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [info, setInfo] = useState({});
   const personagem = config.personagem;
@@ -33,11 +30,13 @@ export default function Jogar({ data }) {
   const [checkBanco, setCheckBanco] = useState(false);
   const [showDicaProfessor, setShowDicaProfessor] = useState(false);
   const [showDicaColega, setShowDicaColega] = useState(false);
+  const [usouDicaProfessor, setUsouDicaProfessor] = useState(false);
+  const [usouDicaColega, setUsouDicaColega] = useState(false);
   const tamanho = 430;
 
-  useEffect(() => {
+/*   useEffect(() => {
     console.log(JSON.stringify(info));
-  }, [info]);
+  }, [info]); */
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,9 +57,9 @@ export default function Jogar({ data }) {
           const dados = await response.json();
 
           if (response.ok) {
-            console.log('Dados recuperados:', dados);
+/*             console.log('Dados recuperados:', dados); */
 
-            if (dados.response.pontos >= 50) {
+            if (dados.response.nivel > 1) {
               if (!dados.response.statusNivel3.jogou) {
                 setInfo(prevInfo => ({ ...prevInfo, pontos: dados.response.pontos }));
                 setInfo(prevInfo => ({ ...prevInfo, xp: dados.response.xp }));
@@ -102,7 +101,7 @@ export default function Jogar({ data }) {
                 }
               }
             } else {
-              console.log("Você não tem pontos para esse nível")
+              router.push('/');
             }
           } else {
             router.push('/');
@@ -206,7 +205,7 @@ export default function Jogar({ data }) {
         body: JSON.stringify(info),
       })
       if (response.ok) {
-        console.log('Valores inseridos no banco');
+    /*     console.log('Valores inseridos no banco'); */
         handleNextPag();
       }
     } catch (error) {
@@ -223,14 +222,21 @@ export default function Jogar({ data }) {
   }
 
   const exibirDica = (professor) => {
-    setUsouDica(true);
     if (professor) {
+      if (!usouDicaProfessor){
+        setInfo(prevState => ({ ...prevState, pontos: prevState.pontos - 10 }));
+        setUsouDicaProfessor(true)
+      }
       setShowDicaProfessor(true);
       setTimeout(() => {
         setShowDicaProfessor(false);
         setAnimationEnded(true);
       }, 5000);
     } else {
+      if (!usouDicaColega){
+        setInfo(prevState => ({ ...prevState, pontos: prevState.pontos - 5 }));
+        setUsouDicaColega(true)
+      }
       setShowDicaColega(true);
       setTimeout(() => {
         setShowDicaColega(false);
@@ -304,7 +310,7 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={personagem.cor} posicao={'5%'} tamanho={'30%'} complete={() => setShowButton(true)} dialogText={`${personagem.nome} precisa da ajuda de ${mentor.nome} novamente, e marcaram um encontro para falar sobre os projetos de SL.`} />
             <Personagem img={"p3/imagem1"} tamanho={tamanho} posicao={"40%"} />
-            <Personagem img={"m3/imagem8"} tamanho={tamanho} posicao={"10%"} />
+            <Personagem img={"m3/imagem3"} tamanho={tamanho} posicao={"10%"} />
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 4:
@@ -312,7 +318,7 @@ export default function Jogar({ data }) {
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"200px"} dialogText={`E ai, ${personagem.nome}, como vai?`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"200px"} dialogText={"Estou bem, e você, como vai?"} posicao={"50%"} />
-            <Personagem img={"m3/imagem8"} tamanho={tamanho} posicao={"10%"} />
+            <Personagem img={"m3/imagem3"} tamanho={tamanho} posicao={"10%"} />
             <Personagem tamanho={tamanho} img={"p3/imagem5"} posicao={'60%'} inverter={true} />
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
@@ -320,7 +326,7 @@ export default function Jogar({ data }) {
         return (
           <div>
             <DialogoBox complete={() => setShowButton(true)} cor={mentor.cor} tamanho={"300px"} dialogText={"Estou ótima, pronta para mais um desafio?"} />
-            <Personagem img={"m3/imagem8"} tamanho={tamanho} posicao={"10%"} />
+            <Personagem img={"m3/imagem3"} tamanho={tamanho} posicao={"10%"} />
             <Personagem img={"p3/imagem4"} tamanho={tamanho} posicao={"50%"} />
             {showButton && <ConfirmationBox onYes={() => handleSetCoin(10, 0)} onNo={() => { router.push('/') }} />}
             {showMessage && (
@@ -344,7 +350,7 @@ export default function Jogar({ data }) {
 algumas informações
 sobre esse projeto.`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={'55%'} tamanho={'10%'} dialogText={'Ok!'} />
-            <Personagem img={"m3/imagem8"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem3"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p3/imagem2"} posicao={"60%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => advancePag(2)} />}
 
@@ -356,7 +362,7 @@ sobre esse projeto.`} />
 vamos apenas
 relembrar, Ok.`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={'60%'} tamanho={'10%'} dialogText={'Ok!'} />
-            <Personagem img={"m3/imagem8"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem3"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p3/imagem2"} posicao={"60%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
 
@@ -365,7 +371,7 @@ relembrar, Ok.`} />
         return (
           <div>
             <DialogoBox cor={mentor.cor} tamanho={'70%'} complete={() => setShowButton(true)} dialogText={`${data.dataDesafio.dadosProj}`} />
-            <Personagem img={"m3/imagem8"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem3"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p3/imagem4"} posicao={"60%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
@@ -378,7 +384,7 @@ vamos abordar, vamos
 ver primeiro a parte
 conceitual do problema.`} />
             <DialogoBox cor={personagem.cor} tamanho={'10%'} posicao={'55%'} complete={() => setShowButton(true)} dialogText={`Ok, está bem.`} />
-            <Personagem img={"m3/imagem8"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem3"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p3/imagem4"} posicao={"60%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
@@ -386,7 +392,7 @@ conceitual do problema.`} />
         return (
           <div>
             <DialogoBox cor={mentor.cor} tamanho={"60%"} complete={() => setShowButton(true)} dialogText={`${data.dataDesafio.descProblema}`} />
-            <Personagem img={"m3/imagem8"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem3"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p3/imagem3"} posicao={"60%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
@@ -410,7 +416,7 @@ conceitual do problema.`} />
         return (
           <div>
             <DialogoBox cor={mentor.cor} tamanho={"60%"} complete={() => setShowButton(true)} dialogText={`${data.dataDesafio.descProblema}`} />
-            <Personagem img={"m3/imagem8"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem3"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p3/imagem3"} posicao={"60%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)

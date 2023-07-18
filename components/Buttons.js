@@ -17,6 +17,7 @@ const Button = ({ onYes, onNo, texto1, texto2, posicaoX, posicaoY, link, tamanho
           top: ${posicaoY ? posicaoY : '50%'};
           right: ${posicaoX ? posicaoX : '10%'};
           transform: translateX(-50%);
+          z-index: 9999;
         }
         
         .buttons {

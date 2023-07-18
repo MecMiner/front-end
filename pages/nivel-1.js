@@ -136,7 +136,7 @@ export default function Jogar({ data }) {
       advancePag(4);
     }
     if(errado){
-      handleNextPag();
+      setPag(28);
     }
   }
 
@@ -199,8 +199,8 @@ export default function Jogar({ data }) {
         return (
           <div>
             <DialogoBox cor={personagem.cor} posicao={'5%'} tamanho={'40%'} complete={() => setShowButton(true)} dialogText={`Como ${personagem.nome} gostaria de aprender mais sobre os projetos de SL e ${mentor.nome} adora ensinar, elas combinaram um encontro para que ${mentor.nome} possa ajudar Personagem a entender mais desse mundo.`} />
-            <Personagem img={"p1/imagem5"} posicao={"10%"} tamanho={tamanhoP} />
-            <Personagem img={"m1/imagem3"} posicao={"40%"} tamanho={tamanhoP}/>
+            <Personagem img={"p1/imagem2"} posicao={"10%"} tamanho={tamanhoP} />
+            <Personagem img={"m1/imagem1"} posicao={"40%"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleSetCoin(20, 5)} />}
             {showMessage && (
               <div className="ganhador-moedas">

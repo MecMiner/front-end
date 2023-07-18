@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Button from './Buttons';
 
-const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica, onFailed }) => {
+const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
     const [frases, setFrases] = useState([]);
     const [frasesOrdenadas, setFrasesOrdenadas] = useState([]);
     const [ordemCorreta, setOrdemCorreta] = useState([]);
@@ -124,9 +125,7 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica, onFailed }) => {
                 {erroMsg && (
                     <p className="erro-message">Ops! A ordem está incorreta. Tente novamente.</p>
                 )}
-                <button className="dica-button" onClick={handleExibirDica}>
-                    <Image src={'/src/dica.svg'} alt="Dica do professor" width={40} height={40} />
-                </button>
+                <Button onYes={()=>handleExibirDica()} texto1={'Dica do Professor'} posicaoY={'80%'} posicaoX={'-10%'}/>
             </div>
 
             <style jsx>{`
