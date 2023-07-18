@@ -1,14 +1,30 @@
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 
-const Desempenho = ({des, col}) => {
+const Desempenho = ({ des, col }) => {
   return (
     <div className="container">
       <div className="imagesContainer">
-        <img src={`src/personagens/${des}Desempenho.png`} alt="Imagem 1" />
-        {col && <img src={`src/personagens/colaboracao.png`} alt="Imagem 1" />}
+        <Image
+          style={{margin: '0 50px'}}
+          src={`/src/personagens/${des}Desempenho.png`}
+          width={280}
+          height={280}
+          alt={des}
+          priority
+        />
+        {col &&
+          <Image
+            style={{margin: '0 50px'}}
+            src={`/src/personagens/colaboracao.png`}
+            width={280}
+            height={280}
+            alt={`colaboracao`}
+            priority
+          />
+        }
       </div>
-      <p className="texto">{`Parabéns, você teve um ${des} Desempenho`}</p>
+      <p className="texto">{`Parabéns, você recebeu um Badge de ${des} Desempenho`}</p>
       {col && <p className="texto">{`E um badge de colaboração`}</p>}
 
       <style jsx>{`
@@ -22,10 +38,6 @@ const Desempenho = ({des, col}) => {
         .imagesContainer {
           display: flex;
           justify-content: center;
-        }
-
-        .imagesContainer img {
-          margin: 0 10px;
         }
 
         .texto {

@@ -5,7 +5,7 @@ const MyHead = () => (
             <Head>
                 <meta charSet="utf-8"/>
                 <meta name="robots" content="index, follow"/>
-                <title>Game - Pass</title>
+                <title>Worked Examples Gamificados</title>
             </Head>
         </div>
 );

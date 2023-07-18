@@ -12,7 +12,7 @@ const CheckUser = ({onFunction}) => {
     
         // Se o token não estiver presente, redirecione para a página de login
         if (!token) {
-          router.push('/');
+          router.push('/login');
         } else {
           // Verifique a validade do token no servidor
           fetch(`${apiUrl}/verify-token`, {
@@ -27,21 +27,23 @@ const CheckUser = ({onFunction}) => {
               
               if (data.valid) {
                 // Token válido, continue com o fluxo normal
-                if(router.asPath === '/'){
-                  router.push('/menu');
+                if(router.asPath === '/login'){
+                  router.push('/');
                 }
+                onFunction();
               } else {
                 // Token inválido, redirecione para a página de login
-                router.push('/');
+                router.push('/login');
               }
             })
             .catch((error) => {
               console.error('Erro ao verificar o token:', error);
               // Em caso de erro na verificação do token, redirecione para a página de login
               router.push('/');
+              
             });
         }
-        onFunction();
+       
       }, []);
 
 

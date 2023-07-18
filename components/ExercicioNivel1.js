@@ -89,9 +89,10 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica, onFailed }) => {
 
     return (
         <div className="sorting-game-container">
+            <p>Para ordenar basta clicar nas etapas, que elas serão passadas para o quadro ao lado.</p>
             <div className='quadros-frases'>
                 <div>
-                    <h2>Ordene as estapas:</h2>
+                    <h2>Etapas desordenadas:</h2>
                     <div className="frases-container">
                         <ul className="frases-lista">
                             {frases.map((frase, index) => (
