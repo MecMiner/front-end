@@ -6,7 +6,7 @@ const Personagem = ({img, posicao, inverter, tamanho}) => {
     <div className="personagem">
         <Image
               className={`${inverter ? 'inverter' : ''}`}
-              src ={`/src/personagens/${img}.svg`}
+              src ={`/src/personagens/${img}.png`}
               width={tamanho? tamanho : 380}
               height={tamanho? tamanho: 380}
               alt="persongem"
