@@ -247,20 +247,14 @@ export default function Jogar({ data }) {
       case 1:
         return (
           <div>
-            <DialogoBox cor={personagem.cor} tamanho={'40%'} complete={() => setShowButton(true)} dialogText={`${personagem.nome} trabalha na mesma empresa de software
-há mais de 18 anos, e possui uma vasta experiência. No
-entanto, está tentando um emprego em uma grande
-fundação de código aberto, e para conseguir a vaga
-precisa se aprofundar mais no mundo dos projetos de
-SL.`} />
+            <DialogoBox cor={personagem.cor} tamanho={'40%'} complete={() => setShowButton(true)} dialogText={`${personagem.nome} trabalha na mesma empresa de software há mais de 18 anos, e possui uma vasta experiência. No entanto, está tentando um emprego em uma grande fundação de código aberto, e para conseguir a vaga precisa se aprofundar mais no mundo dos projetos de SL.`} />
             <Personagem img={'p4/imagem5'} tamanho={tamanho} posicao={'10%'} />
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 2:
         return (
           <div>
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={'10%'} tamanho={'50%'} dialogText={`${mentor.nome} está de volta para ajudá-la nessa
-missão.`} />
+            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={'10%'} tamanho={'50%'} dialogText={`${mentor.nome} está de volta para ajudá-la nessa missão.`} />
             <Personagem posicao={"60%"} tamanho={tamanho} img={"m4/imagem3"} />
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
