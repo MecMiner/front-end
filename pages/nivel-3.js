@@ -434,8 +434,8 @@ no projeto ${data.dataDesafio.nomeProjeto}.`} />
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"70%"} posicao={"10%"} dialogText={`${data.dataDesafio.contextoProblema}`} />
-            <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"70%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem5"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem3"} posicao={"70%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 17:
@@ -443,8 +443,8 @@ no projeto ${data.dataDesafio.nomeProjeto}.`} />
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"20%"} dialogText={`Conseguiu
 entender até aqui?`} />
-            <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"60%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem2"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem5"} posicao={"60%"} tamanho={tamanho}/>
             {showButton && <ConfirmationBox onYes={() => advancePag(3)} onNo={() => handleButtonClick()} />}
           </div>)
       case 18:
@@ -452,8 +452,8 @@ entender até aqui?`} />
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"}  dialogText={`Para te ajudar eu tenho um material complementar sobre esse problema, que tal dar uma olhada e tentar entender melhor?`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"20%"} posicao={"55%"} dialogText={"Ok, vamos lá!"} />
-            <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"60%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem3"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem5"} posicao={"60%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 19:
@@ -470,8 +470,8 @@ entender até aqui?`} />
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"40%"} dialogText={`Então vamos continuar, já vimos o problema de uma forma genérica e vimos como ele ocorreu dentro do projeto do ${data.dataDesafio.nomeProjeto}, mas o que foi feito pelos contribuidores do projeto para solucionar o problema?`} />
-            <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"60%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem2"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem3"} posicao={"60%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 21:
@@ -479,8 +479,8 @@ entender até aqui?`} />
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"} dialogText={`Vamos ver isso agora!`} />
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"10%"} posicao={"55%"} dialogText={`Vamos lá!`} />
-            <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"60%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem3"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem5"} posicao={"60%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
 
           </div>)
@@ -498,16 +498,16 @@ entender até aqui?`} />
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"} dialogText={`Já te disse como resolveram o problema,
 agora você deve criar as etapas de
 solução. Seja o mais detalhista possível.`} />
-            <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"60%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem2"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem3"} posicao={"60%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 24:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"20%"} dialogText={`Você pode solicitar uma dica, caso seja necessário.`} />
-            <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"60%"} tamanho={tamanho}/>
+            <Personagem img={"m3/imagem5"} posicao={"10%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem3"} posicao={"60%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 25:
