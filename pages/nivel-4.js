@@ -66,7 +66,8 @@ export default function Jogar({ data }) {
                     jogou: true,
                     corrigido: false,
                     certo: false,
-                    erros: 0
+                    erros: 0,
+                    feedback: ""
                   };
 
                   return {
@@ -137,7 +138,8 @@ export default function Jogar({ data }) {
         jogou: false,
         corrigido: false,
         certo: false,
-        erros: 0
+        erros: 0,
+        feedback: info.statusNivel2.feedback,
       };
 
       return {
@@ -181,7 +183,8 @@ export default function Jogar({ data }) {
         jogou: info.statusNivel4.jogou,
         corrigido: false,
         certo: false,
-        erros: info.statusNivel4.erros
+        erros: info.statusNivel4.erros,
+        feedback: info.statusNivel2.feedback
       };
 
       return {
