@@ -44,7 +44,7 @@ const CoinsXP = ({coin, xp}) => {
 
         .fill {
           height: 100%;
-          width: ${xp}%;
+          width: ${xp >= 100? 100: xp}%;
           background-color: #ffc107;
           transition: width 0.3s ease;
         }

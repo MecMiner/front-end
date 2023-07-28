@@ -184,7 +184,7 @@ export default function Jogar({ data }) {
         corrigido: false,
         certo: false,
         erros: info.statusNivel4.erros,
-        feedback: info.statusNivel2.feedback
+        feedback: info.statusNivel4.feedback
       };
 
       return {
@@ -403,7 +403,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <Personagem img={"m4/imagem7"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p4/imagem2"} posicao={"40%"} tamanho={tamanho}/>
             {info.statusNivel4.corrigido && !info.statusNivel4.certo && info.statusNivel4.erros < 3 && (
-              <ConfirmationBox posicaoY={'70%'} posicaoX={'20%'} texto1={'Refazer'} texto2={'Reiniciar'} onYes={handleErrorGame} onNo={handleResetGame} />
+              <ConfirmationBox texto={info.statusNivel4.feedback} posicaoY={'70%'} posicaoX={'20%'} texto1={'Refazer'} texto2={'Reiniciar'} onYes={handleErrorGame} onNo={handleResetGame} />
             )}
             {info.statusNivel4.corrigido && !info.statusNivel4.certo && info.statusNivel4.erros == 3 && (
               <ButtonAdvance buttonClick={() => handleButtonClick()} />

@@ -16,8 +16,7 @@ import HomeButton from '@/components/HomeButton';
 import Button from '@/components/Buttons';
 
 
-export default function Jogar() {
-  const [data, setData] = useState();
+export default function Jogar({data}) {
   const tamanhoP = 400;
   const apiUrl = config.apiUrl;
   const fraseGrande = data?.dataDesafio?.etapasSolucao || " "
@@ -41,11 +40,7 @@ export default function Jogar() {
 
 
   useEffect(() => {
-    const fecthDesafio = async () => {
-      const response = await fetch(`${apiUrl}/desafio1/${id}`);
-      const dados = await response.json();
-      setData(dados);
-    }
+
 
     const fetchData = async () => {
       const token = localStorage.getItem('token');
@@ -81,7 +76,6 @@ export default function Jogar() {
     };
   
     fetchData();
-    fecthDesafio();
   }, [id]);
 
 
@@ -526,4 +520,12 @@ export default function Jogar() {
       </Layout>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const apiUrl = config.apiUrl
+  const { id } = context.query;
+  const response = await fetch(`${apiUrl}/desafio1/${id}`);
+  const data = await response.json();
+  return { props: { data } };
 }

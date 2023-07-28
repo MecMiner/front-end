@@ -1,8 +1,9 @@
 import React from 'react';
 
-const ConfirmationBox = ({ onYes, onNo, texto1, texto2, posicaoX, posicaoY, link, tamanho, textoLink }) => {
+const ConfirmationBox = ({ onYes, onNo, texto1, texto2, posicaoX, posicaoY, link, tamanho, textoLink, texto }) => {
   return (
     <div className="confirmation-box">
+        {texto && <p className="texto">{texto}</p>}
         {link && (
           <a href={link} target="_blank">{textoLink? textoLink: link}</a>
         )}  
@@ -24,6 +25,11 @@ const ConfirmationBox = ({ onYes, onNo, texto1, texto2, posicaoX, posicaoY, link
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
+        .texto {
+          font-size: 16px;
+          margin-bottom: 10px;
+        }
+
         .buttons {
           margin-top: 10px;
         }

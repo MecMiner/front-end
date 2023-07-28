@@ -26,7 +26,7 @@ export default function Jogar({ data }) {
   const mentor = config.mentor;
   const router = useRouter();
   const { id } = router.query;
-  const [pag, setPag] = useState(1);
+  const [pag, setPag] = useState(24);
   const [checkBanco, setCheckBanco] = useState(false);
   const [showDicaProfessor, setShowDicaProfessor] = useState(false);
   const [showDicaColega, setShowDicaColega] = useState(false);
@@ -166,7 +166,7 @@ export default function Jogar({ data }) {
         corrigido: false,
         certo: false,
         erros: info.statusNivel3.erros,
-        feedback: info.statusNivel2.feedback,
+        feedback: info.statusNivel3.feedback,
       };
 
       return {
@@ -256,7 +256,7 @@ export default function Jogar({ data }) {
         corrigido: false,
         certo: false,
         erros: 0,
-        feedback: info.statusNivel2.feedback,
+        feedback: info.statusNivel3.feedback,
       };
 
       return {
@@ -558,7 +558,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p3/imagem2"} posicao={"40%"} tamanho={tamanho}/>
             {info.statusNivel3.corrigido && !info.statusNivel3.certo && info.statusNivel3.erros < 3 && (
-              <ConfirmationBox posicaoY={'70%'} posicaoX={'20%'} texto1={'Refazer'} texto2={'Reiniciar'} onYes={handleErrorGame} onNo={handleResetGame} />
+              <ConfirmationBox texto={info.statusNivel3.feedback} posicaoY={'70%'} posicaoX={'20%'} texto1={'Refazer'} texto2={'Reiniciar'} onYes={handleErrorGame} onNo={handleResetGame} />
             )}
             {info.statusNivel3.corrigido && !info.statusNivel3.certo && info.statusNivel3.erros == 3 && (
               <ButtonAdvance buttonClick={() => handleButtonClick()} />

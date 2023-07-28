@@ -11,6 +11,7 @@ const Personagem = ({img, posicao, inverter, tamanho}) => {
               height={tamanho? tamanho: 380}
               alt="persongem"
               priority
+              loading="eager"
             />
         <style jsx>{`
           .personagem {

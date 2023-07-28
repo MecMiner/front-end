@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Button from './Buttons';
 
 const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
@@ -10,6 +9,22 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
     const [erroMsg, setErroMsg] = useState(false);
     const [tentativaOne, setTentativaOne] = useState(false);
     const [tentativaTwo, setTentativaTwo] = useState(false);
+    const [tempoRestante, setTempoRestante] = useState(180); // 3 minutos (em segundos)
+    const [jogoEmAndamento, setJogoEmAndamento] = useState(true);
+
+
+    useEffect(() => {
+        if (jogoEmAndamento && tempoRestante > 0) {
+            const timer = setInterval(() => {
+                setTempoRestante((prevTempo) => prevTempo - 1);
+            }, 1000);
+            return () => clearInterval(timer);
+        } else if (tempoRestante === 0) {
+            // Se o tempo acabar, marque o jogo como encerrado e verifique a ordem
+            setJogoEmAndamento(false);
+            handleVerificarOrdem();
+        }
+    }, [jogoEmAndamento, tempoRestante]);
 
 
     useEffect(() => {
@@ -66,7 +81,8 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
                 reiniciarJogo();
             } else {
                 if(!tentativaTwo){
-                    setTentativaTwo(true)
+                    setTentativaTwo(true);
+                    setErroMsg(true)
                     reiniciarJogo();
                 } else {
                     onSuccess(0,0,false,false,true);
@@ -77,13 +93,17 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
     };
 
     const reiniciarJogo = () => {
+        setTempoRestante(180); // Reiniciar o tempo para 3 minutos
         setFrases(shuffleArray(frasesIniciais));
         setFrasesOrdenadas([]);
         setVerificar(false);
+        setErroMsg(false);
+        setJogoEmAndamento(true); // Marcar o jogo como em andamento novamente
     };
 
     const handleExibirDica = () => {
-        reiniciarJogo();
+        setFrases(shuffleArray(frasesIniciais));
+        setFrasesOrdenadas([]);
         dica();
     };
 
@@ -119,13 +139,15 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
 
                 </div>
             </div>
-
+            <div className="tempo-restante">
+                Tempo restante: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
+            </div>
             <div className="actions-container">
                 <button onClick={handleVerificarOrdem}>Conferir</button>
                 {erroMsg && (
                     <p className="erro-message">Ops! A ordem está incorreta. Tente novamente.</p>
                 )}
-                <Button onYes={()=>handleExibirDica()} texto1={'Dica do Professor'} posicaoY={'80%'} posicaoX={'-10%'}/>
+                <Button onYes={()=>handleExibirDica()} texto1={'Dica do Professor'} posicaoY={'90%'} posicaoX={'-10%'}/>
             </div>
 
             <style jsx>{`
@@ -216,6 +238,11 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
       .dica-button:hover {
         transform: scale(2.0);
       }
+      .tempo-restante {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        }
     `}</style>
         </div>
     );

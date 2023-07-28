@@ -6,6 +6,22 @@ function CompleteAsEtapa3({onSucess, setInfo}) {
   const [etapa3, setEtapa3] = useState('');
   const [etapa4, setEtapa4] = useState('');
 
+  const [tempoRestante, setTempoRestante] = useState(600); // 3 minutos (em segundos)
+  const [jogoEmAndamento, setJogoEmAndamento] = useState(true);
+
+  useEffect(() => {
+    if (jogoEmAndamento && tempoRestante > 0) {
+        const timer = setInterval(() => {
+            setTempoRestante((prevTempo) => prevTempo - 1);
+        }, 1000);
+        return () => clearInterval(timer);
+    } else if (tempoRestante === 0) {
+        // Se o tempo acabar, marque o jogo como encerrado e verifique a ordem
+        setJogoEmAndamento(false);
+        onSucess();
+    }
+  }, [jogoEmAndamento, tempoRestante]);
+
   useEffect(() =>{
     setInfo('Etapa 1: ' + etapa1 + '\nEtapa 2: ' + etapa2 + '\nEtapa 3: ' + etapa3 + '\nEtapa 4: ' + etapa4);
   },[etapa1, etapa2 , etapa3, etapa4]);
@@ -75,6 +91,9 @@ function CompleteAsEtapa3({onSucess, setInfo}) {
           />
         </div>
         <button type="submit" className="button">Enviar</button>
+        <div className="tempo-restante">
+                Tempo restante: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
+          </div>
       </form>
       <style jsx>{`
         .complete-as-etapa {
@@ -140,6 +159,11 @@ function CompleteAsEtapa3({onSucess, setInfo}) {
           .button:hover {
             background-color: #ffac33;
           }
+          .tempo-restante {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            }
           
       `}</style>
     </div>
