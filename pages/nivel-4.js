@@ -14,6 +14,7 @@ import Button from '@/components/Buttons';
 import ExercicioNivel4 from '@/components/ExercicioNivel4';
 import BarradeProgresso from '@/components/BarradeProgresso';
 import HomeButton from '@/components/HomeButton';
+import InfoButton from '@/components/InfoButton';
 
 
 export default function Jogar({ data }) {
@@ -474,6 +475,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
         {renderPag()}
         <BarradeProgresso atual={pag} total={21}/>
       <HomeButton/>
+      <InfoButton/>
       </Layout>
     </div>
   );

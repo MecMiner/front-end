@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import CheckUser from '@/components/CheckUser';
 import Loading from '@/components/Loading';
 import config from '@/config';
+import Personagem from '@/components/Personagem';
+import DialogScreen from '@/components/DialogoBox';
 
 export default function Menu({ data }) {
   const [isLoad,setIsLoad] = useState(true);
@@ -24,6 +26,8 @@ export default function Menu({ data }) {
       <MyHead />
       <Layout>
         <CheckUser onFunction={() => setIsLoad(false)}/>
+        <Personagem img={'m1/imagem3'} posicao={'10%'}/>
+        <DialogScreen cor={config.mentor.cor} dialogText={'Olá, aqui você tem disponível alguns desafios, para iniciá-los, basta clicar sobre eles e eu te guiarei'} complete={() => ({})}/>
         {isLoad && <Loading/>}
           <div>
             {data.dataDesafio.map((item, index) => {
@@ -32,9 +36,8 @@ export default function Menu({ data }) {
               )
             })}  
           </div>
-          <div style={{position: 'absolute', top: '70%'}}>
-              <button className="btn-logout" style={{fontSize: '20px'}} onClick={() => handleLogout()}>Sair</button>
-          </div>  
+          <div className="close-button" onClick={() => handleLogout()}>Sair</div>
+
       </Layout>
       <style jsx>{`
         .btn-menu {
@@ -55,22 +58,21 @@ export default function Menu({ data }) {
             background-color: #154360;
           }
         }
-        .btn-logout {
-          padding: 2rem;
-          background-color: #c0392b;
-          color: #fff;
-          border: none;
-          border-radius: 10px;
+        .close-button {
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          font-size: 24px;
+          color: red;
           cursor: pointer;
-          transition: background-color 0.3s ease;
-          margin: 50px;
-        
+          transition: color 0.3s ease;
+          
           &:hover {
-            background-color: #ddd;
+            color: #ddd;
           }
-        
+          
           &:active {
-            background-color: #ddd;
+            color: #ddd;
           }
         }
       `}</style>

@@ -1,9 +1,17 @@
 import Image from 'next/image';
 import React from 'react';
 
-const CoinsXP = ({coin, xp}) => {
+const CoinsXP = ({coin, xp, colaboracao, otm, bom}) => {
     return (
         <div className="coins-xp-bar">
+      <div className='badges'>
+        <Image src={'/src/personagens/colaboracao.png'} width={30} height={30} alt='moeda' priority/>
+        <span className="value">{colaboracao ? colaboracao : ''}</span>
+        <Image src={'/src/personagens/bomDesempenho.png'} width={30} height={30} alt='moeda' priority/>
+        <span className="value">{otm ? otm : ''}</span>
+        <Image src={'/src/personagens/otimoDesempenho.png'} width={30} height={30} alt='moeda' priority/>
+        <span className="value">{bom ? bom : ''}</span>
+      </div>
       <div className="coin">
       <Image src={'/src/coin.png'} width={20} height={20} alt='moeda' priority/>
         <span className="value">{coin} Moedas</span>
@@ -33,6 +41,12 @@ const CoinsXP = ({coin, xp}) => {
           width: 20px;
           height: 20px;
           margin-right: 5px;
+        }
+
+        .badges img {
+          flex-wrap: wrap;
+          width: 30px;
+          right: 30px;
         }
 
         .experience-bar {

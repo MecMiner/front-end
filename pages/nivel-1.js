@@ -14,6 +14,7 @@ import Loading from '@/components/Loading';
 import BarradeProgresso from '@/components/BarradeProgresso';
 import HomeButton from '@/components/HomeButton';
 import Button from '@/components/Buttons';
+import InfoButton from '@/components/InfoButton';
 
 
 export default function Jogar({data}) {
@@ -61,9 +62,10 @@ export default function Jogar({data}) {
   
           if (response.ok) {
             setInfo(dados.response);
-            setInfo(prevState => ({ ...prevState, bomDesempenho: false }));
-            setInfo(prevState => ({ ...prevState, otimoDesempenho: false }));
-            setInfo(prevState => ({ ...prevState, colaboracao: false }));
+           // setInfo(prevState => ({ ...prevState, bomDesempenho: false }));
+           // setInfo(prevState => ({ ...prevState, otimoDesempenho: false }));
+           // setInfo(prevState => ({ ...prevState, colaboracao: false }));
+            console.log(dados.response);
           } else {
             router.push('/');
             // Trate o erro de acordo com suas necessidades
@@ -513,10 +515,11 @@ export default function Jogar({data}) {
     <div>
       <MyHead />
       <Layout>
-        <CoinsXP coin={info.pontos} xp={info.xp}/>
+        <CoinsXP coin={info.pontos} xp={info.xp} bom={info.bomDesempenho} otm={info.otimoDesempenho} colaboracao={info.colaboracao}/>
         {renderPag()}
         <BarradeProgresso total={38} atual={pag}/>
         <HomeButton/>
+        <InfoButton/>
       </Layout>
     </div>
   );

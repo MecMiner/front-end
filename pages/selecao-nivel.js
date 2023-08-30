@@ -67,6 +67,8 @@ export default function Jogar() {
     <div>
       <MyHead/>
       <Layout>
+          <div className='select-level'>
+          <h1 style={{}}>Selecione um nível</h1>
           {isLoading && <Loading/>}
           <button className='circular-button circular-button-one' onClick={() => handleButtonClick('nivel-1')}>
             <Image
@@ -148,8 +150,24 @@ export default function Jogar() {
               />
             </button>
           )}
+      </div>
       <HomeButton />
-      </Layout>    
+      </Layout>  
+      <style jsx>{`
+      .select-level {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        top: 10%;
+        font-size: 30;
+        margin-bottom: 10px;
+      }
+      `}</style>
+
     </div>
   );
 }

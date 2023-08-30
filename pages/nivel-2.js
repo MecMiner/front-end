@@ -15,6 +15,7 @@ import AvaliacaoStar from '@/components/AvaliacaoStar';
 import Button from '@/components/Buttons';
 import HomeButton from '@/components/HomeButton';
 import BarradeProgresso from '@/components/BarradeProgresso';
+import InfoButton from '@/components/InfoButton';
 
 
 export default function Jogar({ data }) {
@@ -535,7 +536,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             {info.statusNivel2.corrigido && !info.statusNivel2.certo && info.statusNivel2.erros == 3 && (
               <ButtonAdvance buttonClick={() => handleButtonClick()} />
             )}
-            {info.statusNivel2.corrigido && info.statusNivel2.certo && <ButtonAdvance buttonClick={() => advancePag(2)} />}
+            {info.statusNivel2.corrigido && info.statusNivel2.certo && <ConfirmationBox texto={info.statusNivel2.feedback} posicaoY={'70%'} posicaoX={'20%'} texto1={'Continuar'} onYes={() => {advancePag(2)}}/>}
             {!info.statusNivel2.certo && info.statusNivel2.erros < 3 && (
               <div style={{ transform: 'translateX(-50%)', position: 'absolute', top: '2%', left: '50%', width: '50%', backgroundColor: 'white', borderRadius: '4px', textAlign: 'center', fontSize: '18px' }}>
                 Você tem {3 - info.statusNivel2.erros} tentativa(s)
@@ -631,6 +632,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
         <CoinsXP coin={info.pontos} xp={info.xp} />
         {renderPag()}
         <HomeButton/>
+        <InfoButton/>
         <BarradeProgresso total={34} atual={pag}/>
       </Layout>
     </div>

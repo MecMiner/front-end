@@ -50,11 +50,13 @@ const ConfirmationBox = ({ onYes, onNo, texto1, texto2, posicaoX, posicaoY, link
         .btn-yes {
           color: #fff;
           background-color: #27ae60;
+          font-size: 24px;
         }
         
         .btn-no {
           color: #fff;
           background-color: #c0392b;
+          font-size: 24px;
         }
         
         
