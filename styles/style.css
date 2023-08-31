@@ -12,28 +12,7 @@ html, body{ margin: 0}
     transform-origin: center center;
 }
 
-.circular-button:hover {
-    transform: scale(1.1);
-  }
 
-.circular-button-one {
-    top: 40%;
-    left: 100px;
-  }
-
-  .circular-button-two {
-    top: 65%;
-    left: 500px;
-  }
-  .circular-button-three {
-    top: 15%;
-    right: 500px;
-  }
-  .circular-button-four {
-    top: 40%;
-    right: 100px;
-  }
-  
   .circular-image {
     border-radius: 50%;
   }

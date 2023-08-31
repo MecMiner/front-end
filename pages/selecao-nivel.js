@@ -1,173 +1,157 @@
-import Image from 'next/image'
-import React, { useEffect, useState } from 'react';
-import MyHead from '@/components/MyHead';
-import Layout from '@/components/MyLayout';
-import { useRouter } from 'next/router';
-import Loading from '@/components/Loading';
-import config from '@/config';
-import HomeButton from '@/components/HomeButton';
+  import Image from 'next/image';
+  import React, { useEffect, useState } from 'react';
+  import MyHead from '@/components/MyHead';
+  import Layout from '@/components/MyLayout';
+  import { useRouter } from 'next/router';
+  import Loading from '@/components/Loading';
+  import config from '@/config';
+  import HomeButton from '@/components/HomeButton';
+import InfoButton from '@/components/InfoButton';
 
-export default function Jogar() {
-  const apiUrl = config.apiUrl;
-  const [data, setData] = useState(null);
+  export default function Jogar() {
+    const apiUrl = config.apiUrl;
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter();
-  const { id } = router.query;
+    const router = useRouter();
+    const { id } = router.query;
 
-  const[isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (!id){
-      router.push('/menu')
-    } else {
-      buscarId();
-    }
-  }, [id, router]);
-
-  const buscarId = async () => {
-    setIsLoading(true);
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        router.push('/'); // Redirecionar se o token não estiver disponível
-        return;
-      }
-
-      const response = await fetch(`${apiUrl}/respostas/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        },
-      });
-
-      if (response.ok) {
-        const dados = await response.json();
-        if (dados) {
-          setData(dados);
-          setIsLoading(false);
-        } else {
-          router.push('/menu');
-        }
+    useEffect(() => {
+      if (!id) {
+        router.push('/menu');
       } else {
-        console.error('Erro ao buscar dados:', response.status);
+        buscarId();
       }
-    } catch (error) {
-      console.error('Erro ao buscar dados:', error);
-    }
-  };
+    }, [id, router]);
 
+    const buscarId = async () => {
+      setIsLoading(true);
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          router.push('/');
+          return;
+        }
 
-  const handleButtonClick = (name) => {
-    router.push(`/${name}?id=${id}`);
-  };
+        const response = await fetch(`${apiUrl}/respostas/${id}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: token,
+          },
+        });
 
+        if (response.ok) {
+          const dados = await response.json();
+          if (dados) {
+            setData(dados);
+          } else {
+            router.push('/menu');
+          }
+        } else {
+          console.error('Erro ao buscar dados:', response.status);
+        }
 
- 
-  return (
-    <div>
-      <MyHead/>
-      <Layout>
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Erro ao buscar dados:', error);
+      }
+    };
+
+    const handleButtonClick = (name) => {
+      router.push(`/${name}?id=${id}`);
+    };
+
+    return (
+      <div>
+        <MyHead />
+        <Layout>
+          {isLoading && <Loading />}
           <div className='select-level'>
-          <h1 style={{}}>Selecione um nível</h1>
-          {isLoading && <Loading/>}
-          <button className='circular-button circular-button-one' onClick={() => handleButtonClick('nivel-1')}>
-            <Image
-              className='circular-image'
-              src="/src/mapa/numero1.png"
-              width={150}
-              height={150}
-              alt="numero1"
-              priority
-            />
-          </button>
-          {data && data.response && data.response.nivel >= 1  ?  (
-            <button className='circular-button circular-button-two' onClick={() => handleButtonClick('nivel-2')}>
-            <Image
-              className='circular-image'
-              src="/src/mapa/numero2.png"
-              width={150}
-              height={150}
-              alt="numero3"
-              priority
-            />
-          </button>
-          ) : (
-            <button className='circular-button circular-button-two'>
-            <Image
-              className='circular-image'
-              src="/src/mapa/numero2ds.png"
-              width={150}
-              height={150}
-              alt="numero3"
-              priority
-            />
-          </button>
-          )}
-          {data && data.response && data.response.nivel >= 2  ?  (
-            <button className='circular-button circular-button-three' onClick={() => handleButtonClick('nivel-3')}>
-            <Image
-              className='circular-image'
-              src="/src/mapa/numero3.png"
-              width={150}
-              height={150}
-              alt="numero3"
-              priority
-            />
-          </button>
-          ) : (
-            <button className='circular-button circular-button-three'>
-            <Image
-              className='circular-image'
-              src="/src/mapa/numero3ds.png"
-              width={150}
-              height={150}
-              alt="numero3"
-              priority
-            />
-          </button>
-          )}
-          
-          {data && data.response && data.response.nivel >= 3  ?  (
-            <button className='circular-button circular-button-four' onClick={() => handleButtonClick('nivel-4')}>
-              <Image
-                className='circular-image'
-                src={ "/src/mapa/numero4.png"}
-                width={150}
-                height={150}
-                alt="numero4"
-                priority
-              />
-            </button>
-          ) : (
-            <button className='circular-button circular-button-four'>
-              <Image
-                className='circular-image'
-                src={ "/src/mapa/numero4ds.png"}
-                width={150}
-                height={150}
-                alt="numero4"
-                priority
-              />
-            </button>
-          )}
+            
+            <h1>Selecione um nível</h1>
+            <div className='level-frame'>
+           
+            {[1, 2, 3, 4].map((level, index, array) => (
+              <div key={level} className='level-button-container'>
+                <button
+                  className={`circular-button circular-button-${level} level-button`}
+                  onClick={() => handleButtonClick(`nivel-${level}`)}
+                  disabled={!data || !data.response || data.response.nivel < level}
+                >
+                    <Image
+                      className='circular-image'
+                      src={`/src/mapa/numero${level}${data && data.response && data.response.nivel >= level ? '' : 'ds'}.png`}
+                      width={150}
+                      height={150}
+                      alt={`numero${level}`}
+                      priority
+                    />
+                  </button>
+                  {index < array.length - 1 && (
+                  <div className={`line ${data && data.response && data.response.nivel >= level ? 'active' : ''}`} />
+                )}
+                  </div>
+                ))}
+            </div>
+          </div>
+          <HomeButton />
+          <InfoButton/>
+        </Layout>
+        <style jsx>{`
+          .select-level {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            padding-top: 20px;
+          }
+  
+          h1 {
+            font-size: 36px;
+            color: #ff9900;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-top: 40px;
+          }
+  
+          .level-frame {
+            display: flex;
+            align-items: center;
+            gap: 100px;
+            margin-top: 150px;
+          }
+  
+          .level-button-container {
+            position: relative;
+          }
+  
+          .level-button {
+            display: inline-block;
+          }
+  
+          .line {
+            position: absolute;
+            width: calc(100% + 80px); /* Largura da linha ajustada para cobrir todo o espaço entre os botões */
+            height: 10px; /* Altura da linha */
+            background-color: #ccc; /* Cor da linha */
+            top: calc(50% - 0.5px); /* Centralizar a linha verticalmente entre os botões */
+            left: calc(50% + 15px); /* Centralizar a linha horizontalmente */
+          }
+
+          .line.active {
+          background-color: green; /* Muda a cor para verde quando o botão estiver ativado */
+        }
+  
+          .circular-button {
+            position: relative;
+            top: 50%;
+            z-index: 99;
+          }
+  
+          .circular-button:hover {
+            transform: scale(1.1);
+          }
+        `}</style>
       </div>
-      <HomeButton />
-      </Layout>  
-      <style jsx>{`
-      .select-level {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 20px;
-      }
-
-      h1 {
-        top: 10%;
-        font-size: 30;
-        margin-bottom: 10px;
-      }
-      `}</style>
-
-    </div>
-  );
-}
+    );    
+  }

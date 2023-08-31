@@ -39,10 +39,6 @@ export default function Jogar({ data }) {
   const [usouDicaColega, setUsouDicaColega] = useState(false);
   const tamanho = 430;  
 
-/*   useEffect(() => {
-    console.log(JSON.stringify(info));
-  }, [info]); */
-
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem('token');
