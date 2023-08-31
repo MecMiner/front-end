@@ -88,7 +88,7 @@ import InfoButton from '@/components/InfoButton';
                     />
                   </button>
                   {index < array.length - 1 && (
-                  <div className={`line ${data && data.response && data.response.nivel >= level ? 'active' : ''}`} />
+                  <div className={`line ${data && data.response && data.response.nivel > level ? 'active' : ''}`} />
                 )}
                   </div>
                 ))}
