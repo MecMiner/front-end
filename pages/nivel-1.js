@@ -18,6 +18,7 @@ import InfoButton from '@/components/InfoButton';
 
 
 export default function Jogar({data}) {
+  const [user, setUser] = useState({});
   const tamanhoP = 400;
   const apiUrl = config.apiUrl;
   const fraseGrande = data?.dataDesafio?.etapasSolucao || " "
@@ -40,7 +41,38 @@ export default function Jogar({data}) {
   const [isSave, setIsSave] = useState(false);
 
 
+
   useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        router.push('/'); // Não tiver token, vai para página de login
+      } else {
+        try {
+          const response = await fetch(`${apiUrl}/`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: token,
+            },
+          });
+  
+          const dados = await response.json();
+  
+          if (response.ok) {
+            setUser(dados.dataUsuario);
+            console.log(dados.dataUsuario);
+          } else {
+            router.push('/');
+            // Trate o erro de acordo com suas necessidades
+          }
+        } catch (error) {
+          console.error('Erro na requisição:', error);
+          // Trate o erro de acordo com suas necessidades
+        }
+      }
+    }
 
 
     const fetchData = async () => {
@@ -62,9 +94,6 @@ export default function Jogar({data}) {
   
           if (response.ok) {
             setInfo(dados.response);
-           // setInfo(prevState => ({ ...prevState, bomDesempenho: false }));
-           // setInfo(prevState => ({ ...prevState, otimoDesempenho: false }));
-           // setInfo(prevState => ({ ...prevState, colaboracao: false }));
             console.log(dados.response);
           } else {
             router.push('/');
@@ -77,6 +106,7 @@ export default function Jogar({data}) {
       }
     };
   
+    fetchUser();
     fetchData();
   }, [id]);
 
@@ -113,8 +143,8 @@ export default function Jogar({data}) {
 
   const handleSetCoin = (valor, exp) => {
     setShowButton(false);
-    setInfo(prevState => ({ ...prevState, pontos: prevState.pontos + valor }));
-    setInfo(prevState => ({ ...prevState, xp: prevState.xp + exp }));
+    setUser(prevState => ({ ...prevState, pontos: prevState.pontos + valor }));
+    setUser(prevState => ({ ...prevState, xp: prevState.xp + exp }));
    // Ocultar a mensagem após 3 segundos
       setShowMessage(true);
       setTimeout(() => {
@@ -125,17 +155,17 @@ export default function Jogar({data}) {
   };
 
   const handelCorrigirGame = (valor, exp, bom, otimo, errado) => {
-    setInfo(prevState => ({ ...prevState, pontos: prevState.pontos + valor }));
-    setInfo(prevState => ({ ...prevState, xp: prevState.xp + exp }));
+    setUser(prevState => ({ ...prevState, pontos: prevState.pontos + valor }));
+    setUser(prevState => ({ ...prevState, xp: prevState.xp + exp }));
     if(bom){
-      setInfo(prevState => ({ ...prevState, bomDesempenho: true }));
-      setInfo(prevState => ({ ...prevState, nivel: 1 }));
+      setUser(prevState => ({ ...prevState, bomDesempenho: prevState.bomDesempenho + 1 }));
+      setUser(prevState => ({ ...prevState, nivel: 1 }));
       setShowButton(true);
       advancePag(4);
     }
     if(otimo){
-      setInfo(prevState => ({ ...prevState, otimoDesempenho: true }));
-      setInfo(prevState => ({ ...prevState, nivel: 1 }));
+      setUser(prevState => ({ ...prevState, otimoDesempenho: prevState.otimoDesempenho + 1 }));
+      setUser(prevState => ({ ...prevState, nivel: 1 }));
       setShowButton(true);
       advancePag(4);
     }
@@ -515,7 +545,7 @@ export default function Jogar({data}) {
     <div>
       <MyHead />
       <Layout>
-        <CoinsXP coin={info.pontos} xp={info.xp} bom={info.bomDesempenho} otm={info.otimoDesempenho} colaboracao={info.colaboracao}/>
+        <CoinsXP coin={user.pontos} xp={user.xp} bom={user.bomDesempenho} otm={user.otimoDesempenho} colaboracao={user.colaboracao}/>
         {renderPag()}
         <BarradeProgresso total={38} atual={pag}/>
         <HomeButton/>

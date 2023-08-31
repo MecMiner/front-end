@@ -3,7 +3,7 @@ import { BiHelpCircle } from 'react-icons/bi';
 import { useState } from 'react';
 
 const InfoButton = () => {
-  const [showInfo, setShowInfo] = useState(false);  
+  const [showInfo, setShowInfo] = useState(false);
   const router = useRouter();
 
   const handleGoToHomePage = () => {
@@ -12,36 +12,53 @@ const InfoButton = () => {
 
   const handleExit = () => {
     setShowInfo(false);
-  }
+  };
 
   return (
     <div>
-    {showInfo && (<div className='info'>
-        <div className="close-button" onClick={() => handleExit()}>X</div> 
-        <h1>Área de dúvidas</h1>   
-    </div>)}
-    <div className="homeButton" onClick={handleGoToHomePage}>
-      <div className="linkContainer">
-        <BiHelpCircle size={48} />
+      {showInfo && (
+        <div className='info-overlay'>
+          <div className='info'>
+            <div className='close-button' onClick={() => handleExit()}>
+              X
+            </div>
+            <h1>Área de dúvidas</h1>
+          </div>
+        </div>
+      )}
+      <div className='homeButton' onClick={handleGoToHomePage}>
+        <div className='linkContainer'>
+          <BiHelpCircle size={48} />
+        </div>
       </div>
-    </div>
       <style jsx>{`
-
-        .info{
-            width: 500px;
-            height: 500px;
-            border: 2px solid #000;
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff;
-            position: relative;
-            z-index: 999999999;
+        .info-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background-color: rgba(0, 0, 0, 0.7);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 999999999;
         }
 
-  
+        .info {
+          width: 500px;
+          height: 500px;
+          border: 2px solid #000;
+          border-radius: 10px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background-color: #fff;
+          z-index: 9999999999;
+          position: relative;
+        }
+
         .homeButton {
           position: absolute;
           top: 90%;
