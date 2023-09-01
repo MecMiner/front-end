@@ -163,14 +163,14 @@ export default function Jogar({data}) {
     setUser(prevState => ({ ...prevState, xp: prevState.xp + exp }));
     if(bom){
       setUser(prevState => ({ ...prevState, bomDesempenho: prevState.bomDesempenho + 1 }));
-      setUser(prevState => ({ ...prevState, nivel: 2 }));
+      setInfo(prevState => ({ ...prevState, nivel: 2 }));
       setUserGame(prevState => ({ ...prevState, bomDesempenho: true }));
       setShowButton(true);
       advancePag(4);
     }
     if(otimo){
       setUser(prevState => ({ ...prevState, otimoDesempenho: prevState.otimoDesempenho + 1 }));
-      setUser(prevState => ({ ...prevState, nivel: 2 }));
+      setInfo(prevState => ({ ...prevState, nivel: 2 }));
       setUserGame(prevState => ({ ...prevState, otimoDesempenho: true }));
       setShowButton(true);
       advancePag(4);

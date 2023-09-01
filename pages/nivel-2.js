@@ -217,8 +217,8 @@ export default function Jogar({ data }) {
 
   const handleSetCoin = (valor, exp) => {
     setShowButton(false);
-    setInfo(prevState => ({ ...prevState, pontos: prevState.pontos + valor }));
-    setInfo(prevState => ({ ...prevState, xp: prevState.xp + exp }));
+    setUser(prevState => ({ ...prevState, pontos: prevState.pontos + valor }));
+    setUser(prevState => ({ ...prevState, xp: prevState.xp + exp }));
     // Ocultar a mensagem após 3 segundos
     setShowMessage(true);
     setTimeout(() => {
@@ -259,7 +259,7 @@ export default function Jogar({ data }) {
   const exibirDica = (professor) => {
     if (professor) {
       if (!usouDicaProfessor){
-        setInfo(prevState => ({ ...prevState, pontos: prevState.pontos - 10 }));
+        setUser(prevState => ({ ...prevState, pontos: prevState.pontos - 10 }));
         setUsouDicaProfessor(true)
       }
       setShowDicaProfessor(true);
@@ -269,7 +269,7 @@ export default function Jogar({ data }) {
       }, 5000);
     } else {
       if (!usouDicaColega){
-        setInfo(prevState => ({ ...prevState, pontos: prevState.pontos - 5 }));
+        setUser(prevState => ({ ...prevState, pontos: prevState.pontos - 5 }));
         setUsouDicaColega(true)
       }
       setShowDicaColega(true);
@@ -595,7 +595,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
       case 29:
         return (
           <div>
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`Vou ter mostrar novamente como ficam as estapas completas.`} />
+            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`Vou te mostrar novamente como ficam as estapas completas.`} />
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"40%"} tamanho={"40%"} dialogText={`${data.dataDesafio.etapasSolucao}`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"40%"} tamanho={tamanho}/>
@@ -657,7 +657,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
     <div>
       <MyHead />
       <Layout>
-        <CoinsXP coin={info.pontos} xp={info.xp} />
+        <CoinsXP coin={user.pontos} xp={user.xp} bom={user.bomDesempenho} otm={user.otimoDesempenho} colaboracao={user.colaboracao}/>
         {renderPag()}
         <HomeButton/>
         <InfoButton/>

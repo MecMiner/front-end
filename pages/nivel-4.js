@@ -18,6 +18,7 @@ import InfoButton from '@/components/InfoButton';
 
 
 export default function Jogar({ data }) {
+  const [user,setUser] = useState({});
   const apiUrl = config.apiUrl;
   const [showMessage, setShowMessage] = useState(false);
   const [animationEnded, setAnimationEnded] = useState(false);
@@ -36,6 +37,43 @@ export default function Jogar({ data }) {
     console.log(JSON.stringify(info));
   }, [info]);
  */
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        router.push('/'); // Não tiver token, vai para página de login
+      } else {
+        try {
+          const response = await fetch(`${apiUrl}/`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: token,
+            },
+          });
+  
+          const dados = await response.json();
+  
+          if (response.ok) {
+            setUser(dados.dataUsuario);
+            console.log(dados.dataUsuario);
+          } else {
+            router.push('/');
+            // Trate o erro de acordo com suas necessidades
+          }
+        } catch (error) {
+          console.error('Erro na requisição:', error);
+          // Trate o erro de acordo com suas necessidades
+        }
+      }
+    }
+
+    fetchUser();
+  })
+
+
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem('token');
@@ -59,8 +97,6 @@ export default function Jogar({ data }) {
  */
             if (dados.response.pontos > 2) {
               if (!dados.response.statusNivel4.jogou) {
-                setInfo(prevInfo => ({ ...prevInfo, pontos: dados.response.pontos }));
-                setInfo(prevInfo => ({ ...prevInfo, xp: dados.response.xp }));
                 setInfo(prevInfo => {
                   const updatedstatusNivel4 = {
                     ...prevInfo.statusNivel4,
@@ -78,8 +114,6 @@ export default function Jogar({ data }) {
                 });
               } else {
                 setPag(16);
-                setInfo(prevInfo => ({ ...prevInfo, pontos: dados.response.pontos }));
-                setInfo(prevInfo => ({ ...prevInfo, xp: dados.response.xp }));
                 setInfo(prevInfo => ({ ...prevInfo, statusNivel4: dados.response.statusNivel4 }));
 
                 if (!dados.response.statusNivel4.corrigido) {
@@ -89,9 +123,9 @@ export default function Jogar({ data }) {
                 if (dados.response.statusNivel4.corrigido) {
                   if(dados.response.statusNivel4.certo) {
                     if(dados.response.statusNivel4.erros == 0){
-                      setInfo(prevInfo => ({ ...prevInfo, otimoDesempenho: true }));
+                      setUser(prevInfo => ({ ...prevInfo, otimoDesempenho: prevState.otimoDesempenho + 1 }));
                     } else {
-                      setInfo(prevInfo => ({ ...prevInfo, bomDesempenho: true }));
+                      setUser(prevInfo => ({ ...prevInfo, bomDesempenho: prevState.bomDesempenho + 1  }));
                     }
                   }
                   setPag(16);
@@ -471,7 +505,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
     <div>
       <MyHead />
       <Layout>
-        <CoinsXP coin={info.pontos} xp={info.xp} />
+        <CoinsXP coin={user.pontos} xp={user.xp} bom={user.bomDesempenho} otm={user.otimoDesempenho} colaboracao={user.colaboracao}/>
         {renderPag()}
         <BarradeProgresso atual={pag} total={21}/>
       <HomeButton/>
