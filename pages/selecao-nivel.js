@@ -44,7 +44,6 @@ export default function Jogar() {
         const dados = await response.json();
         if (dados) {
           setData(dados);
-          console.log(dados)
         } else {
           router.push('/menu');
         }
@@ -52,8 +51,8 @@ export default function Jogar() {
         console.error('Erro ao buscar dados:', response.status);
       }
 
-      setIsLoading(false);
     } catch (error) {
+      router.push('/menu');
       console.error('Erro ao buscar dados:', error);
     }
   };
@@ -66,7 +65,7 @@ export default function Jogar() {
     <div>
       <MyHead />
       <Layout>
-        {isLoading && <Loading />}
+        <Loading />
         <div className='select-level'>
           
           <h1>Selecione um nível</h1>
@@ -132,17 +131,17 @@ export default function Jogar() {
 
         .line {
           position: absolute;
-          width: calc(100% + 80px); /* Largura da linha ajustada para cobrir todo o espaço entre os botões */
-          height: 10px; /* Altura da linha */
-          background-color: #ccc; /* Cor da linha */
-          top: calc(50% - 0.5px); /* Centralizar a linha verticalmente entre os botões */
-          left: calc(50% + 15px); /* Centralizar a linha horizontalmente */
+          width: calc(100% + 80px);
+          height: 10px; 
+          background-color: #858383; /* Cor da linha */
+          top: calc(50% - 0.5px);
+          left: calc(50% + 15px);
         }
-
+        
         .line.active {
-        background-color: green; /* Muda a cor para verde quando o botão estiver ativado */
-      }
-
+          background-color: rgb(43, 202, 107);
+        }
+        
         .circular-button {
           position: relative;
           top: 50%;

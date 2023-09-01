@@ -12,7 +12,6 @@ export default function Home() {
   const apiUrl = config.apiUrl
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [isLoad, setIsLoad] = useState(true)
   const [isSenhaIncorreta, setIsSenhaIncorreta] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -36,9 +35,7 @@ export default function Home() {
 
       if (response.ok) {
         const data = await response.json();
-        // Faça o que desejar com o token retornado, como armazená-lo no localStorage
         localStorage.setItem('token', data.token);
-        // Redirecione para a página de menu
         router.push('/');
       } else {
         setIsSenhaIncorreta(true);
@@ -66,18 +63,18 @@ export default function Home() {
         <div className="login-screen">
         <div className= "loginContainer">
           <div className="image-login">
-            <FaUser size={200} />
+            <FaUser size={150} />
           </div>
           <form onSubmit={handleLogin}>
             <input className="input-login" name="email" type="text" placeholder="Nome de usuário" onChange={onChangeInput} value={content.email}/>
             <input className="input-login" name="senha" type="password" placeholder="Senha" onChange={onChangeInput} value={content.senha} />
-            {isSenhaIncorreta && <p className="senha-incorreta">Usuário ou senha incorreto</p>}
             <div className="button-container">
               <button className="button-login" type="submit" disabled={isLoading}>
                 {isLoading ? 'Carregando...' : 'Entrar'}
               </button>
               <button className="button-cadastrar" type='button' onClick={handleCadastr}>Cadastrar</button>
             </div>
+            {isSenhaIncorreta && <p className="senha-incorreta">Usuário ou senha incorreto</p>}
           </form>
         </div>
         </div>
@@ -158,8 +155,8 @@ export default function Home() {
       }
       
       .image-login {
-          width: 200px;
-          height: 200px;
+          width: 150px;
+          height: 150px;
           margin-bottom: 1rem;
       }      
       `}</style>

@@ -97,7 +97,6 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         setFrases(shuffleArray(frasesIniciais));
         setFrasesOrdenadas([]);
         setVerificar(false);
-        setErroMsg(false);
         setJogoEmAndamento(true); // Marcar o jogo como em andamento novamente
     };
 
@@ -110,10 +109,9 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
 
     return (
         <div className="sorting-game-container">
-            <p>Para ordenar basta clicar nas etapas, que elas serão passadas para o quadro ao lado.</p>
             <div className='quadros-frases'>
                 <div>
-                    <h2>Etapas desordenadas:</h2>
+                    <h2 style={{textAlign: 'center'}}>Etapas desordenadas:</h2>
                     <div className="frases-container">
                         <ul className="frases-lista">
                             {frases.map((frase, index) => (
@@ -126,7 +124,7 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
 
                 </div>
                 <div>
-                    <h2>Etapas ordenadas:</h2>
+                    <h2 style={{textAlign: 'center'}}>Etapas ordenadas:</h2>
                     <div className="frases-ordenadas-container">
                         <ul className="frases-ordenadas-lista">
                             {frasesOrdenadas.map((frase, index) => (
@@ -139,50 +137,53 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
 
                 </div>
             </div>
-            <div className="tempo-restante">
-                Tempo restante: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
-            </div>
+            
             <div className="actions-container">
+                <div className="tempo-restante">
+                    Tempo restante: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
+                </div>
                 <button onClick={handleVerificarOrdem}>Conferir</button>
-                {erroMsg && (
-                    <p className="erro-message">Ops! A ordem está incorreta. Tente novamente.</p>
-                )}
+                <p  className="erro-message">{erroMsg? 'Ops! A ordem está incorreta. Tente novamente.' : ''}</p>
                 <Button onYes={()=>handleExibirDica()} texto1={'Dica do Professor'} posicaoY={'90%'} posicaoX={'-10%'}/>
             </div>
 
             <style jsx>{`
-      .sorting-game-container {
+    .sorting-game-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        position: relative;
+        position: absolute;
+        top: 0%;
+        left: 10%;
+        height: 100%;
+        width: 80%;
         z-index: 9999;
-      }
+        background-color: grey;
+    }
 
-      .quadros-frases {
+    .quadros-frases {
         opacity: 1.9;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         width: 100%;
-        heigth: 100%;
-      }
+    }
 
-      .frases-container,
-      .frases-ordenadas-container {
+    .frases-container,
+    .frases-ordenadas-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 380px;
-        height: 400px;
+        height: 330px;
         border: 1px solid #ccc;
-        padding: 10px;
+        padding: 5px;
         margin-bottom: 20px;
         overflow-y: auto;
-      }
+    }
 
-      .frases-lista,
-      .frases-ordenadas-lista {
+    .frases-lista,
+    .frases-ordenadas-lista {
         list-style-type: none;
         padding: 0;
         margin: 0;
@@ -190,35 +191,34 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-      }
+    }
 
-      .frases-lista li,
-      .frases-ordenadas-lista li {
+    .frases-lista li,
+    .frases-ordenadas-lista li {
         background-color: #f9f9f9;
         border: 1px solid #ddd;
         padding: 5px;
         margin: 5px;
         cursor: pointer;
-      }
+    }
 
-      .frases-container h2,
-      .frases-ordenadas-container h2 {
+    .frases-container h2,
+    .frases-ordenadas-container h2 {
         margin: 0;
-      }
+    }
 
-      .actions-container {
+    .actions-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 20px;
-      }
+    }
 
-      .erro-message {
+    .erro-message {
         color: red;
         margin-bottom: 10px;
-      }
+    }
 
-      button {
+    button {
         padding: 10px 20px;
         background-color: #4caf50;
         color: #fff;
@@ -226,19 +226,19 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         border-radius: 4px;
         font-size: 16px;
         cursor: pointer;
-      }
-      .dica-button {
+    }
+    .dica-button {
         position: absolute;
         bottom: 20px;
         right: 20px;
         background: none;
         border: none;
         cursor: pointer;
-      }
-      .dica-button:hover {
+    }
+    .dica-button:hover {
         transform: scale(2.0);
-      }
-      .tempo-restante {
+    }
+    .tempo-restante {
         font-size: 20px;
         font-weight: bold;
         margin-bottom: 10px;
