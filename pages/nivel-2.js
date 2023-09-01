@@ -19,6 +19,7 @@ import InfoButton from '@/components/InfoButton';
 
 
 export default function Jogar({ data }) {
+  const [user,setUser] = useState({});
   const apiUrl = config.apiUrl;
   const fraseGrande = data.dataDesafio.etapasSolucao
   const linhas = fraseGrande.split('\r\n');
@@ -38,6 +39,41 @@ export default function Jogar({ data }) {
   const [usouDicaProfessor, setUsouDicaProfessor] = useState(false);
   const [usouDicaColega, setUsouDicaColega] = useState(false);
   const tamanho = 430;  
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        router.push('/'); // Não tiver token, vai para página de login
+      } else {
+        try {
+          const response = await fetch(`${apiUrl}/`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: token,
+            },
+          });
+  
+          const dados = await response.json();
+  
+          if (response.ok) {
+            setUser(dados.dataUsuario);
+            console.log(dados.dataUsuario);
+          } else {
+            router.push('/');
+            // Trate o erro de acordo com suas necessidades
+          }
+        } catch (error) {
+          console.error('Erro na requisição:', error);
+          // Trate o erro de acordo com suas necessidades
+        }
+      }
+    }
+
+    fetchUser();
+  })
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,8 +98,6 @@ export default function Jogar({ data }) {
 
             if (dados.response.nivel >= 1) {
               if (!dados.response.statusNivel2.jogou) {
-                setInfo(prevInfo => ({ ...prevInfo, pontos: dados.response.pontos }));
-                setInfo(prevInfo => ({ ...prevInfo, xp: dados.response.xp }));
                 setInfo(prevInfo => {
                   const updatedStatusNivel2 = {
                     ...prevInfo.statusNivel2,
@@ -81,8 +115,6 @@ export default function Jogar({ data }) {
                 });
               } else {
                 setPag(26);
-                setInfo(prevInfo => ({ ...prevInfo, pontos: dados.response.pontos }));
-                setInfo(prevInfo => ({ ...prevInfo, xp: dados.response.xp }));
                 setInfo(prevInfo => ({ ...prevInfo, statusNivel2: dados.response.statusNivel2 }));
 
                 if (!dados.response.statusNivel2.corrigido) {
@@ -92,9 +124,9 @@ export default function Jogar({ data }) {
                 if (dados.response.statusNivel2.corrigido) {
                   if(dados.response.statusNivel2.certo) {
                     if(dados.response.statusNivel2.erros == 0){
-                      setInfo(prevInfo => ({ ...prevInfo, otimoDesempenho: true }));
+                      setUser(prevInfo => ({ ...prevInfo, otimoDesempenho: prevState.otimoDesempenho + 1 }));
                     } else {
-                      setInfo(prevInfo => ({ ...prevInfo, bomDesempenho: true }));
+                      setUser(prevInfo => ({ ...prevInfo, bomDesempenho: prevState.bomDesempenho + 1 }));
                     }
                   }
                   setPag(26);

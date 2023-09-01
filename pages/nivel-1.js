@@ -39,6 +39,10 @@ export default function Jogar({data}) {
   const [pag, setPag] = useState(1);
   const [usouDica, setUsouDica] = useState(false);
   const [isSave, setIsSave] = useState(false);
+  const [userGame, setUserGame] = useState({
+    bomDesempenho: false,
+    otimoDesempenho: false,
+  })
 
 
 
@@ -159,13 +163,15 @@ export default function Jogar({data}) {
     setUser(prevState => ({ ...prevState, xp: prevState.xp + exp }));
     if(bom){
       setUser(prevState => ({ ...prevState, bomDesempenho: prevState.bomDesempenho + 1 }));
-      setUser(prevState => ({ ...prevState, nivel: 1 }));
+      setUser(prevState => ({ ...prevState, nivel: 2 }));
+      setUserGame(prevState => ({ ...prevState, bomDesempenho: true }));
       setShowButton(true);
       advancePag(4);
     }
     if(otimo){
       setUser(prevState => ({ ...prevState, otimoDesempenho: prevState.otimoDesempenho + 1 }));
-      setUser(prevState => ({ ...prevState, nivel: 1 }));
+      setUser(prevState => ({ ...prevState, nivel: 2 }));
+      setUserGame(prevState => ({ ...prevState, otimoDesempenho: true }));
       setShowButton(true);
       advancePag(4);
     }
@@ -197,6 +203,23 @@ export default function Jogar({data}) {
         Authorization: token,
       },
       body: JSON.stringify(info),
+    })
+    if(response.ok){
+      handleNextPag();
+      console.log('Valores inseridos no banco');
+    }
+  } catch (error) {
+    console.error('Erro ao fazer a requisição:', error);
+  }
+
+  try {
+    const response = await fetch(`${apiUrl}/setPts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+      body: JSON.stringify(user),
     })
     if(response.ok){
       handleNextPag();
@@ -471,8 +494,8 @@ export default function Jogar({data}) {
         return (
           <div>
             {isSave && <Loading texto={'Savando informações...'}/>}
-            {info.bomDesempenho && <Desempenho des={'bom'}/>}
-            {info.otimoDesempenho && <Desempenho des={'otimo'}/>}    
+            {userGame.bomDesempenho && <Desempenho des={'bom'}/>}
+            {userGame.otimoDesempenho && <Desempenho des={'otimo'}/>}    
             {!isSave && <Button onYes={() => saveGame()} texto1={'Salvar'} posicaoX={'43%'} posicaoY={'85%'}/>}   
             {isSave && <ButtonAdvance buttonClick={() => handleNextPag()} />}         
           </div>)
