@@ -130,7 +130,7 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
           .button {
             padding: 10px 20px;
             margin-bottom: 10px;
-            background-color: #ff9800;
+            background-color: green;
             color: white;
             border: none;
             border-radius: 4px;
@@ -139,7 +139,8 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
           }
           
           .button:hover {
-            background-color: #ffac33;
+            background-color: #32CD32	;
+            transform: scale(1.1);
           }
           .tempo-restante {
             font-size: 20px;

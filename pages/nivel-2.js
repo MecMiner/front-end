@@ -40,6 +40,10 @@ export default function Jogar({ data }) {
   const [showDicaColega, setShowDicaColega] = useState(false);
   const [usouDicaProfessor, setUsouDicaProfessor] = useState(false);
   const [usouDicaColega, setUsouDicaColega] = useState(false);
+  const [userGame, setUserGame] = useState({
+    bomDesempenho: false,
+    otimoDesempenho: false,
+  })
   const tamanho = 400;  
 
   useEffect(() => {
@@ -127,8 +131,10 @@ export default function Jogar({ data }) {
                   if(dados.response.statusNivel2.certo) {
                     if(dados.response.statusNivel2.erros == 0){
                       setUser(prevState => ({ ...prevState, otimoDesempenho: prevState.otimoDesempenho + 1 }));
+                      setUserGame(prevState => ({...prevState, otimoDesempenho: true}));
                     } else {
                       setUser(prevState => ({ ...prevState, bomDesempenho: prevState.bomDesempenho + 1 }));
+                      setUserGame(prevState => ({...prevState, bomDesempenho: true}));
                     }
                   }
                   setPag(26);
@@ -291,7 +297,7 @@ export default function Jogar({ data }) {
         statusNivel2: updatedStatusNivel2
       };
     });
-    setInfo(prevState => ({ ...prevState, colaboracao: true }));
+    setUserGame(prevState => ({ ...prevState, colaboracao: true }));
     setInfo(prevState => ({ ...prevState, nivel: 2 }));
     setInfo(prevState => ({ ...prevState, resposta2: '' }));
     handleSetCoin(10,5);
@@ -528,7 +534,7 @@ export default function Jogar({ data }) {
       case 26:
         return (
           <div>
-            <div style={{ width: '200px', border: '1px solid black', borderRadius: '4px', position: 'absolute', height: '200px', right: '20%', top: '20%' }}>
+            <div style={{ transform: 'translateX(-50%)' ,width: '200px', border: '1px solid black', borderRadius: '4px', position: 'absolute', height: '200px', right: '10%', top: '50%' }}>
               {checkBanco && (
                 <Loading infinite={true} />
               )}
@@ -540,17 +546,17 @@ export default function Jogar({ data }) {
                 />
               )}
             </div>
-            <DialogoBox cor={mentor.cor} complete={() => { }} posicao={"10%"} tamanho={"30%"} dialogText={`Agora vou pedir a ajuda de um amigo mais experiente para verificar se a sua proposta de solução está correta, ok.
+            <DialogoBox cor={mentor.cor} complete={() => { }} tamanho={"30%"} dialogText={`Agora vou pedir a ajuda de um amigo mais experiente para verificar se a sua proposta de solução está correta, ok.
 Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"40%"} tamanho={tamanho}/>
             {info.statusNivel2.corrigido && !info.statusNivel2.certo && info.statusNivel2.erros < 3 && (
-              <ConfirmationBox texto={info.statusNivel2.feedback} posicaoY={'70%'} posicaoX={'20%'} texto1={'Refazer'} texto2={'Reiniciar'} onYes={handleErrorGame} onNo={handleResetGame} />
+              <ConfirmationBox  texto={info.statusNivel2.feedback} posicaoY={'10%'} posicaoX={'20%'} texto1={'Refazer'} texto2={'Reiniciar'} onYes={handleErrorGame} onNo={handleResetGame} />
             )}
             {info.statusNivel2.corrigido && !info.statusNivel2.certo && info.statusNivel2.erros == 3 && (
               <ButtonAdvance buttonClick={() => handleButtonClick()} />
             )}
-            {info.statusNivel2.corrigido && info.statusNivel2.certo && <ConfirmationBox texto={info.statusNivel2.feedback} posicaoY={'70%'} posicaoX={'20%'} texto1={'Continuar'} onYes={() => {advancePag(2)}}/>}
+            {info.statusNivel2.corrigido && info.statusNivel2.certo && <ConfirmationBox texto={info.statusNivel2.feedback} posicaoY={'10%'} posicaoX={'10%'} texto1={'Continuar'} onYes={() => {advancePag(2)}}/>}
             {!info.statusNivel2.certo && info.statusNivel2.erros < 3 && (
               <div style={{ transform: 'translateX(-50%)', position: 'absolute', top: '2%', left: '50%', width: '50%', backgroundColor: 'white', borderRadius: '4px', textAlign: 'center', fontSize: '18px' }}>
                 Você tem {3 - info.statusNivel2.erros} tentativa(s)
@@ -584,7 +590,6 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`Vou te mostrar novamente como ficam as estapas completas.`} />
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"40%"} tamanho={"40%"} dialogText={`${data.dataDesafio.etapasSolucao}`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p2/imagem2"} posicao={"40%"} tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 30:
@@ -620,8 +625,8 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
       case 33:
         return (
           <div>
-            {info.bomDesempenho && <Desempenho des={'bom'} col={true}/>}
-            {info.otimoDesempenho && <Desempenho des={'otimo'} col={true}/>}     
+            {userGame.bomDesempenho && <Desempenho des={'bom'} col={true}/>}
+            {userGame.otimoDesempenho && <Desempenho des={'otimo'} col={true}/>}     
             <ButtonAdvance buttonClick={() => handleSetBanco()} />         
           </div>)
       case 34:

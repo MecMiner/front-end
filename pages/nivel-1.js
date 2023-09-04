@@ -537,17 +537,8 @@ export default function Jogar({data}) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"} dialogText={`Que legal, fico muito feliz em estar te ajudando nessa caminhada.`} />
             <Personagem img={"m1/imagem3"}  posicao={"10%"} tamanho={tamanhoP}/>
             <Personagem img={"p1/imagem5"}  posicao={"60%"} tamanho={tamanhoP}/>
-            {showButton &&  <ConfirmationBox texto1={'Refazer'} posicaoY={'10%'} texto2={'Sair'} onYes={() => handleResetGame()} onNo={() => {router.push(`/selecao-nivel?id=${id}`)}} />}          
+            {showButton &&  <ConfirmationBox texto1={'Continuar'} texto2={'Refazer'} posicaoY={'10%'} onNo={() => handleResetGame()} onYes={() => {router.push(`/selecao-nivel?id=${id}`)}} />}          
           </div>)
-      case 38:
-        return (
-          <div>
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"} dialogText={`Ah é uma pena, espero poder te ajudar nas próximas vezes.`} />
-            <Personagem img={"m1/imagem5"}  posicao={"10%"} tamanho={tamanhoP}/>
-            <Personagem img={"p1/imagem4"}  posicao={"20%"} tamanho={tamanhoP}/>
-            {showButton &&  <ConfirmationBox posicaoY={'10%'} texto1={'Refazer'} texto2={'Sair'} onYes={() => handleResetGame()} onNo={() => {router.push(`/selecao-nivel?id=${id}`)}} />}        
-          </div>)
-
       default:
         router.push(`/selectNivel?id=${id}`);
         break;

@@ -144,7 +144,7 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
                 </div>
                 <div style={{flexDirection: 'row', width: '100%'}}>
                     <button onClick={handleVerificarOrdem}>Conferir</button>
-                    <button onClick={handleExibirDica}>Dica do Professor</button>
+                    <button className='dica-button' onClick={handleExibirDica}>Dica do Professor</button>
                 </div>               
                 <p  className="erro-message">{erroMsg? 'Ops! A ordem está incorreta. Tente novamente.' : ''}</p>
             </div>
@@ -229,7 +229,7 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
     button {
         padding: 10px 20px;
         margin-bottom: 10px;
-        background-color: #ff9800;
+        background-color: green;
         color: white;
         border: none;
         border-radius: 4px;
@@ -238,15 +238,10 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         margin: 0 15px;
     }
     .dica-button {
-        position: absolute;
-        bottom: 20px;
-        right: 20px;
-        background: none;
-        border: none;
-        cursor: pointer;
+        background-color: #ff9800;
     }
-    .dica-button:hover {
-        transform: scale(2.0);
+    button:hover {
+        transform: scale(1.2);
     }
     .tempo-restante {
         font-size: 20px;
