@@ -111,7 +111,7 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         <div className="sorting-game-container">
             <div className='quadros-frases'>
                 <div>
-                    <h2 style={{textAlign: 'center'}}>Etapas desordenadas:</h2>
+                    <h2 style={{textAlign: 'center'}} className='title'>Etapas desordenadas:</h2>
                     <div className="frases-container">
                         <ul className="frases-lista">
                             {frases.map((frase, index) => (
@@ -124,7 +124,7 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
 
                 </div>
                 <div>
-                    <h2 style={{textAlign: 'center'}}>Etapas ordenadas:</h2>
+                    <h2 style={{textAlign: 'center'}} className='title'>Etapas ordenadas:</h2>
                     <div className="frases-ordenadas-container">
                         <ul className="frases-ordenadas-lista">
                             {frasesOrdenadas.map((frase, index) => (
@@ -142,23 +142,31 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
                 <div className="tempo-restante">
                     Tempo restante: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
                 </div>
-                <button onClick={handleVerificarOrdem}>Conferir</button>
+                <div style={{flexDirection: 'row', width: '100%'}}>
+                    <button onClick={handleVerificarOrdem}>Conferir</button>
+                    <button onClick={handleExibirDica}>Dica do Professor</button>
+                </div>               
                 <p  className="erro-message">{erroMsg? 'Ops! A ordem está incorreta. Tente novamente.' : ''}</p>
-                <Button onYes={()=>handleExibirDica()} texto1={'Dica do Professor'} posicaoY={'90%'} posicaoX={'-10%'}/>
             </div>
 
             <style jsx>{`
+
+            
+
     .sorting-game-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         position: absolute;
-        top: 0%;
-        left: 10%;
-        height: 100%;
-        width: 80%;
+        top: 5%;
+        left: 50%;
+        height: 90%;
+        width: 70%;
+        min-width: 800px;
         z-index: 9999;
-        background-color: grey;
+        border: 1px solid black;
+        border-radius: 10px;
+        transform: translateX(-50%);
     }
 
     .quadros-frases {
@@ -220,12 +228,14 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
 
     button {
         padding: 10px 20px;
-        background-color: #4caf50;
-        color: #fff;
+        margin-bottom: 10px;
+        background-color: #ff9800;
+        color: white;
         border: none;
         border-radius: 4px;
         font-size: 16px;
         cursor: pointer;
+        margin: 0 15px;
     }
     .dica-button {
         position: absolute;
@@ -243,6 +253,12 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         font-weight: bold;
         margin-bottom: 10px;
         }
+
+        .title {
+            color: #ff9800;
+            font-size: 24px;
+            margin-bottom: 20px;
+          }
     `}</style>
         </div>
     );
