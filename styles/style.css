@@ -45,3 +45,6 @@ html, body{ margin: 0}
   z-index: 999999;
 }
 
+@media (max-width: 600px) {
+   
+}

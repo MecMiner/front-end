@@ -7,6 +7,7 @@ import Loading from '@/components/Loading';
 import config from '@/config';
 import Personagem from '@/components/Personagem';
 import DialogScreen from '@/components/DialogoBox';
+import CheckOrientacao from '@/components/Orientacao';
 
 export default function Menu({ data }) {
   const [isLoad,setIsLoad] = useState(true);
@@ -25,6 +26,7 @@ export default function Menu({ data }) {
     <div>
       <MyHead />
       <Layout>
+        <CheckOrientacao>
         <CheckUser onFunction={() => setIsLoad(false)}/>
         <Personagem img={'m1/imagem3'} posicao={'10%'}/>
         <DialogScreen cor={config.mentor.cor} dialogText={'Olá, aqui você tem disponível alguns desafios, para iniciá-los, basta clicar sobre eles e eu te guiarei'} complete={() => ({})}/>
@@ -37,7 +39,7 @@ export default function Menu({ data }) {
             })}  
           </div>
           <div className="close-button" onClick={() => handleLogout()}>Sair</div>
-
+        </CheckOrientacao>
       </Layout>
       <style jsx>{`
         .btn-menu {

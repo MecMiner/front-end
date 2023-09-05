@@ -19,7 +19,7 @@ import ExibirDica from '@/components/ExibirDica';
 
 
 export default function Jogar({data}) {
-  const [pag, setPag] = useState(25);
+  const [pag, setPag] = useState(1);
   const [user, setUser] = useState({});
   const tamanhoP = 400;
   const apiUrl = config.apiUrl;

@@ -79,7 +79,7 @@ export default function Jogar({ data }) {
     }
 
     fetchUser();
-  })
+  },[id])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -254,6 +254,22 @@ export default function Jogar({ data }) {
     } catch (error) {
       console.error('Erro ao fazer a requisição:', error);
     }
+
+    try {
+      const response = await fetch(`${apiUrl}/setPts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+        body: JSON.stringify(user),
+      })
+      if(response.ok){
+        console.log('Valores inseridos no banco');
+      }
+    } catch (error) {
+      console.error('Erro ao fazer a requisição:', error);
+    }
   }
 
 
@@ -298,7 +314,8 @@ export default function Jogar({ data }) {
       };
     });
     setUserGame(prevState => ({ ...prevState, colaboracao: true }));
-    setInfo(prevState => ({ ...prevState, nivel: 2 }));
+    setUser(prevState => ({ ...prevState, colaboracao: prevState.colaboracao + 1 }));
+    setInfo(prevState => ({ ...prevState, nivel: 3 }));
     setInfo(prevState => ({ ...prevState, resposta2: '' }));
     handleSetCoin(10,5);
   } 
@@ -636,7 +653,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"30%"} dialogText={`Obrigada por deixar sua avaliação, fico muito feliz em estar te ajudando nessa caminhada.`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"40%"} tamanho={tamanho}/>
-            {showButton && <ConfirmationBox texto1={'Refazer'} texto2={'Sair'} onYes={() => handleResetGame()} onNo={() => {router.push(`/selecao-nivel?id=${id}`)}} />}
+            {showButton &&  <ConfirmationBox texto1={'Continuar'} texto2={'Refazer'} posicaoY={'10%'} onNo={() => handleResetGame()} onYes={() => {router.push(`/selecao-nivel?id=${id}`)}} />}
           </div>)
       default:
         router.push(`/selectNivel?id=${id}`);

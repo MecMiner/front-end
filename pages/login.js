@@ -63,7 +63,7 @@ export default function Home() {
         <div className="login-screen">
         <div className= "loginContainer">
           <div className="image-login">
-            <FaUser size={150} />
+            <FaUser size={100} />
           </div>
           <form onSubmit={handleLogin}>
             <input className="input-login" name="email" type="text" placeholder="Nome de usuário" onChange={onChangeInput} value={content.email}/>
@@ -81,15 +81,6 @@ export default function Home() {
         
       </Layout>
       <style jsx>{`
-      .login-screen {
-          width: 50%;
-          height: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: absolute;
-      }
-      
       .loginContainer {
           padding: 2rem;
           background-color: #ecf0f1;
@@ -108,45 +99,32 @@ export default function Home() {
           border-radius: 4px;
       }
       
-      .button-login {
-          padding: 0.5rem 1rem;
-          background-color: #2980b9;
-          color: #fff;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: background-color 0.3s ease;
-          cursor: pointer;
-          transform-origin: center center;
-      
-          &:hover {
-              background-color: #1a5276;
-          }
-      
-          &:active {
-              background-color: #154360;
-          }
+      .button-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
       }
-      
+    
+      .button-login,
       .button-cadastrar {
-          padding: 0.5rem 1rem;
-          background-color: #2ecc71;
-          color: #fff;
-          border: none;
-          border-radius: 4px;
-          margin-left: 1rem;
-          cursor: pointer;
-          transition: background-color 0.3s ease;
-          cursor: pointer;
-          transform-origin: center center;
-      
-          &:hover {
-              background-color: #27ae60;
-          }
-      
-          &:active {
-              background-color: #1f8b4c;
-          }
+        padding: 0.5rem 1rem;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-bottom: 1rem;
+        width: 100%;
+        max-width: 150px; /* Ajuste o valor conforme necessário */
+      }
+    
+      .button-login {
+        background-color: #2980b9;
+      }
+    
+      .button-cadastrar {
+        background-color: #2ecc71;
       }
       
       .senha-incorreta {
@@ -155,8 +133,8 @@ export default function Home() {
       }
       
       .image-login {
-          width: 150px;
-          height: 150px;
+          width: 100px;
+          height: 100px;
           margin-bottom: 1rem;
       }      
       `}</style>

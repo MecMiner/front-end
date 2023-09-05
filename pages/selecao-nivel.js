@@ -7,6 +7,7 @@ import Loading from '@/components/Loading';
 import config from '@/config';
 import HomeButton from '@/components/HomeButton';
 import InfoButton from '@/components/InfoButton';
+import CheckOrientacao from '@/components/Orientacao';
 
 export default function Jogar() {
   const apiUrl = config.apiUrl;
@@ -65,6 +66,7 @@ export default function Jogar() {
     <div>
       <MyHead />
       <Layout>
+        <CheckOrientacao>
         <Loading />
         <div className='select-level'>
           
@@ -96,6 +98,7 @@ export default function Jogar() {
         </div>
         <HomeButton />
         <InfoButton/>
+        </CheckOrientacao>
       </Layout>
       <style jsx>{`
         .select-level {

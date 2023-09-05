@@ -23,13 +23,16 @@ const Layout = ({ children }) => {
 
   return (
     <div className="layout">
-      {shouldShowSite ? (
+      {/* {shouldShowSite ? (
         <div className="game-frame">
           {children}
         </div>
       ) : (
         <p>O site não pode ser exibido em telas tão pequenas.</p>
-      )}
+      )} */}
+      <div className="game-frame">
+          {children}
+        </div>
       <style jsx>{`
         .layout {
           max-width: 100vw;
@@ -52,7 +55,13 @@ const Layout = ({ children }) => {
             align-items: center;
             background-color: #fff;
             position: relative;
-        }     
+        }         
+        @media screen and (max-width: 1024px) {
+          .game-frame {
+            max-width: 98%;
+            max-height: 98%;
+          }
+        }
       `}</style>
     </div>
     
