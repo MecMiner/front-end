@@ -115,7 +115,7 @@ export default function Home() {
         cursor: pointer;
         transition: background-color 0.3s ease;
         margin-bottom: 1rem;
-        width: 100%;
+        width: 80%;
         max-width: 150px; /* Ajuste o valor conforme necessário */
       }
     

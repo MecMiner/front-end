@@ -66,7 +66,6 @@ export default function Jogar() {
     <div>
       <MyHead />
       <Layout>
-        <CheckOrientacao>
         <Loading />
         <div className='select-level'>
           
@@ -98,7 +97,6 @@ export default function Jogar() {
         </div>
         <HomeButton />
         <InfoButton/>
-        </CheckOrientacao>
       </Layout>
       <style jsx>{`
         .select-level {

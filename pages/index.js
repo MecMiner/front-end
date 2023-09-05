@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, {useState, useEffect } from 'react';
 import MyHead from '@/components/MyHead'
 import Layout from '@/components/MyLayout'
 import { useRouter } from 'next/router';
@@ -7,11 +7,24 @@ import Loading from '@/components/Loading';
 import config from '@/config';
 import Personagem from '@/components/Personagem';
 import DialogScreen from '@/components/DialogoBox';
-import CheckOrientacao from '@/components/Orientacao';
 
 export default function Menu({ data }) {
   const [isLoad,setIsLoad] = useState(true);
   const router = useRouter();
+  // Função para ativar o modo de tela cheia
+  const requestFullScreen = () => {
+    const element = document.documentElement;
+
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+      element.mozRequestFullScreen(); // Firefox
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen(); // Chrome, Safari e Opera
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen(); // IE/Edge
+    }
+  };
 
   const handleStart = (id) => {
     router.push(`/selecao-nivel?id=${id}`)
@@ -26,22 +39,36 @@ export default function Menu({ data }) {
     <div>
       <MyHead />
       <Layout>
-        <CheckOrientacao>
         <CheckUser onFunction={() => setIsLoad(false)}/>
-        <Personagem img={'m1/imagem3'} posicao={'10%'}/>
+        <Personagem img={'m1/imagem3'} posicao={'10%'} tamanho={'50'}/>
         <DialogScreen cor={config.mentor.cor} dialogText={'Olá, aqui você tem disponível alguns desafios, para iniciá-los, basta clicar sobre eles e eu te guiarei'} complete={() => ({})}/>
         {isLoad && <Loading/>}
-          <div>
-            {data.dataDesafio.map((item, index) => {
-              return (
-                <button key={index} className="btn-menu" style={{fontSize: '20px'}} onClick={() => handleStart(item.iddesafio)}>{item.titulo}</button>
-              )
-            })}  
-          </div>
+        <div className="challenge-list">
+          {data.dataDesafio.map((item, index) => (
+            <div className="challenge-item" key={index}>
+              <button className="btn-menu" style={{ fontSize: '20px' }} onClick={() => handleStart(item.iddesafio)}>
+                {item.titulo}
+              </button>
+            </div>
+          ))}
+        </div>
+          {/* <button className="fullscreen-button" onClick={() => requestFullScreen()}>Tela Cheia</button> */}
           <div className="close-button" onClick={() => handleLogout()}>Sair</div>
-        </CheckOrientacao>
       </Layout>
       <style jsx>{`
+
+        .challenge-list {
+          display: flex;
+          flex-direction: column; /* Alinhar verticalmente */
+          gap: 1rem;
+          padding: 1rem;
+          max-width: 100%; /* Largura máxima responsiva */
+        }
+
+        .challenge-item {
+          text-align: center;
+        }
+
         .btn-menu {
           padding: 2rem;
           background-color: #2980b9;

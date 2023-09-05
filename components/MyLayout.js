@@ -46,7 +46,7 @@ const Layout = ({ children }) => {
         .game-frame {
             width: 100%;
             max-width: 90%;
-            height: 90%;
+            aspect-ratio: 16 / 8;
             border: 2px solid #000;
             border-radius: 10px;
             display: flex;
@@ -56,12 +56,6 @@ const Layout = ({ children }) => {
             background-color: #fff;
             position: relative;
         }         
-        @media screen and (max-width: 1024px) {
-          .game-frame {
-            max-width: 98%;
-            max-height: 98%;
-          }
-        }
       `}</style>
     </div>
     

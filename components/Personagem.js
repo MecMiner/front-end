@@ -7,14 +7,15 @@ const Personagem = ({img, posicao, inverter, tamanho}) => {
         <Image
               className={`${inverter ? 'inverter' : ''}`}
               src ={`/src/personagens/${img}.png`}
-              width={tamanho? tamanho : 380}
-              height={tamanho? tamanho: 380}
+              fill
               alt="persongem"
               priority
               loading="eager"
             />
         <style jsx>{`
           .personagem {
+            height:${tamanho? tamanho : '10'}%;
+            aspect-ratio: 1 / 1;
             position: absolute;
             left: ${posicao};
             bottom: 0%;
