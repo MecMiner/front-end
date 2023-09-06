@@ -1,42 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const Layout = ({ children }) => {
 
-  const [shouldShowSite, setShouldShowSite] = useState(false);
-
-  useEffect(() => {
-    function handleResize() {
-      setShouldShowSite(window.innerWidth >= 1024);
+  const checkIsMobile = () => {
+    if (typeof window !== 'undefined') {
+      const userAgent = window.navigator.userAgent;
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
     }
+    return false; // Trata como não sendo um dispositivo móvel se `window` não estiver definido
+  };
 
-    // Inicialização
-    handleResize();
-
-    // Adiciona um listener para o evento de resize
-    window.addEventListener('resize', handleResize);
-
-    // Remove o listener ao desmontar o componente
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  const isMobile = checkIsMobile();
 
   return (
     <div className="layout">
-      {/* {shouldShowSite ? (
-        <div className="game-frame">
-          {children}
-        </div>
-      ) : (
-        <p>O site não pode ser exibido em telas tão pequenas.</p>
-      )} */}
       <div className="game-frame">
           {children}
         </div>
       <style jsx>{`
         .layout {
           max-width: 100vw;
-          min-width: 1040px;
+          min-width: ${isMobile ? '600px' : '1040px'};
           height: 100vh;
           display: flex;
           justify-content: center;
@@ -58,11 +42,6 @@ const Layout = ({ children }) => {
             position: relative;
         }   
         
-        @media (max-width: 800px) {
-          .layout {
-            min-width: 600px;
-          }
-       }
   
       `}</style>
     </div>

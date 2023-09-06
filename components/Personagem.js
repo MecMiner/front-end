@@ -14,7 +14,7 @@ const Personagem = ({img, posicao, inverter, tamanho}) => {
             />
         <style jsx>{`
           .personagem {
-            height:${tamanho? tamanho : '10'}%;
+            height:${tamanho? tamanho : '50'}%;
             aspect-ratio: 1 / 1;
             position: absolute;
             left: ${posicao};

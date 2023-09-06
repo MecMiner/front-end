@@ -41,7 +41,7 @@ export default function Menu({ data }) {
       <Layout>
         <CheckUser onFunction={() => setIsLoad(false)}/>
         <Personagem img={'m1/imagem3'} posicao={'10%'} tamanho={'60'}/>
-        <DialogScreen cor={config.mentor.cor} dialogText={'Olá, aqui você tem disponível alguns desafios, para iniciá-los, basta clicar sobre eles e eu te guiarei'} complete={() => ({})}/>
+        <DialogScreen tamanho={'20%'} posicao={'10%'} posicaoY={'20%'} cor={config.mentor.cor} dialogText={'Olá,  asdsasd asd sadsas sda sd asdsaasdas asdassd asdda asdsas asdas aqui você tem disponível alguns desafios.'} complete={() => ({})}/>
         {isLoad && <Loading/>}
         <div className="challenge-list">
           {data.dataDesafio.map((item, index) => (

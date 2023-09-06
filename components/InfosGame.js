@@ -33,11 +33,11 @@ const InfosGame = ({ user }) => {
             <div style={{ position: 'absolute', width: '100%', height: '10%', top: '90%' }}>
                 <Copyright />
             </div>
-            <div style={{ position: 'absolute', width: '100%', height: '10%', top: '80%', display: 'inline-block' }}>
-                <div>
+            <div style={{ position: 'absolute', width: '100%', height: '10%', top: '80%' }}>
+                <div style={{position: "absolute", width: '50%', height: '100%', justifyContent: 'center'}}>
                     <HomeButton />
                 </div>
-                <div>
+                <div style={{position: "absolute", width: '50%', height: '100%', justifyContent: 'center'}}>
                     <InfoButton />
                 </div>
 

@@ -16,7 +16,7 @@ const HomeButton = () => {
       <style jsx>{`
         .homeButton {
           width: 100%;
-          z-index: 9999;
+          z-index: 999999;
           cursor: pointer;
         }
         

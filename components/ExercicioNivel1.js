@@ -143,14 +143,19 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
             </div>
             
             <div className="actions-container">
-                <div className="tempo-restante">
-                    Tempo restante: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
+                <div className='tempo-restante'>
+                    Tempo: {Math.floor(tempoRestante / 60)}:
+                    {(tempoRestante % 60).toString().padStart(2, '0')}
                 </div>
-                <div style={{flexDirection: 'row', width: '100%'}}>
+                <div className="buttons-container">
                     <button onClick={handleVerificarOrdem}>Conferir</button>
-                    <button className='dica-button' onClick={handleExibirDica}>Dica do Professor</button>
-                </div>               
-                <p  className="erro-message">{erroMsg? 'Ops! A ordem está incorreta. Tente novamente.' : ''}</p>
+                    <button className="dica-button" onClick={handleExibirDica}>
+                        Dica do Professor
+                    </button>
+                </div>
+                <p className="erro-message">
+                {erroMsg ? 'Ops! A ordem está incorreta. Tente novamente.' : ''}
+                </p>
             </div>
 
             <style jsx>{`
@@ -166,8 +171,6 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         height: 100%;
         width: 100%;
         z-index: 9999;
-/*         border: 1px solid black;
-        border-radius: 10px; */
         transform: translateX(-50%);
     }
 
@@ -218,58 +221,62 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
 
 
     .actions-container {
+        width: 100%;
+        height: 20%;
         position: absolute;
         top: 80%;
+
+      }
+      
+      .tempo-restante {
+        position: absolute;
+        transform: translate(-50% , -50%);
+        top: 50%;
+        left:20%;
+      }
+
+      .buttons-container {
+        position: absolute;
+        transform: translate(-50% , -50%);
+        left:50%;
+        top: 50%;
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
         align-items: center;
-    }
-
-    .erro-message {
-        color: red;
-        margin-bottom: 10px;
-    }
-
-    button {
+      }
+      
+      button {
         padding: 10px 20px;
-        margin-bottom: 10px;
         background-color: green;
         color: white;
         border: none;
         border-radius: 4px;
-        font-size: 16px;
         cursor: pointer;
-        margin: 0 15px;
-    }
-    .dica-button {
+        margin: 5px;
+      }
+      
+      .dica-button {
         background-color: #ff9800;
-    }
-    button:hover {
+      }
+      
+      button:hover {
         transform: scale(1.2);
-    }
-    .tempo-restante {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 10px;
+      }
+      
+      .erro-message {
+        position: absolute;
+        transform: translate(-50% , -100%);
+        left:50%;
+        top: 80%;
+        color: red;
+        font-size: 14px; /* Ajuste o tamanho da fonte conforme necessário */
+      }
+    .title {
+        color: #ff9800;
+        margin-bottom: 20px;
         }
 
-        .title {
-            color: #ff9800;
-            margin-bottom: 20px;
-          }
-    @media (max-width: 900px) {
-            button {
-                font-size: 14px;
-            }
-
-            .title {
-                font-size: 12px;
-            }
-            .frases-lista,
-            .frases-ordenadas-lista  li {
-                font-size: 12px; /* Ajuste o tamanho da fonte conforme necessário */
-            }
-        }
     
     `}</style>
         </div>

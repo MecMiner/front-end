@@ -93,8 +93,6 @@ export default function Jogar() {
             ))}
           </div>
         </div>
-        <HomeButton />
-        <InfoButton />
       </Layout>
       <style jsx>{`
         .select-level {
