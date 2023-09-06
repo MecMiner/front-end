@@ -15,9 +15,7 @@ const HomeButton = () => {
       </div>
       <style jsx>{`
         .homeButton {
-          position: absolute;
-          top: 20px;
-          left: 20px;
+          width: 100%;
           z-index: 9999;
           cursor: pointer;
         }

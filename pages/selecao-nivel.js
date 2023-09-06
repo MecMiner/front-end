@@ -68,61 +68,64 @@ export default function Jogar() {
       <Layout>
         <Loading />
         <div className='select-level'>
-          
           <h1>Selecione um nível</h1>
           <div className='level-frame'>
-          
-          {[1, 2, 3, 4].map((level, index, array) => (
-            <div key={level} className='level-button-container'>
-              <button
-                className={`circular-button circular-button-${level} level-button`}
-                onClick={() => handleButtonClick(`nivel-${level}`)}
-                disabled={!data || !data.response || data.response.nivel < level}
-              >
+
+            {[1, 2, 3, 4].map((level, index, array) => (
+              <div key={level} className='level-button-container'>
+                <button
+                  className={`circular-button`}
+                  onClick={() => handleButtonClick(`nivel-${level}`)}
+                  disabled={!data || !data.response || data.response.nivel < level}
+                >
                   <Image
                     className='circular-image'
                     src={`/src/mapa/numero${level}${data && data.response && data.response.nivel >= level ? '' : 'ds'}.png`}
-                    width={150}
-                    height={150}
+                    fill
                     alt={`numero${level}`}
                     priority
                   />
-                </button>
+                </button>              
                 {index < array.length - 1 && (
-                <div className={`line ${data && data.response && data.response.nivel > level ? 'active' : ''}`} />
-              )}
-                </div>
-              ))}
+                  <div className={`line ${data && data.response && data.response.nivel > level ? 'active' : ''}`} />
+                )}
+              </div>
+            ))}
           </div>
         </div>
         <HomeButton />
-        <InfoButton/>
+        <InfoButton />
       </Layout>
       <style jsx>{`
         .select-level {
+          position: relative;
+          width: 80%;
+          height: 100%;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: flex-start;
-          height: 100vh;
-          padding-top: 20px;
         }
 
         h1 {
-          font-size: 36px;
           color: #ff9900;
           text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
           margin-top: 40px;
         }
 
         .level-frame {
+          position: absolute;
+          top:50%;
+          transform: translateY(-50%);
           display: flex;
           align-items: center;
-          gap: 100px;
-          margin-top: 150px;
+          gap: calc(100% / 7);
+          width: 100%;
         }
 
         .level-button-container {
+          width: 25%;
+          aspect-ratio: 1/1;
           position: relative;
         }
 
@@ -132,9 +135,9 @@ export default function Jogar() {
 
         .line {
           position: absolute;
-          width: calc(100% + 80px);
+          width: 200%;
           height: 10px; 
-          background-color: #858383; /* Cor da linha */
+          background-color: #858383;
           top: calc(50% - 0.5px);
           left: calc(50% + 15px);
         }
@@ -144,9 +147,10 @@ export default function Jogar() {
         }
         
         .circular-button {
-          position: relative;
-          top: 50%;
-          z-index: 99;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          z-index: 9;
         }
 
         .circular-button:hover {
@@ -154,5 +158,5 @@ export default function Jogar() {
         }
       `}</style>
     </div>
-  );    
+  );
 }

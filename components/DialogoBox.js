@@ -24,15 +24,14 @@ const DialogScreen = ({tamanho, posicao, dialogText, cor, complete, posicaoY }) 
     }, [dialogText]);
 
     return (
-        <div className='centerDown'>
+        <div>
             {dialogVisible && (
                 <div className='dialogoBox'>
-                    <span style={{ whiteSpace: 'pre-wrap' , fontSize: '18px'}}>{currentText}</span>
+                    <span style={{ whiteSpace: 'pre-wrap'}}>{currentText}</span>
                 </div>
             )}
             <style jsx>{`
                 .dialogoBox {
-                    font-size: 10px;
                     position: absolute;
                     width: ${tamanho ? tamanho : '20%'};
                     left: ${posicao ? posicao : '5%'};
@@ -40,20 +39,14 @@ const DialogScreen = ({tamanho, posicao, dialogText, cor, complete, posicaoY }) 
                     top: ${posicaoY ? posicaoY : '10%'};
                     padding: 10px;
                     color: rgb(15, 5, 5);
-                    font-size: 16px;
                     border: 1px solid #0a0a0a;
                     height: auto;
-                    min-height: 100px; 
                     z-index: 100;
                     border-radius: 30px;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
+                    max-height: 90%;
+                    overflow-y: auto;
                   };
-                  
-                  .centerDown {
-                  position: fixed;
-                  left: 50%;
-                  top: 20%;
-                  }
             `}</style>
         </div>
     );

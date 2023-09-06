@@ -36,6 +36,7 @@ const Layout = ({ children }) => {
       <style jsx>{`
         .layout {
           max-width: 100vw;
+          min-width: 1040px;
           height: 100vh;
           display: flex;
           justify-content: center;
@@ -55,7 +56,14 @@ const Layout = ({ children }) => {
             align-items: center;
             background-color: #fff;
             position: relative;
-        }         
+        }   
+        
+        @media (max-width: 800px) {
+          .layout {
+            min-width: 600px;
+          }
+       }
+  
       `}</style>
     </div>
     

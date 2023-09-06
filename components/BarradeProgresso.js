@@ -11,12 +11,12 @@ const BarradeProgresso = ({ total, atual }) => {
             <style jsx>{`
         .coins-xp-bar {
           position: absolute;  
-          width: 99%;
-          top: 100%;
+          width: 100%;
+          top: calc(100% - 4px);
           left: 50%;
           display: flex;
           flex-direction: column;
-          border-radius: 0px 0px 40px 100px ;
+          border-radius:  40px 100px 0px 0px ;
           align-items: flex-start;
           transform: translateX(-50%);
           font-family: Arial, sans-serif; /* Substitua pela fonte desejada */

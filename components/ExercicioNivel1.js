@@ -110,8 +110,10 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
     return (
         <div className="sorting-game-container">
             <div className='quadros-frases'>
-                <div>
-                    <h2 style={{textAlign: 'center'}} className='title'>Etapas desordenadas:</h2>
+                <div style={{ position: 'absolute', width: '50%', left:'0%', height: '100%'}}>
+                    <div style={{position: 'absolute', width: '100%', height: '10%'}}>
+                        <h2 style={{textAlign: 'center'}} className='title'>Etapas desordenadas:</h2>
+                    </div>  
                     <div className="frases-container">
                         <ul className="frases-lista">
                             {frases.map((frase, index) => (
@@ -123,8 +125,10 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
                     </div>
 
                 </div>
-                <div>
-                    <h2 style={{textAlign: 'center'}} className='title'>Etapas ordenadas:</h2>
+                <div style={{position: 'absolute', width: '50%', left: '50%', height: '100%'}}>
+                    <div style={{position: 'absolute', width: '100%', height: '10%'}}>
+                        <h2 style={{textAlign: 'center'}} className='title'>Etapas ordenadas:</h2>
+                    </div>
                     <div className="frases-ordenadas-container">
                         <ul className="frases-ordenadas-lista">
                             {frasesOrdenadas.map((frase, index) => (
@@ -158,34 +162,36 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         flex-direction: column;
         align-items: center;
         position: absolute;
-        top: 5%;
         left: 50%;
-        height: 90%;
-        width: 70%;
-        min-width: 800px;
+        height: 100%;
+        width: 100%;
         z-index: 9999;
-        border: 1px solid black;
-        border-radius: 10px;
+/*         border: 1px solid black;
+        border-radius: 10px; */
         transform: translateX(-50%);
     }
 
     .quadros-frases {
+        position: absolute;
         opacity: 1.9;
         display: flex;
         flex-direction: row;
         justify-content: space-around;
         width: 100%;
+        height: 80%;
     }
 
     .frases-container,
     .frases-ordenadas-container {
+        padding: 5px;
+        position: absolute;
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 380px;
-        height: 330px;
+        width: 95%; 
+        height: 85%;
+        top: 15%;
         border: 1px solid #ccc;
-        padding: 5px;
         margin-bottom: 20px;
         overflow-y: auto;
     }
@@ -210,12 +216,10 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         cursor: pointer;
     }
 
-    .frases-container h2,
-    .frases-ordenadas-container h2 {
-        margin: 0;
-    }
 
     .actions-container {
+        position: absolute;
+        top: 80%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -251,9 +255,22 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
 
         .title {
             color: #ff9800;
-            font-size: 24px;
             margin-bottom: 20px;
           }
+    @media (max-width: 900px) {
+            button {
+                font-size: 14px;
+            }
+
+            .title {
+                font-size: 12px;
+            }
+            .frases-lista,
+            .frases-ordenadas-lista  li {
+                font-size: 12px; /* Ajuste o tamanho da fonte conforme necessário */
+            }
+        }
+    
     `}</style>
         </div>
     );

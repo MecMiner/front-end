@@ -8,20 +8,19 @@ import Personagem from '@/components/Personagem';
 import ButtonAdvance from '@/components/ButtonAdvance';
 import ExercicioNivel1 from '@/components/ExercicioNivel1';
 import config from '@/config';
-import CoinsXP from '@/components/CoinsXp';
 import Desempenho from '@/components/Desempenho';
 import Loading from '@/components/Loading';
 import BarradeProgresso from '@/components/BarradeProgresso';
-import HomeButton from '@/components/HomeButton';
 import Button from '@/components/Buttons';
-import InfoButton from '@/components/InfoButton';
 import ExibirDica from '@/components/ExibirDica';
+import Image from 'next/image';
+import InfosGame from '@/components/InfosGame';
 
 
 export default function Jogar({data}) {
-  const [pag, setPag] = useState(1);
+  const [pag, setPag] = useState(25);
   const [user, setUser] = useState({});
-  const tamanhoP = 30;
+  const tamanhoP = 60;
   const apiUrl = config.apiUrl;
   const fraseGrande = data?.dataDesafio?.etapasSolucao || " "
   const linhas = fraseGrande.split('\r\n');
@@ -242,7 +241,7 @@ export default function Jogar({data}) {
         return (
           <div>
             <DialogoBox  cor={mentor.cor} complete={() => setShowButton(true)} posicao={'25%'} tamanho={'50%'} dialogText={`${mentor.nome} já desenvolveu diversas pesquisas relacionadas aos projetos de SL e suas comunidades, e trabalhou em alguns projetos, fazendo contribuições importantes. ${mentor.nome} adora falar sobre esse universo para outras pessoas, e compartilhar o conhecimento que adquiriu ao longo dos anos.`} />
-            <Personagem  posicao={"50%"} img={"m1/imagem2"} />
+            <Personagem  posicao={"50%"} img={"m1/imagem2"} tamanho={tamanhoP}/>
             {showButton &&  <ButtonAdvance buttonClick={() => handleButtonClick()} tamanho={tamanhoP}/>}
           </div>)
       case 3:
@@ -254,6 +253,7 @@ export default function Jogar({data}) {
             {showButton &&  <ButtonAdvance buttonClick={() => handleSetCoin(20, 5)} />}
             {showMessage && (
               <div className="ganhador-moedas">
+                <Image src={'/src/moeda.gif'} width={100} height={100} alt='moeda' priority />
                 Você ganhou 20 moedas e 5 XP!
               </div>
             )}
@@ -294,6 +294,7 @@ export default function Jogar({data}) {
             {showButton && <ConfirmationBox posicaoY={'10%'} onYes={() => handleSetCoin(10,0)} onNo={() => {router.push(`/selecao-nivel?id=${id}`)}} />}
             {showMessage && (
               <div className="ganhador-moedas">
+                
                 Você ganhou 10 moedas
               </div>
             )}
@@ -549,12 +550,25 @@ export default function Jogar({data}) {
     <div>
       <MyHead />
       <Layout>
-        <CoinsXP coin={user.pontos} xp={user.xp} bom={user.bomDesempenho} otm={user.otimoDesempenho} colaboracao={user.colaboracao}/>
-        {renderPag()}
-        <BarradeProgresso total={38} atual={pag}/>
-        <HomeButton/>
-        <InfoButton/>
+        <InfosGame  user={user}/>
+        
+        <div className='renderPag'>
+          {renderPag()}
+          <BarradeProgresso total={38} atual={pag}/>
+        </div>
+       
+        
+        
       </Layout>
+      <style jsx>{`
+        .renderPag{
+          position: absolute;
+          left: 15%;
+          width: 85%;
+          height: 100%;
+          background-color: pink;
+        }
+      `}</style>
     </div>
   );
 }

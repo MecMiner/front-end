@@ -19,12 +19,6 @@ html, body{ margin: 0}
 
 
 
-.nextButton {
-  position: absolute;
-  top: 50%;
-  right: 20px;
-}
-
 
 .inverter {
   transform: scaleX(-1);
@@ -33,18 +27,35 @@ html, body{ margin: 0}
 
 .ganhador-moedas {
   position: fixed;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 20px;
-  background-color: #ffd700;
-  color: #000000;
+  background-color: rgba(199, 196, 196, 0.566);
+  color: rgb(171, 171, 1);
   font-size: 25px;
   border-radius: 8px;
   animation: fadeInOut 5s;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   z-index: 999999;
 }
 
 @media (max-width: 600px) {
    
+}
+
+/* Estilos padrão para telas maiores */
+h1 {
+  font-size: 36px;
+}
+
+/* Estilos para telas menores (por exemplo, telas com largura de até 768px) */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 24px;
+  }
 }

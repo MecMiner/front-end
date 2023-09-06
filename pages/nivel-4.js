@@ -7,7 +7,7 @@ import ConfirmationBox from '@/components/ConfirmationBox';
 import Personagem from '@/components/Personagem';
 import ButtonAdvance from '@/components/ButtonAdvance';
 import config from '@/config';
-import CoinsXP from '@/components/CoinsXp';
+import CoinsXP from '@/components/Xp';
 import Desempenho from '@/components/Desempenho';
 import Loading from '@/components/Loading';
 import Button from '@/components/Buttons';

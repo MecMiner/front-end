@@ -40,29 +40,31 @@ export default function Menu({ data }) {
       <MyHead />
       <Layout>
         <CheckUser onFunction={() => setIsLoad(false)}/>
-        <Personagem img={'m1/imagem3'} posicao={'10%'} tamanho={'50'}/>
+        <Personagem img={'m1/imagem3'} posicao={'10%'} tamanho={'60'}/>
         <DialogScreen cor={config.mentor.cor} dialogText={'Olá, aqui você tem disponível alguns desafios, para iniciá-los, basta clicar sobre eles e eu te guiarei'} complete={() => ({})}/>
         {isLoad && <Loading/>}
         <div className="challenge-list">
           {data.dataDesafio.map((item, index) => (
             <div className="challenge-item" key={index}>
-              <button className="btn-menu" style={{ fontSize: '20px' }} onClick={() => handleStart(item.iddesafio)}>
+              <button className="btn-menu" onClick={() => handleStart(item.iddesafio)}>
                 {item.titulo}
               </button>
             </div>
           ))}
         </div>
-          {/* <button className="fullscreen-button" onClick={() => requestFullScreen()}>Tela Cheia</button> */}
+        <button className="fullscreen-button" onClick={() => requestFullScreen()}>Tela Cheia</button>
           <div className="close-button" onClick={() => handleLogout()}>Sair</div>
       </Layout>
       <style jsx>{`
 
         .challenge-list {
+          width: 30%;
           display: flex;
           flex-direction: column; /* Alinhar verticalmente */
           gap: 1rem;
           padding: 1rem;
-          max-width: 100%; /* Largura máxima responsiva */
+          max-height: 100%;
+          overflow-y: auto;
         }
 
         .challenge-item {
@@ -70,14 +72,15 @@ export default function Menu({ data }) {
         }
 
         .btn-menu {
-          padding: 2rem;
+          width: 100%;
+          padding: 1rem;
           background-color: #2980b9;
           color: #fff;
           border: none;
           border-radius: 10px;
           cursor: pointer;
           transition: background-color 0.3s ease;
-          margin: 0 1rem;
+
         
           &:hover {
             background-color: #1a5276;
@@ -89,9 +92,9 @@ export default function Menu({ data }) {
         }
         .close-button {
           position: absolute;
-          top: 20px;
-          right: 20px;
-          font-size: 24px;
+          top: 2%;
+          right: 2%;
+          font-size: 18px;
           color: red;
           cursor: pointer;
           transition: color 0.3s ease;

@@ -7,7 +7,7 @@ import ConfirmationBox from '@/components/ConfirmationBox';
 import Personagem from '@/components/Personagem';
 import ButtonAdvance from '@/components/ButtonAdvance';
 import config from '@/config';
-import CoinsXP from '@/components/CoinsXp';
+import CoinsXP from '@/components/Xp';
 import Desempenho from '@/components/Desempenho';
 import Loading from '@/components/Loading';
 import ExercicioNivel2 from '@/components/ExercicioNivel2';
@@ -44,7 +44,7 @@ export default function Jogar({ data }) {
     bomDesempenho: false,
     otimoDesempenho: false,
   })
-  const tamanho = 400;  
+  const tamanho = 60;  
 
   useEffect(() => {
     const fetchUser = async () => {

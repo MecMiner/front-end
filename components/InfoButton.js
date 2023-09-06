@@ -44,7 +44,7 @@ Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja 
       </div>
       <style jsx>{`
         .info-overlay {
-          position: fixed;
+          position: absolute;
           top: 0;
           left: 0;
           width: 100vw;
@@ -71,9 +71,6 @@ Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja 
         }
 
         .homeButton {
-          position: absolute;
-          top: 90%;
-          left: 95%;
           z-index: 9999;
           cursor: pointer;
         }
