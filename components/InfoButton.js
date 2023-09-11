@@ -39,12 +39,12 @@ Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja 
       )}
       <div className='homeButton' onClick={handleGoToHomePage}>
         <div className='linkContainer'>
-          <BiHelpCircle size={48} />
+          <BiHelpCircle size={24} />
         </div>
       </div>
       <style jsx>{`
         .info-overlay {
-          position: absolute;
+          position: fixed;
           top: 0;
           left: 0;
           width: 100vw;
@@ -57,8 +57,8 @@ Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja 
         }
 
         .info {
-          width: 500px;
-          height: 500px;
+          width: 50%;
+          height: 50%;
           border: 2px solid #000;
           border-radius: 10px;
           display: flex;
@@ -68,9 +68,13 @@ Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja 
           background-color: #fff;
           z-index: 9999999999;
           position: relative;
+          overflow-y: auto;
         }
 
         .homeButton {
+          position: absolute;
+          transform: translateX(-50%);
+          left: 50%;
           z-index: 9999;
           cursor: pointer;
         }

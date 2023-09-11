@@ -566,7 +566,6 @@ export default function Jogar({data}) {
           left: 15%;
           width: 85%;
           height: 100%;
-          background-color: pink;
         }
       `}</style>
     </div>

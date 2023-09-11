@@ -72,21 +72,28 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
             onChange={(e) => handleInputChange(e, 4)}
           />
         </div>
-        <button type="submit" className="button">Enviar</button>
+        <div className="button-container">
+          <button type="button" className="button">Dica Aluno</button>
+          <button type="submit" className="button">Enviar</button>
+          <button type="button" className="button">Dica Professor</button>
+        </div>
         <div className="tempo-restante">
                 Tempo restante: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
           </div>
       </form>
       <style jsx>{`
         .complete-as-etapa {
-            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 90%;
             border: 1px solid black;
             border-radius: 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
             font-family: Arial, sans-serif;
-            z-index: 999;
+            transform: translate(-50%, -50%);
           }
           
           .title {
@@ -102,6 +109,7 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
           }
           
           .step {
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -117,7 +125,7 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
           }
           
           .textarea {
-            width: 500px;
+            width: 80%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -125,6 +133,12 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
             resize: vertical; /* Permite redimensionamento vertical */
             min-height: 50px; /* Altura mínima inicial */
             overflow: auto; /* Adiciona barra de rolagem quando o conteúdo excede a altura */
+          }
+
+          .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
           }
           
           .button {
@@ -143,7 +157,7 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
             transform: scale(1.1);
           }
           .tempo-restante {
-            font-size: 20px;
+            font-size: 14px;
             font-weight: bold;
             margin-bottom: 10px;
             }

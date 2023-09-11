@@ -5,14 +5,16 @@ const Copyright = () => {
   return (
       <div className="coin">
    
-        <span style={{color: 'white'}} className="value"> © Jeferson Souza</span>
+        <p style={{color: 'black'}} className="value"> © Jeferson Souza</p>
       <style jsx>{`
-        .coin {       
+        .coin { 
+          position: absolute;      
           width: 100%;
           height: 100%;
           display: flex;
           align-items: center;
           justify-content: center;
+          font-size: 11px;
         }
       `}</style>
     </div>

@@ -7,16 +7,14 @@ import ConfirmationBox from '@/components/ConfirmationBox';
 import Personagem from '@/components/Personagem';
 import ButtonAdvance from '@/components/ButtonAdvance';
 import config from '@/config';
-import CoinsXP from '@/components/Xp';
 import Desempenho from '@/components/Desempenho';
 import Loading from '@/components/Loading';
 import ExercicioNivel2 from '@/components/ExercicioNivel2';
 import AvaliacaoStar from '@/components/AvaliacaoStar';
 import Button from '@/components/Buttons';
-import HomeButton from '@/components/HomeButton';
 import BarradeProgresso from '@/components/BarradeProgresso';
-import InfoButton from '@/components/InfoButton';
 import ExibirDica from '@/components/ExibirDica';
+import InfosGame from '@/components/InfosGame';
 
 
 export default function Jogar({ data }) {
@@ -665,12 +663,24 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
     <div>
       <MyHead />
       <Layout>
-        <CoinsXP coin={user.pontos} xp={user.xp} bom={user.bomDesempenho} otm={user.otimoDesempenho} colaboracao={user.colaboracao}/>
-        {renderPag()}
-        <HomeButton/>
-        <InfoButton/>
-        <BarradeProgresso total={34} atual={pag}/>
+        <InfosGame  user={user}/>
+        
+        <div className='renderPag'>
+          {renderPag()}
+          <BarradeProgresso total={38} atual={pag}/>
+        </div>
+       
+        
+        
       </Layout>
+      <style jsx>{`
+        .renderPag{
+          position: absolute;
+          left: 15%;
+          width: 85%;
+          height: 100%;
+        }
+      `}</style>
     </div>
   );
 }

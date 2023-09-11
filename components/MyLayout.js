@@ -19,7 +19,6 @@ const Layout = ({ children }) => {
         </div>
       <style jsx>{`
         .layout {
-          max-width: 100vw;
           min-width: ${isMobile ? '600px' : '1040px'};
           height: 100vh;
           display: flex;

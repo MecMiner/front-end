@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Button from './Buttons';
 
 const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
     const [frases, setFrases] = useState([]);
@@ -169,9 +168,8 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         position: absolute;
         left: 50%;
         height: 100%;
-        width: 100%;
-        z-index: 9999;
-        transform: translateX(-50%);
+        width: 90%;
+        transform: translateX(-50%);       
     }
 
     .quadros-frases {
@@ -198,7 +196,7 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         margin-bottom: 20px;
         overflow-y: auto;
     }
-
+    
     .frases-lista,
     .frases-ordenadas-lista {
         list-style-type: none;

@@ -15,6 +15,7 @@ import ExercicioNivel3 from '@/components/ExercicioNivel3';
 import HomeButton from '@/components/HomeButton';
 import BarradeProgresso from '@/components/BarradeProgresso';
 import InfoButton from '@/components/InfoButton';
+import InfosGame from '@/components/InfosGame';
 
 
 export default function Jogar({ data }) {
@@ -34,7 +35,7 @@ export default function Jogar({ data }) {
   const [showDicaColega, setShowDicaColega] = useState(false);
   const [usouDicaProfessor, setUsouDicaProfessor] = useState(false);
   const [usouDicaColega, setUsouDicaColega] = useState(false);
-  const tamanho = 430;
+  const tamanho = 50;
 
 /*   useEffect(() => {
     console.log(JSON.stringify(info));
@@ -722,15 +723,27 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
 
   return (
     <div>
-      <MyHead />
-      <Layout>
-        <CoinsXP coin={user.pontos} xp={user.xp} bom={user.bomDesempenho} otm={user.otimoDesempenho} colaboracao={user.colaboracao}/>
+    <MyHead />
+    <Layout>
+      <InfosGame  user={user}/>
+      
+      <div className='renderPag'>
         {renderPag()}
-        <BarradeProgresso total={39} atual={pag}/>
-        <HomeButton/>
-        <InfoButton/>
-      </Layout>
-    </div>
+        <BarradeProgresso total={38} atual={pag}/>
+      </div>
+     
+      
+      
+    </Layout>
+    <style jsx>{`
+      .renderPag{
+        position: absolute;
+        left: 15%;
+        width: 85%;
+        height: 100%;
+      }
+    `}</style>
+  </div>
   );
 }
 

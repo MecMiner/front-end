@@ -8,14 +8,22 @@ const BomDesempenho = ({info}) => {
             <Image src={'/src/personagens/bomDesempenho.png'} fill alt='moeda' priority />
         </div>
         
-        <span className="value"> {info} </span>
+        <div className="text-container">
+          <span className="value"> {info} </span>
+        </div>              
       <style jsx>{`
         .coin {       
           width: 100%;
           height: 100%;
           display: flex;
           align-items: center;
-          padding: 5%;
+          padding:5px;
+        }
+        .text-container {
+          flex: 1; /* O texto ocupa todo o espaço disponível */
+          display: flex;
+          align-items: center;
+          justify-content: center; /* Alinha o texto ao centro */
         }
 
       `}</style>
