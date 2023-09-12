@@ -67,7 +67,7 @@ function CompleteAsEtapa3({onSucess, setInfo, tentativas, dicaAluno, dicaProf}) 
     <div className="complete-as-etapa">
       <h1 className="title">Complete as Etapas</h1>
       <form className="form" onSubmit={handleSubmit}>
-      <div className="step">
+        <div className="step">
           <textarea
             className="textarea"
             placeholder='Digite a etapa 1'
@@ -113,88 +113,6 @@ function CompleteAsEtapa3({onSucess, setInfo, tentativas, dicaAluno, dicaProf}) 
             </div>
         </div>
       </form>
-      <style jsx>{`
-        .complete-as-etapa {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 90%;
-            border: 1px solid black;
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            transform: translate(-50%, -50%);
-          }
-          
-          .title {
-            color: #ff9800;
-            font-size: 24px;
-            margin-bottom: 20px;
-          }
-          
-          .form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
-          
-          .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
-          }
-          
-          .step-title {
-            color: black;
-            font-size: 12px;
-            margin-bottom: 10px;
-            margin-right: 20px;
-            margin-left: 20px;
-          }
-          
-          .textarea {
-            width: 50%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-            resize: vertical; /* Permite redimensionamento vertical */
-            min-height: 50px; /* Altura mínima inicial */
-            overflow: auto; /* Adiciona barra de rolagem quando o conteúdo excede a altura */
-          }
-          
-          .button-container {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-          }
-          
-          .button {
-            padding: 10px 20px;
-            margin-bottom: 10px;
-            background-color: green;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-          }
-          
-          .button:hover {
-            background-color: #32CD32	;
-            transform: scale(1.1);
-          }
-
-          .tempo-restante {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            }
-          
-      `}</style>
     </div>
   );
 }

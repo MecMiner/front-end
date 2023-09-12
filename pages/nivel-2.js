@@ -14,10 +14,12 @@ import AvaliacaoStar from '@/components/AvaliacaoStar';
 import BarradeProgresso from '@/components/BarradeProgresso';
 import ExibirDica from '@/components/ExibirDica';
 import InfosGame from '@/components/InfosGame';
+import Button from '@/components/Buttons';
+import { sendRequest } from './api/api';
 
 
 export default function Jogar({ data }) {
-  const [pag, setPag] = useState(1);
+  const [pag, setPag] = useState(24);
   const [user,setUser] = useState({});
   const apiUrl = config.apiUrl;
   const fraseGrande = data.dataDesafio.etapasSolucao
@@ -42,6 +44,20 @@ export default function Jogar({ data }) {
     otimoDesempenho: false,
   })
   const tamanho = 60;  
+  const [isSave, setIsSave] = useState(false);
+
+  useEffect(() =>{
+    const setDesempenho = () => {
+      if (userGame.bomDesempenho) {
+        setUser(prevState => ({ ...prevState, bomDesempenho: prevState.bomDesempenho + 1 }));
+      }
+      if (userGame.otimoDesempenho) {
+        setUser(prevState => ({ ...prevState, otimoDesempenho: prevState.otimoDesempenho + 1 }));
+      }    
+    }
+
+    setDesempenho();
+  },[userGame])
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -83,7 +99,7 @@ export default function Jogar({ data }) {
       const token = localStorage.getItem('token');
 
       if (!token) {
-        router.push('/'); // Não tiver token, vai para página de login
+        router.push('/login');
       } else {
         try {
           const response = await fetch(`${apiUrl}/respostas/${id}`, {
@@ -97,8 +113,6 @@ export default function Jogar({ data }) {
           const dados = await response.json();
 
           if (response.ok) {
-        /*     console.log('Dados recuperados:', dados); */
-
             if (dados.response.nivel >= 1) {
               if (!dados.response.statusNivel2.jogou) {
                 setInfo(prevInfo => {
@@ -127,10 +141,8 @@ export default function Jogar({ data }) {
                 if (dados.response.statusNivel2.corrigido) {
                   if(dados.response.statusNivel2.certo) {
                     if(dados.response.statusNivel2.erros == 0){
-                      setUser(prevState => ({ ...prevState, otimoDesempenho: prevState.otimoDesempenho + 1 }));
                       setUserGame(prevState => ({...prevState, otimoDesempenho: true}));
                     } else {
-                      setUser(prevState => ({ ...prevState, bomDesempenho: prevState.bomDesempenho + 1 }));
                       setUserGame(prevState => ({...prevState, bomDesempenho: true}));
                     }
                   }
@@ -151,7 +163,7 @@ export default function Jogar({ data }) {
       }
     };
 
-    const interval = setInterval(fetchData, 5000);
+    const interval = setInterval(fetchData, 60000);
 
     if (!checkBanco) {
       fetchData();
@@ -234,42 +246,21 @@ export default function Jogar({ data }) {
   };
 
   const handleSetBanco = async () => {
-    const token = localStorage.getItem('token');
     try {
-      const response = await fetch(`${apiUrl}/respostas/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        },
-        body: JSON.stringify(info),
-      })
-      if (response.ok) {
-        /* console.log('Valores inseridos no banco'); */
+      const response1 = await sendRequest(`${apiUrl}/respostas/${id}`, 'POST', {}, info);
+      const response2 = await sendRequest(`${apiUrl}/setPts`, 'POST', {}, user);
+      if (response1.ok && response2.ok) {
         handleNextPag();
       }
     } catch (error) {
-      console.error('Erro ao fazer a requisição:', error);
+      console.log('Erro ao inserir no banco')
     }
+  };
 
-    try {
-      const response = await fetch(`${apiUrl}/setPts`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        },
-        body: JSON.stringify(user),
-      })
-      if(response.ok){
-        console.log('Valores inseridos no banco');
-      }
-    } catch (error) {
-      console.error('Erro ao fazer a requisição:', error);
-    }
+  const saveGame = () => {
+    setIsSave(true);
+    handleSetBanco();
   }
-
-
 
   const handelCorrigirGame = () => {
     setShowButton(false);
@@ -310,7 +301,6 @@ export default function Jogar({ data }) {
         statusNivel2: updatedStatusNivel2
       };
     });
-    setUserGame(prevState => ({ ...prevState, colaboracao: true }));
     setUser(prevState => ({ ...prevState, colaboracao: prevState.colaboracao + 1 }));
     setInfo(prevState => ({ ...prevState, nivel: 3 }));
     setInfo(prevState => ({ ...prevState, resposta2: '' }));
@@ -631,9 +621,12 @@ export default function Jogar({ data }) {
       case 33:
         return (
           <div style={{padding: '5%'}}>
+            {isSave && <Loading texto={'Salvando informações...'}/>}
             {userGame.bomDesempenho && <Desempenho des={'bom'} col={true}/>}
-            {userGame.otimoDesempenho && <Desempenho des={'otimo'} col={true}/>}     
-            <ButtonAdvance buttonClick={() => {handleSetBanco(); handleButtonClick();}} />         
+            {userGame.otimoDesempenho && <Desempenho des={'otimo'} col={true}/>} 
+            {!isSave && <Button onYes={() => saveGame()} texto1={'Salvar'} posicaoX={'43%'} posicaoY={'85%'}/>}   
+            {isSave && <ButtonAdvance buttonClick={() => handleButtonClick()} />}        
+            <ButtonAdvance buttonClick={() => {handleSetBanco()}} />         
           </div>)
       case 34:
         return (
@@ -641,8 +634,8 @@ export default function Jogar({ data }) {
             <Loading texto={'Salvando informações'}/>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"30%"} dialogText={`Obrigada por deixar sua avaliação, fico muito feliz em estar te ajudando nessa caminhada.`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p2/imagem2"} posicao={"40%"} tamanho={tamanho}/>
-            {showButton &&  <ConfirmationBox texto1={'Continuar'} texto2={'Refazer'} posicaoY={'10%'} onNo={() => handleResetGame()} onYes={() => {router.push(`/selecao-nivel?id=${id}`)}} />}
+            <Personagem img={"p2/imagem2"} posicao={"50%"} tamanho={tamanho}/>
+            {showButton &&  <ConfirmationBox texto1={'Continuar'} texto2={'Refazer'} posicaoY={'50%'} posicaoX={'50%'} onNo={() => handleResetGame()} onYes={() => {router.push(`/selecao-nivel?id=${id}`)}} />}
           </div>)
       default:
         router.push(`/selectNivel?id=${id}`);
