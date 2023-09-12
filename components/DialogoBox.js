@@ -37,7 +37,7 @@ const DialogScreen = ({tamanho, posicao, dialogText, cor, complete, posicaoY }) 
                     left: ${posicao ? posicao : '10%'};
                     background-color: ${cor ? cor: 'blue'};
                     top: ${posicaoY ? posicaoY : '50%'};
-                    padding: 10px;
+                    padding: 20px;
                     color: rgb(15, 5, 5);
                     border: 1px solid #0a0a0a;
                     height: auto;

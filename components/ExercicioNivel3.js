@@ -100,9 +100,9 @@ function CompleteAsEtapa3({onSucess, setInfo, tentativas, dicaAluno, dicaProf}) 
           />
         </div>
         <div className="button-container">
-          <button type="button" className="button" onClick={handleDicaAluno}>Dica Aluno</button>
+          <button type="button" className="button button-dica" onClick={handleDicaAluno}>Dica Aluno</button>
           <button type="submit" className="button">Enviar</button>
-          <button type="button" className="button" onClick={handleDicaProf}>Dica Professor</button>
+          <button type="button" className="button button-dica" onClick={handleDicaProf}>Dica Professor</button>
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '80%', padding: '10px'}}>
           <div className="tempo-restante">

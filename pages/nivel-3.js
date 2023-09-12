@@ -27,7 +27,7 @@ export default function Jogar({ data }) {
   const mentor = config.mentor;
   const router = useRouter();
   const { id } = router.query;
-  const [pag, setPag] = useState(24);
+  const [pag, setPag] = useState(1);
   const [checkBanco, setCheckBanco] = useState(false);
   const [showDicaProfessor, setShowDicaProfessor] = useState(false);
   const [showDicaColega, setShowDicaColega] = useState(false);
@@ -551,15 +551,15 @@ solução. Seja o mais detalhista possível.`} />
       case 26:
         return (
           <div>
-            <div style={{ width: '200px', border: '1px solid black', borderRadius: '4px', position: 'absolute', height: '200px', right: '20%', top: '20%' }}>
+            <div style={{ transform: 'translateX(-50%)' ,height: '20%', border: '1px solid black', borderRadius: '4px', position: 'absolute', aspectRatio: '1/1', right: '10%', top: '70%' }}>
               {checkBanco && (
                 <Loading infinite={true} />
               )}
-              {info.statusNivel3.corrigido && (
+                {info.statusNivel3.corrigido && (
                 <Personagem
                   posicao={'50%'}
                   tamanho={100}
-                  img={info.statusNivel3.certo ? 'm3/imagem8' : 'm3/imagem7'}
+                  img={info.statusNivel3.certo ? 'm2/imagem8' : 'm2/imagem7'}
                 />
               )}
             </div>
@@ -568,22 +568,21 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p3/imagem2"} posicao={"50%"}tamanho={tamanho}/>
             {info.statusNivel3.corrigido && !info.statusNivel3.certo && info.statusNivel3.erros < 3 && (
-              <ConfirmationBox texto={info.statusNivel3.feedback} posicaoY={'70%'} posicaoX={'20%'} texto1={'Refazer'} texto2={'Reiniciar'} onYes={handleErrorGame} onNo={handleResetGame} />
+              <div>
+              <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} texto1={'Refazer'} texto2={'Reiniciar'} onYes={handleErrorGame} onNo={handleResetGame} />
+              <DialogoBox cor={mentor.cor} posicaoY={'70%'} posicao={'60%'} complete={() => { }} tamanho={"30%"} dialogText={info.statusNivel3.feedback} />
+            </div>
             )}
             {info.statusNivel3.corrigido && !info.statusNivel3.certo && info.statusNivel3.erros == 3 && (
               <ButtonAdvance buttonClick={() => handleButtonClick()} />
             )}
-            {info.statusNivel3.corrigido && info.statusNivel3.certo && <ButtonAdvance buttonClick={() => advancePag(2)} />}
-            {!info.statusNivel3.certo && info.statusNivel3.erros < 3 && (
-              <div style={{ transform: 'translateX(-50%)', position: 'absolute', top: '2%', left: '50%', width: '50%', backgroundColor: 'white', borderRadius: '4px', textAlign: 'center', fontSize: '18px' }}>
-                Você tem {3 - info.statusNivel3.erros} tentativa(s)
-              </div>
+            {info.statusNivel3.corrigido && info.statusNivel3.certo && (
+              <div>
+              <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} texto1={'Continuar'} onYes={() => {advancePag(2)}}/>
+              <DialogoBox cor={mentor.cor} posicaoY={'70%'} posicao={'60%'} complete={() => { }} dialogText={info.statusNivel3.feedback} />
+            </div>
             )}
-            {info.statusNivel3.erros == 3 && (
-              <div style={{ transform: 'translateX(-50%)', position: 'absolute', top: '2%', left: '50%', width: '50%', backgroundColor: 'white', borderRadius: '4px', textAlign: 'center', fontSize: '18px' }}>
-                Você não tem mais tentativa(s)
-              </div>
-            )}
+            
           </div>)
       case 27:
         return (
