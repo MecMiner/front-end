@@ -123,9 +123,9 @@ export default function Jogar({ data }) {
                 if (dados.response.statusNivel3.corrigido) {
                   if(dados.response.statusNivel3.certo) {
                     if(dados.response.statusNivel3.erros == 0){
-                      setInfo(prevInfo => ({ ...prevInfo, otimoDesempenho: prevState.otimoDesempenho + 1  }));
+                      setInfo(prevInfo => ({ ...prevInfo, otimoDesempenho: prevInfo.otimoDesempenho + 1  }));
                     } else {
-                      setInfo(prevInfo => ({ ...prevInfo, bomDesempenho: prevState.bomDesempenho + 1  }));
+                      setInfo(prevInfo => ({ ...prevInfo, bomDesempenho: prevInfo.bomDesempenho + 1  }));
                     }
                   }
                   setPag(26);
@@ -335,7 +335,7 @@ export default function Jogar({ data }) {
         return (
           <div>
             <DialogoBox cor={personagem.cor} posicao={'5%'} tamanho={'30%'} complete={() => setShowButton(true)} dialogText={`${personagem.nome} precisa da ajuda de ${mentor.nome} novamente, e marcaram um encontro para falar sobre os projetos de SL.`} />
-            <Personagem img={"p3/imagem1"} tamanho={tamanho} posicao={"40%"} />
+            <Personagem img={"p3/imagem1"} tamanho={tamanho} posicao={"50%"}/>
             <Personagem img={"m3/imagem3"} tamanho={tamanho} posicao={"10%"} />
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
@@ -558,7 +558,7 @@ solução. Seja o mais detalhista possível.`} />
               {info.statusNivel3.corrigido && (
                 <Personagem
                   posicao={'50%'}
-                  tamanho={200}
+                  tamanho={100}
                   img={info.statusNivel3.certo ? 'm3/imagem8' : 'm3/imagem7'}
                 />
               )}
@@ -566,7 +566,7 @@ solução. Seja o mais detalhista possível.`} />
             <DialogoBox cor={mentor.cor} complete={() => { }} posicao={"10%"} tamanho={"30%"} dialogText={`Agora vou pedir a ajuda de um amigo mais experiente para verificar se a sua proposta de solução está correta, ok. 
 Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"40%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem2"} posicao={"50%"}tamanho={tamanho}/>
             {info.statusNivel3.corrigido && !info.statusNivel3.certo && info.statusNivel3.erros < 3 && (
               <ConfirmationBox texto={info.statusNivel3.feedback} posicaoY={'70%'} posicaoX={'20%'} texto1={'Refazer'} texto2={'Reiniciar'} onYes={handleErrorGame} onNo={handleResetGame} />
             )}
@@ -590,7 +590,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"30%"} dialogText={`Infelizmente sua resposta não está correta, mas o importante é que você tentou.`} />
             <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"60%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem2"} posicao={"50%"} tamanho={tamanho}/>
             {showButton && <ConfirmationBox texto1={'Reiniciar'} texto2={'Sair'} onYes={() => { router.reload() }} onNo={() => { router.push('/') }} />}
           </div>)
       case 28:
@@ -598,16 +598,16 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"30%"} dialogText={`Isso aí, parabéns, sua resposta está correta.`} />
             <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"40%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem2"} posicao={"50%"}tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 29:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`Vou te mostrar novamente como ficam as estapas completas.`} />
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"40%"} tamanho={"40%"} dialogText={`${data.dataDesafio.etapasSolucao}`} />
+            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"50%"}tamanho={"40%"} dialogText={`${data.dataDesafio.etapasSolucao}`} />
             <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"40%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem2"} posicao={"50%"}tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 30:
@@ -624,7 +624,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"70%"} dialogText={`${data.dataDesafio.resultado}`} />
             <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"40%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem2"} posicao={"50%"}tamanho={tamanho}/>
             {showButton && <ButtonAdvance buttonClick={() => handleNextPag()} />}
           </div>)
       case 32:
@@ -632,7 +632,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`E ai,o que achou? Conseguiu aprender alguma no encontro de hoje?`} />
             <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"40%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem2"} posicao={"50%"}tamanho={tamanho}/>
             {showButton && <ConfirmationBox onYes={() => advancePag(2)} onNo={() => handleButtonClick()} />}
           </div>)
         case 33:
@@ -640,7 +640,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
               <div>
                 <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`É uma pena`} />
                 <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-                <Personagem img={"p3/imagem2"} posicao={"40%"} tamanho={tamanho}/>
+                <Personagem img={"p3/imagem2"} posicao={"50%"}tamanho={tamanho}/>
                 {showButton && <ButtonAdvance buttonClick={() => advancePag(2)} />}
               </div>)
         case 34:
@@ -648,7 +648,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
               <div>
                 <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`Que legal, fico muito feliz!`} />
                 <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-                <Personagem img={"p3/imagem2"} posicao={"40%"} tamanho={tamanho}/>
+                <Personagem img={"p3/imagem2"} posicao={"50%"}tamanho={tamanho}/>
                 {showButton && <ButtonAdvance buttonClick={() => handleNextPag()} />}
               </div>)
          case 35:
@@ -656,7 +656,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
               <div>
                 <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`Agora eu gostaria de saber se poderia me ajudar a evoluir os conteúdos dos meus exemplos. Poderia avaliar os conteúdos que vimos?`} />
                 <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-                <Personagem img={"p3/imagem2"} posicao={"40%"} tamanho={tamanho}/>
+                <Personagem img={"p3/imagem2"} posicao={"50%"}tamanho={tamanho}/>
                 {showButton && <ConfirmationBox onYes={() => advancePag(2)} onNo={() => handleButtonClick()} />}
               </div>)
             case 36:
@@ -664,7 +664,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
               <div>
                 <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`Tudo bem, sem problemas`} />
                 <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-                <Personagem img={"p3/imagem2"} posicao={"40%"} tamanho={tamanho}/>
+                <Personagem img={"p3/imagem2"} posicao={"50%"}tamanho={tamanho}/>
                 {showButton && <ButtonAdvance buttonClick={() => handleNoAvaliable()} />}
               </div>)
         case 37:
@@ -672,7 +672,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
               <div>
                 <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"20%"} dialogText={`Que legal, aqui está o formulário para a avaliação`} />
                 <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-                <Personagem img={"p3/imagem2"} posicao={"40%"} tamanho={tamanho}/>
+                <Personagem img={"p3/imagem2"} posicao={"50%"}tamanho={tamanho}/>
                 {showButton && <ConfirmationBox onYes={() => handleAvaliacao()} texto1={'pronto'} link={'https://forms.gle/unuZ7k5GkZ6bCzKN8'} />}
               </div>)
       case 38:
@@ -688,7 +688,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <Loading texto={'Savando informações'}/>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"30%"} dialogText={`Obrigada por deixar sua avaliação, fico muito feliz em estar te ajudando nessa caminhada.`} />
             <Personagem img={"m3/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            <Personagem img={"p3/imagem2"} posicao={"40%"} tamanho={tamanho}/>
+            <Personagem img={"p3/imagem2"} posicao={"50%"}tamanho={tamanho}/>
             {showButton && <ConfirmationBox texto1={'Refazer'} texto2={'Sair'} onYes={() => handleResetGame()} onNo={() => {router.push(`/selecao-nivel?id=${id}`)}} />}
           </div>)
       default:
