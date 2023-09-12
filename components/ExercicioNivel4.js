@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function ExercicioNivel4({onSucess, setInfo, linksite}) {
+function ExercicioNivel4({onSucess, setInfo, linksite, tentativas}) {
   const [link, setlink] = useState('');
 
   useEffect(() =>{
@@ -40,72 +40,11 @@ function ExercicioNivel4({onSucess, setInfo, linksite}) {
         </div>
         <button type="submit" className="button">Enviar</button>
       </form>
-      <style jsx>{`
-        .complete-as-etapa {
-            width: 100%;
-            border: 1px solid black;
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-family: Arial, sans-serif;
-            z-index: 999;
-          }
-          
-          .title {
-            color: #ff9800;
-            font-size: 24px;
-            margin-bottom: 20px;
-          }
-          
-          .form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
-          
-          .step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 20px;
-          }
-          
-          .step-title {
-            color: black;
-            font-size: 12px;
-            margin-bottom: 10px;
-            margin-right: 20px;
-            margin-left: 20px;
-          }
-          
-          .textarea {
-            width: 500px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-            resize: vertical; /* Permite redimensionamento vertical */
-            min-height: 50px; /* Altura mínima inicial */
-            overflow: auto; /* Adiciona barra de rolagem quando o conteúdo excede a altura */
-          }
-          
-          .button {
-            padding: 10px 20px;
-            margin-bottom: 10px;
-            background-color: #ff9800;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-          }
-          
-          .button:hover {
-            background-color: #ffac33;
-          }
-          
-      `}</style>
+      <div style={{ display: 'flex', justifyContent: 'space-between', width: '80%', padding: '10px'}}>
+          <div className="tempo-restante">
+              {`Você tem ${tentativas} tentativas`}
+          </div>
+        </div>
     </div>
   );
 }

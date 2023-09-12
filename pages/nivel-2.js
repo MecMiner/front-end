@@ -19,7 +19,7 @@ import { sendRequest } from './api/api';
 
 
 export default function Jogar({ data }) {
-  const [pag, setPag] = useState(24);
+  const [pag, setPag] = useState(1);
   const [user,setUser] = useState({});
   const apiUrl = config.apiUrl;
   const fraseGrande = data.dataDesafio.etapasSolucao

@@ -1,5 +1,12 @@
 html, body{ margin: 0}
 
+.renderPag{
+  position: absolute;
+  left: 15%;
+  width: 85%;
+  height: 100%;
+}
+
 .circular-button{
     position: absolute;
     width: 150px;

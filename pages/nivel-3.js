@@ -223,8 +223,8 @@ export default function Jogar({ data }) {
 
   const handleSetCoin = (valor, exp) => {
     setShowButton(false);
-    setInfo(prevState => ({ ...prevState, pontos: prevState.pontos + valor }));
-    setInfo(prevState => ({ ...prevState, xp: prevState.xp + exp }));
+    setUser(prevState => ({ ...prevState, pontos: prevState.pontos + valor }));
+    setUser(prevState => ({ ...prevState, xp: prevState.xp + exp }));
     // Ocultar a mensagem após 3 segundos
     setShowMessage(true);
     setTimeout(() => {
@@ -697,20 +697,9 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
       <InfosGame  user={user}/>  
       <div className='renderPag'>
         {renderPag()}
-        <BarradeProgresso total={38} atual={pag}/>
-      </div>
-     
-      
-      
+        <BarradeProgresso total={39} atual={pag}/>
+      </div>   
     </Layout>
-    <style jsx>{`
-      .renderPag{
-        position: absolute;
-        left: 15%;
-        width: 85%;
-        height: 100%;
-      }
-    `}</style>
   </div>
   );
 }

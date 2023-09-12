@@ -23,6 +23,7 @@ const ConfirmationBox = ({ onYes, onNo, texto1, texto2, posicaoX, posicaoY, link
           padding: 20px;
           border-radius: 30px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+          z-index: 999;
         }
         
         .texto {
