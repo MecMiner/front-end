@@ -28,6 +28,7 @@ function ExercicioNivel4({onSucess, setInfo, linksite, tentativas}) {
           <a className="step-title" href={linksite} target='_blank'>Link para o Commit</a>
           <a className="step-title" href='https://portalworkedexamples.herokuapp.com/Login/Logado/Formulario/formulario.php' target='_blank'>Formulário de Criação do Exemplo</a>
           <a className="step-title" href='https://portalworkedexamples.herokuapp.com/padrao.php' target='_blank'>Diretrizes para Criação</a>
+          <a className="step-title" href='https://drive.google.com/file/d/1Ffc7VtlLX3sgPQ3QUYAnhmo1MXUKt4rn/view?usp=sharing' target='_blank'>Vídeo passo a passo</a>
       </div>
       <form className="form" onSubmit={handleSubmit}>
         <div className="step">
