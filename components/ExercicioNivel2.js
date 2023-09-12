@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
+function CompleteAsEtapa({frase1, frase2, onSucess, setInfo, dicaAluno, dicaProf, tentativas}) {
   const [etapa2, setEtapa2] = useState('');
   const [etapa4, setEtapa4] = useState('');
-  const [tempoRestante, setTempoRestante] = useState(600); // 3 minutos (em segundos)
+  const [tempoRestante, setTempoRestante] = useState(600); 
   const [jogoEmAndamento, setJogoEmAndamento] = useState(true);
 
   useEffect(() => {
@@ -13,7 +13,6 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
         }, 1000);
         return () => clearInterval(timer);
     } else if (tempoRestante === 0) {
-        // Se o tempo acabar, marque o jogo como encerrado e verifique a ordem
         setJogoEmAndamento(false);
         onSucess();
     }
@@ -45,6 +44,14 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
     onSucess();
   };
 
+  const handleDicaAluno = () => {
+    dicaAluno()
+  };
+
+  const handleDicaProf = () => {
+   dicaProf()
+  };
+
   return (
     <div className="complete-as-etapa">
       <h1 className="title">Complete as Etapas</h1>
@@ -73,13 +80,18 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
           />
         </div>
         <div className="button-container">
-          <button type="button" className="button">Dica Aluno</button>
+          <button type="button" className="button" onClick={handleDicaAluno}>Dica Aluno</button>
           <button type="submit" className="button">Enviar</button>
-          <button type="button" className="button">Dica Professor</button>
+          <button type="button" className="button" onClick={handleDicaProf}>Dica Professor</button>
         </div>
-        <div className="tempo-restante">
-                Tempo restante: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '80%', padding: '10px'}}>
+          <div className="tempo-restante">
+              {`Você tem ${tentativas} tentativas`}
           </div>
+          <div className="tempo-restante">
+                  Tempo restante: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
+            </div>
+        </div>
       </form>
       <style jsx>{`
         .complete-as-etapa {
@@ -130,9 +142,9 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 14px;
-            resize: vertical; /* Permite redimensionamento vertical */
-            min-height: 50px; /* Altura mínima inicial */
-            overflow: auto; /* Adiciona barra de rolagem quando o conteúdo excede a altura */
+            resize: vertical; 
+            min-height: 30px; 
+            overflow: auto; 
           }
 
           .button-container {
@@ -156,6 +168,7 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo}) {
             background-color: #32CD32	;
             transform: scale(1.1);
           }
+
           .tempo-restante {
             font-size: 14px;
             font-weight: bold;

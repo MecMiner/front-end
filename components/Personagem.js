@@ -11,6 +11,7 @@ const Personagem = ({img, posicao, inverter, tamanho}) => {
               alt="persongem"
               priority
               loading="eager"
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 40vw"
             />
         <style jsx>{`
           .personagem {

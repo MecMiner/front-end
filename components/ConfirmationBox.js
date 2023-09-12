@@ -16,12 +16,12 @@ const ConfirmationBox = ({ onYes, onNo, texto1, texto2, posicaoX, posicaoY, link
           position: absolute;
           ${tamanho ? `width: ${tamanho};` : '' }
           top: ${posicaoY ? posicaoY : '50%'};
-          right: ${posicaoX ? posicaoX : '10%'};
-          transform: translateX(-50%);
+          left: ${posicaoX ? posicaoX : '60%'};
+          transform: translateY(-100%);
           background-color: #f1f1f1;
           border: 1px solid #0a0a0a;
           padding: 20px;
-          border-radius: 5px;
+          border-radius: 30px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
@@ -36,7 +36,7 @@ const ConfirmationBox = ({ onYes, onNo, texto1, texto2, posicaoX, posicaoY, link
         
         .buttons button {
           margin-right: 10px;
-          padding: 8px 16px;
+          padding: 4px 8px;
           border-radius: 4px;
           border: none;
           cursor: pointer;

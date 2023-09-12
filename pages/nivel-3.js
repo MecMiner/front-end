@@ -7,15 +7,13 @@ import ConfirmationBox from '@/components/ConfirmationBox';
 import Personagem from '@/components/Personagem';
 import ButtonAdvance from '@/components/ButtonAdvance';
 import config from '@/config';
-import CoinsXP from '@/components/Xp';
 import Desempenho from '@/components/Desempenho';
 import Loading from '@/components/Loading';
 import Button from '@/components/Buttons';
 import ExercicioNivel3 from '@/components/ExercicioNivel3';
-import HomeButton from '@/components/HomeButton';
 import BarradeProgresso from '@/components/BarradeProgresso';
-import InfoButton from '@/components/InfoButton';
 import InfosGame from '@/components/InfosGame';
+import ExibirDica from '@/components/ExibirDica';
 
 
 export default function Jogar({ data }) {
@@ -29,13 +27,13 @@ export default function Jogar({ data }) {
   const mentor = config.mentor;
   const router = useRouter();
   const { id } = router.query;
-  const [pag, setPag] = useState(1);
+  const [pag, setPag] = useState(24);
   const [checkBanco, setCheckBanco] = useState(false);
   const [showDicaProfessor, setShowDicaProfessor] = useState(false);
   const [showDicaColega, setShowDicaColega] = useState(false);
   const [usouDicaProfessor, setUsouDicaProfessor] = useState(false);
   const [usouDicaColega, setUsouDicaColega] = useState(false);
-  const tamanho = 50;
+  const tamanho = 60;
 
 /*   useEffect(() => {
     console.log(JSON.stringify(info));
@@ -260,28 +258,19 @@ export default function Jogar({ data }) {
   const exibirDica = (professor) => {
     if (professor) {
       if (!usouDicaProfessor){
-        setInfo(prevState => ({ ...prevState, pontos: prevState.pontos - 10 }));
+        setUser(prevState => ({ ...prevState, pontos: prevState.pontos - 10 }));
         setUsouDicaProfessor(true)
       }
       setShowDicaProfessor(true);
-      setTimeout(() => {
-        setShowDicaProfessor(false);
-        setAnimationEnded(true);
-      }, 5000);
     } else {
       if (!usouDicaColega){
-        setInfo(prevState => ({ ...prevState, pontos: prevState.pontos - 5 }));
+        setUser(prevState => ({ ...prevState, pontos: prevState.pontos - 5 }));
         setUsouDicaColega(true)
       }
       setShowDicaColega(true);
-      setTimeout(() => {
-        setShowDicaColega(false);
-        setAnimationEnded(true);
-      }, 5000);
     }
     
   }
-
   const handleAvaliacao = () =>{
     setInfo(prevInfo => {
       const updatedstatusNivel3 = {
@@ -550,27 +539,14 @@ solução. Seja o mais detalhista possível.`} />
       case 25:
         return (
           <div>
-            <p>Você pode solicitar uma dica caso se sinta confuso sobre como devem ser a etapas de solução de desse problema.</p>
             
-            <ExercicioNivel3 onSucess={handelCorrigirGame} setInfo={onChaneresposta3} />
-            <Button onYes={()=>exibirDica(true)} texto1={'Dica do Professor'} posicaoY={'90%'} posicaoX={'20%'}/>
-            <Button onYes={()=>exibirDica(false)} texto1={'Dica do Aluno'} posicaoY={'90%'} posicaoX={'60%'}/>
-            {info.statusNivel3 && !info.statusNivel3.certo && info.statusNivel3.erros < 3 && (
-              <div style={{ position: 'absolute', top: '2%', width: '50%', backgroundColor: 'white', borderRadius: '4px', textAlign: 'center', fontSize: '18px' }}>
-                Você tem {3 - info.statusNivel3.erros} tentativa(s)
-              </div>
-            )}
+            <ExercicioNivel3 dicaAluno={()=> exibirDica(false)} dicaProf={()=>exibirDica(true)} tentativas={3 - info.statusNivel3.erros} onSucess={handelCorrigirGame} setInfo={onChaneresposta3} />
             {showDicaProfessor && (
-              <div className="ganhador-moedas">
-                {data.dataDesafio.dica}
-              </div>
+              <ExibirDica dica={data.dataDesafio.dica} setExibirDica={setShowDicaProfessor}/>
             )}
             {showDicaColega && (
-              <div className="ganhador-moedas">
-                {data.dataDesafio.dicaColega}
-              </div>
+              <ExibirDica dica={data.dataDesafio.dicaColega} setExibirDica={setShowDicaColega}/>
             )}
-
           </div>)
       case 26:
         return (

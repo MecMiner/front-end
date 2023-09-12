@@ -19,7 +19,7 @@ const Layout = ({ children }) => {
         </div>
       <style jsx>{`
         .layout {
-          min-width: ${isMobile ? '600px' : '1040px'};
+          min-width: ${isMobile ? '1040px' : '1040px'};
           height: 100vh;
           display: flex;
           justify-content: center;

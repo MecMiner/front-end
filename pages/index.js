@@ -7,24 +7,18 @@ import Loading from '@/components/Loading';
 import config from '@/config';
 import Personagem from '@/components/Personagem';
 import DialogScreen from '@/components/DialogoBox';
+import useSWR from 'swr';
 
-export default function Menu({ data }) {
-  const [isLoad,setIsLoad] = useState(true);
+const fetcher = (url) => fetch(url).then((res) => res.json()); // Função para buscar dados
+
+export default function Menu() {
   const router = useRouter();
-  // Função para ativar o modo de tela cheia
-  const requestFullScreen = () => {
-    const element = document.documentElement;
 
-    if (element.requestFullscreen) {
-      element.requestFullscreen();
-    } else if (element.mozRequestFullScreen) {
-      element.mozRequestFullScreen(); // Firefox
-    } else if (element.webkitRequestFullscreen) {
-      element.webkitRequestFullscreen(); // Chrome, Safari e Opera
-    } else if (element.msRequestFullscreen) {
-      element.msRequestFullscreen(); // IE/Edge
-    }
-  };
+  const { data, error, isLoading } = useSWR(`${config.apiUrl}/desafio`, fetcher);
+
+  if (error) {
+    console.error('Erro ao buscar dados:', error);
+  }
 
   const handleStart = (id) => {
     router.push(`/selecao-nivel?id=${id}`)
@@ -39,12 +33,12 @@ export default function Menu({ data }) {
     <div>
       <MyHead />
       <Layout>
-        <CheckUser onFunction={() => setIsLoad(false)}/>
+        <CheckUser onFunction={()=>{}}/>
         <Personagem img={'m1/imagem3'} posicao={'10%'} tamanho={'60'}/>
-        <DialogScreen tamanho={'20%'} posicao={'10%'} posicaoY={'20%'} cor={config.mentor.cor} dialogText={'Olá,  asdsasd asd sadsas sda sd asdsaasdas asdassd asdda asdsas asdas aqui você tem disponível alguns desafios.'} complete={() => ({})}/>
-        {isLoad && <Loading/>}
+        <DialogScreen tamanho={'20%'} posicao={'10%'}  cor={config.mentor.cor} dialogText={'Olá, aqui você tem disponível alguns desafios.'} complete={() => ({})}/>
+        {isLoading && <Loading/>}
         <div className="challenge-list">
-          {data.dataDesafio.map((item, index) => (
+          {data && data.dataDesafio && data.dataDesafio.map((item, index) => (
             <div className="challenge-item" key={index}>
               <button className="btn-menu" onClick={() => handleStart(item.iddesafio)}>
                 {item.titulo}
@@ -52,7 +46,6 @@ export default function Menu({ data }) {
             </div>
           ))}
         </div>
-        <button className="fullscreen-button" onClick={() => requestFullScreen()}>Tela Cheia</button>
           <div className="close-button" onClick={() => handleLogout()}>Sair</div>
       </Layout>
       <style jsx>{`
@@ -110,11 +103,4 @@ export default function Menu({ data }) {
       `}</style>
     </div>
   )
-}
-
-export async function getServerSideProps() {
-  const apiUrl = config.apiUrl
-  const response = await fetch(`${apiUrl}/desafio`);
-  const data = await response.json();
-  return { props: { data } };
 }

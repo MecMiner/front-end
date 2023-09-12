@@ -34,9 +34,9 @@ const DialogScreen = ({tamanho, posicao, dialogText, cor, complete, posicaoY }) 
                 .dialogoBox {
                     position: absolute;
                     width: ${tamanho ? tamanho : '20%'};
-                    left: ${posicao ? posicao : '5%'};
+                    left: ${posicao ? posicao : '10%'};
                     background-color: ${cor ? cor: 'blue'};
-                    top: ${posicaoY ? posicaoY : '40%'};
+                    top: ${posicaoY ? posicaoY : '50%'};
                     padding: 10px;
                     color: rgb(15, 5, 5);
                     border: 1px solid #0a0a0a;
@@ -44,8 +44,8 @@ const DialogScreen = ({tamanho, posicao, dialogText, cor, complete, posicaoY }) 
                     z-index: 100;
                     border-radius: 30px;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
-                    transform: translateY(-50%);
-                    max-height: ${posicaoY ? posicaoY : '60%'};
+                    transform: translateY(-100%);
+                    max-height: ${posicaoY ? posicaoY : '40%'};
                     overflow-y: auto;
                   };
             `}</style>

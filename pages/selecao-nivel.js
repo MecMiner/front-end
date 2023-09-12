@@ -81,6 +81,7 @@ export default function Jogar() {
                     src={`/src/mapa/numero${level}${data && data.response && data.response.nivel >= level ? '' : 'ds'}.png`}
                     fill
                     alt={`numero${level}`}
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 40vw"
                     priority
                   />
                 </button>              

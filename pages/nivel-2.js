@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import MyHead from '@/components/MyHead';
 import Layout from '@/components/MyLayout';
 import DialogoBox from '@/components/DialogoBox';
@@ -11,14 +11,13 @@ import Desempenho from '@/components/Desempenho';
 import Loading from '@/components/Loading';
 import ExercicioNivel2 from '@/components/ExercicioNivel2';
 import AvaliacaoStar from '@/components/AvaliacaoStar';
-import Button from '@/components/Buttons';
 import BarradeProgresso from '@/components/BarradeProgresso';
 import ExibirDica from '@/components/ExibirDica';
 import InfosGame from '@/components/InfosGame';
 
 
 export default function Jogar({ data }) {
-  const [pag, setPag] = useState(24);
+  const [pag, setPag] = useState(1);
   const [user,setUser] = useState({});
   const apiUrl = config.apiUrl;
   const fraseGrande = data.dataDesafio.etapasSolucao
@@ -324,7 +323,7 @@ export default function Jogar({ data }) {
       case 1:
         return (
           <div>
-            <DialogoBox cor={personagem.cor} posicao={'30%'} tamanho={'40%'} complete={() => setShowButton(true)} dialogText={`${personagem.nome} acabou de se formar, e está trabalhando em uma empresa como desenvolvedora Junior. Desde a faculdade, quando fez o trabalho sobre os projetos de SL, se interessou pelo assunto, chegou a se encontrar com ${mentor.nome} para obter mais informações, mas acabou não tendo tempo de se aprofundar depois do encontro.`} />
+            <DialogoBox cor={personagem.cor} posicao={'30%'} posicaoY={'30%'} tamanho={'40%'} complete={() => setShowButton(true)} dialogText={`${personagem.nome} acabou de se formar, e está trabalhando em uma empresa como desenvolvedora Junior. Desde a faculdade, quando fez o trabalho sobre os projetos de SL, se interessou pelo assunto, chegou a se encontrar com ${mentor.nome} para obter mais informações, mas acabou não tendo tempo de se aprofundar depois do encontro.`} />
             <Personagem img={'p2/imagem5'} tamanho={tamanho} posicao={'50%'} />
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
@@ -530,14 +529,7 @@ export default function Jogar({ data }) {
       case 25:
         return (
           <div>
-            <ExercicioNivel2 frase1={linhas[0]} frase2={linhas[2]} onSucess={handelCorrigirGame} setInfo={onChaneResposta2} />
-            <Button onYes={()=>exibirDica(true)} texto1={'Dica do Professor'} posicaoY={'90%'} posicaoX={'20%'}/>
-            <Button onYes={()=>exibirDica(false)} texto1={'Dica do Aluno'} posicaoY={'90%'} posicaoX={'60%'}/>
-            {info.statusNivel2 && !info.statusNivel2.certo && info.statusNivel2.erros < 3 && (
-              <div style={{ position: 'absolute', top: '2%', width: '50%', backgroundColor: 'white', borderRadius: '4px', textAlign: 'center', fontSize: '18px' }}>
-                Você tem {3 - info.statusNivel2.erros} tentativa(s)
-              </div>
-            )}
+            <ExercicioNivel2 dicaProf={()=>exibirDica(true)} dicaAluno={()=>exibirDica(false)}  frase1={linhas[0]} frase2={linhas[2]} tentativas={3 - info.statusNivel2.erros} onSucess={handelCorrigirGame} setInfo={onChaneResposta2} />
             {showDicaProfessor && (
               <ExibirDica dica={data.dataDesafio.dica} setExibirDica={setShowDicaProfessor}/>
             )}
@@ -549,39 +541,28 @@ export default function Jogar({ data }) {
       case 26:
         return (
           <div>
-            <div style={{ transform: 'translateX(-50%)' ,width: '200px', border: '1px solid black', borderRadius: '4px', position: 'absolute', height: '200px', right: '10%', top: '50%' }}>
+            <div style={{ transform: 'translateX(-50%)' ,width: '150px', border: '1px solid black', borderRadius: '4px', position: 'absolute', height: '150px', right: '10%', top: '50%' }}>
               {checkBanco && (
                 <Loading infinite={true} />
               )}
               {info.statusNivel2.corrigido && (
                 <Personagem
                   posicao={'50%'}
-                  tamanho={200}
+                  tamanho={100}
                   img={info.statusNivel2.certo ? 'm2/imagem8' : 'm2/imagem7'}
                 />
               )}
             </div>
-            <DialogoBox cor={mentor.cor} complete={() => { }} tamanho={"30%"} dialogText={`Agora vou pedir a ajuda de um amigo mais experiente para verificar se a sua proposta de solução está correta, ok.
-Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
+            <DialogoBox cor={mentor.cor} complete={() => { }} tamanho={"30%"} dialogText={`Agora vou pedir a ajuda de um amigo mais experiente para verificar se a sua proposta de solução está correta, ok. Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"40%"} tamanho={tamanho}/>
             {info.statusNivel2.corrigido && !info.statusNivel2.certo && info.statusNivel2.erros < 3 && (
-              <ConfirmationBox  texto={info.statusNivel2.feedback} posicaoY={'10%'} posicaoX={'20%'} texto1={'Refazer'} texto2={'Reiniciar'} onYes={handleErrorGame} onNo={handleResetGame} />
+              <ConfirmationBox  texto={info.statusNivel2.feedback}  texto1={'Refazer'} texto2={'Reiniciar'} onYes={handleErrorGame} onNo={handleResetGame} />
             )}
             {info.statusNivel2.corrigido && !info.statusNivel2.certo && info.statusNivel2.erros == 3 && (
               <ButtonAdvance buttonClick={() => handleButtonClick()} />
             )}
             {info.statusNivel2.corrigido && info.statusNivel2.certo && <ConfirmationBox texto={info.statusNivel2.feedback} posicaoY={'10%'} posicaoX={'10%'} texto1={'Continuar'} onYes={() => {advancePag(2)}}/>}
-            {!info.statusNivel2.certo && info.statusNivel2.erros < 3 && (
-              <div style={{ transform: 'translateX(-50%)', position: 'absolute', top: '2%', left: '50%', width: '50%', backgroundColor: 'white', borderRadius: '4px', textAlign: 'center', fontSize: '18px' }}>
-                Você tem {3 - info.statusNivel2.erros} tentativa(s)
-              </div>
-            )}
-            {info.statusNivel2.erros == 3 && (
-              <div style={{ transform: 'translateX(-50%)', position: 'absolute', top: '2%', left: '50%', width: '50%', backgroundColor: 'SlateBlue', borderRadius: '4px', textAlign: 'center', fontSize: '18px' }}>
-                Você não tem mais tentativa(s)
-              </div>
-            )}
           </div>)
       case 27:
         return (

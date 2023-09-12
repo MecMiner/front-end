@@ -22,6 +22,7 @@ const ExibirDica = ({ dica, setExibirDica }) => {
           top: 0;
           left: 0;
           width: 100vw;
+          min-width: 1040px;
           height: 100vh;
           background-color: rgba(0, 0, 0, 0.7);
           display: flex;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-function CompleteAsEtapa3({onSucess, setInfo}) {
+function CompleteAsEtapa3({onSucess, setInfo, tentativas, dicaAluno, dicaProf}) {
   const [etapa1, setEtapa1] = useState('');
   const [etapa2, setEtapa2] = useState('');
   const [etapa3, setEtapa3] = useState('');
@@ -54,6 +54,15 @@ function CompleteAsEtapa3({onSucess, setInfo}) {
     onSucess();
   };
 
+  const handleDicaAluno = () => {
+    dicaAluno()
+  };
+
+  const handleDicaProf = () => {
+   dicaProf()
+  };
+
+
   return (
     <div className="complete-as-etapa">
       <h1 className="title">Complete as Etapas</h1>
@@ -90,21 +99,33 @@ function CompleteAsEtapa3({onSucess, setInfo}) {
             onChange={(e) => handleInputChange(e, 4)}
           />
         </div>
-        <button type="submit" className="button">Enviar</button>
-        <div className="tempo-restante">
-                Tempo restante: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
+        <div className="button-container">
+          <button type="button" className="button" onClick={handleDicaAluno}>Dica Aluno</button>
+          <button type="submit" className="button">Enviar</button>
+          <button type="button" className="button" onClick={handleDicaProf}>Dica Professor</button>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '80%', padding: '10px'}}>
+          <div className="tempo-restante">
+              {`Você tem ${tentativas} tentativas`}
           </div>
+          <div className="tempo-restante">
+                  Tempo restante: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
+            </div>
+        </div>
       </form>
       <style jsx>{`
         .complete-as-etapa {
-            width: 100%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 90%;
             border: 1px solid black;
             border-radius: 4px;
             display: flex;
             flex-direction: column;
             align-items: center;
             font-family: Arial, sans-serif;
-            z-index: 999;
+            transform: translate(-50%, -50%);
           }
           
           .title {
@@ -123,7 +144,7 @@ function CompleteAsEtapa3({onSucess, setInfo}) {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
           }
           
           .step-title {
@@ -135,7 +156,7 @@ function CompleteAsEtapa3({onSucess, setInfo}) {
           }
           
           .textarea {
-            width: 500px;
+            width: 50%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -145,10 +166,16 @@ function CompleteAsEtapa3({onSucess, setInfo}) {
             overflow: auto; /* Adiciona barra de rolagem quando o conteúdo excede a altura */
           }
           
+          .button-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+          }
+          
           .button {
             padding: 10px 20px;
             margin-bottom: 10px;
-            background-color: #ff9800;
+            background-color: green;
             color: white;
             border: none;
             border-radius: 4px;
@@ -157,10 +184,12 @@ function CompleteAsEtapa3({onSucess, setInfo}) {
           }
           
           .button:hover {
-            background-color: #ffac33;
+            background-color: #32CD32	;
+            transform: scale(1.1);
           }
+
           .tempo-restante {
-            font-size: 20px;
+            font-size: 14px;
             font-weight: bold;
             margin-bottom: 10px;
             }
