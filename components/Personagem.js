@@ -22,6 +22,10 @@ const Personagem = ({img, posicao, inverter, tamanho}) => {
             bottom: 0%;
             transform: translateX(-50%);
           }
+
+          .inverter {
+            transform: scaleX(-1);
+          }
         `}</style>
     </div>
   );

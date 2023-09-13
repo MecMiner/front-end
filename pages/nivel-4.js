@@ -401,7 +401,7 @@ interações..`} />
       case 15:
         return (
           <div>
-            <ExercicioNivel4 onSucess={handelCorrigirGame} setInfo={onChaneresposta4} tentativas={3 - info.statusNivel4.erros} linksite={data.dataDesafio.linkNivel}  />
+            <ExercicioNivel4 onSucess={handelCorrigirGame} setInfo={onChaneresposta4} tentativas={info && info.statusNivel4 && info.statusNivel4.erros ? 3 - info.statusNivel4.erros : 0} linksite={data.dataDesafio.linkNivel}  />
 
           </div>)
       case 16:

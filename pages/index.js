@@ -8,11 +8,15 @@ import config from '@/config';
 import Personagem from '@/components/Personagem';
 import DialogScreen from '@/components/DialogoBox';
 import useSWR from 'swr';
+import { fetchUser } from './api/api';
+import InfosGame from '@/components/InfosGame';
+
 
 const fetcher = (url) => fetch(url).then((res) => res.json()); // Função para buscar dados
 
 export default function Menu() {
   const router = useRouter();
+  const [user, setUser] = useState();
 
   const { data, error, isLoading } = useSWR(`${config.apiUrl}/desafio`, fetcher);
 
@@ -20,7 +24,7 @@ export default function Menu() {
     console.error('Erro ao buscar dados:', error);
   }
 
-  const handleStart = (id) => {
+  const handleStart = () => {
     router.push(`/selecao-nivel?id=${id}`)
   };
 
@@ -29,24 +33,47 @@ export default function Menu() {
     router.push('/login');
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
+    if (!token) {
+      router.push('/');
+    } else {
+      const getUser = async () => {
+        try {
+          const user = await fetchUser(token);
+          setUser(user);
+          console.log(user);
+        } catch (error) {
+          router.push('/');
+        }
+      };
+  
+      getUser();
+    }
+  }, [router]);
+
   return (
     <div>
       <MyHead />
       <Layout>
-        <CheckUser onFunction={()=>{}}/>
-        <Personagem img={'m1/imagem3'} posicao={'10%'} tamanho={'60'}/>
-        <DialogScreen tamanho={'20%'} posicao={'10%'}  cor={config.mentor.cor} dialogText={'Olá, aqui você tem disponível alguns desafios.'} complete={() => ({})}/>
-        {isLoading && <Loading/>}
-        <div className="challenge-list">
-          {data && data.dataDesafio && data.dataDesafio.map((item, index) => (
-            <div className="challenge-item" key={index}>
-              <button className="btn-menu" onClick={() => handleStart(item.iddesafio)}>
-                {item.titulo}
-              </button>
-            </div>
-          ))}
+        <InfosGame user={user}/>
+        <div className='renderPag'>
+          <CheckUser onFunction={()=>{}}/>
+          <Personagem img={'m1/imagem3'} posicao={'90%'} tamanho={'60'} inverter={true}/>
+          <DialogScreen tamanho={'20%'} posicao={'10%'}  cor={config.mentor.cor} dialogText={'Olá, aqui você tem disponível alguns desafios.'} complete={() => ({})}/>
+          {isLoading && <Loading/>}
+          <div className="challenge-list">
+            {data && data.dataDesafio && data.dataDesafio.map((item, index) => (
+              <div className="challenge-item" key={index}>
+                <button className="btn-menu" onClick={() => handleStart(item.iddesafio)}>
+                  {item.titulo}
+                </button>
+              </div>
+            ))}
+          </div>
+            <div className="close-button" onClick={() => handleLogout()}>Sair</div>
         </div>
-          <div className="close-button" onClick={() => handleLogout()}>Sair</div>
       </Layout>
       <style jsx>{`
 

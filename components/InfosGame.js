@@ -14,22 +14,22 @@ const InfosGame = ({ user }) => {
     return (
         <div className='infos'>
             <div style={{ position: 'absolute', width: '100%', height: '10%' }}>
-                <Name name={user.nome ? user.nome : 'Nome'} />
+                <Name name={user && user.nome ? user.nome : 'Nome'} />
             </div>
             <div style={{ position: 'absolute', width: '80%', left: '10%', height: '10%', top: '10%' }}>
-                <Coin info={user.pontos ? user.pontos: 0} />
+                <Coin info={user &&  user.pontos ? user.pontos: 0} />
             </div>
             <div style={{ position: 'absolute', width: '100%', height: '10%', top: '20%' }}>
-                <XP info={user.xp ? user.xp : 0} />
+                <XP info={user && user.xp ? user.xp : 0} />
             </div>
             <div style={{ position: 'absolute', width: '80%', left: '10%', height: '10%', top: '30%'}}>
-                <Colaboracao info={user.colaboracao ? user.colaboracao : 0} />
+                <Colaboracao info={user &&  user.colaboracao ? user.colaboracao : 0} />
             </div>
             <div style={{ position: 'absolute', width: '80%', left: '10%', height: '10%', top: '40%' }}>
-                <OtimoDesempenho info={user.otimoDesempenho ? user.otimoDesempenho : 0} />
+                <OtimoDesempenho info={user &&  user.otimoDesempenho ? user.otimoDesempenho : 0} />
             </div>
             <div style={{ position: 'absolute', width: '80%', left: '10%', height: '10%', top: '50%' }}>
-                <BomDesempenho info={user.bomDesempenho ? user.bomDesempenho : 0} />
+                <BomDesempenho info={user &&  user.bomDesempenho ? user.bomDesempenho : 0} />
             </div>
             <div style={{ position: 'absolute', width: '80%', left: '10%', height: '20%', top: '70%' }}>
                 <FullScren/>
