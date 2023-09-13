@@ -24,7 +24,7 @@ export default function Menu() {
     console.error('Erro ao buscar dados:', error);
   }
 
-  const handleStart = () => {
+  const handleStart = (id) => {
     router.push(`/selecao-nivel?id=${id}`)
   };
 
@@ -60,8 +60,8 @@ export default function Menu() {
         <InfosGame user={user}/>
         <div className='renderPag'>
           <CheckUser onFunction={()=>{}}/>
-          <Personagem img={'m1/imagem3'} posicao={'90%'} tamanho={'60'} inverter={true}/>
-          <DialogScreen tamanho={'20%'} posicao={'10%'}  cor={config.mentor.cor} dialogText={'Olá, aqui você tem disponível alguns desafios.'} complete={() => ({})}/>
+          <Personagem img={'m1/imagem3'} posicao={'10%'} tamanho={'60'} inverter={true}/>
+          <DialogScreen tamanho={'20%'}  cor={config.mentor.cor} dialogText={'Olá, aqui você tem disponível alguns desafios.'} complete={() => ({})}/>
           {isLoading && <Loading/>}
           <div className="challenge-list">
             {data && data.dataDesafio && data.dataDesafio.map((item, index) => (
@@ -78,6 +78,7 @@ export default function Menu() {
       <style jsx>{`
 
         .challenge-list {
+          position : absolute;
           width: 30%;
           display: flex;
           flex-direction: column; /* Alinhar verticalmente */
@@ -85,6 +86,9 @@ export default function Menu() {
           padding: 1rem;
           max-height: 100%;
           overflow-y: auto;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%); 
         }
 
         .challenge-item {
