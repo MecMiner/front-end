@@ -5,12 +5,15 @@ import Layout from '@/components/MyLayout';
 import { useRouter } from 'next/router';
 import Loading from '@/components/Loading';
 import config from '@/config';
+import { fetchUser } from './api/api';
+import InfosGame from '@/components/InfosGame';
 
 
 export default function Jogar() {
   const apiUrl = config.apiUrl;
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState();
 
   const router = useRouter();
   const { id } = router.query;
@@ -22,6 +25,26 @@ export default function Jogar() {
       buscarId();
     }
   }, [id, router]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+  
+    if (!token) {
+      router.push('/');
+    } else {
+      const getUser = async () => {
+        try {
+          const user = await fetchUser(token);
+          setUser(user);
+          console.log(user);
+        } catch (error) {
+          router.push('/');
+        }
+      };
+  
+      getUser();
+    }
+  }, [router]);
 
   const buscarId = async () => {
     setIsLoading(true);
@@ -64,39 +87,43 @@ export default function Jogar() {
     <div>
       <MyHead />
       <Layout>
-        <Loading />
-        <div className='select-level'>
-          <h1>Selecione um nível</h1>
-          <div className='level-frame'>
+        <InfosGame user={user}/>
+        <div className='renderPag'>
+          <Loading />
+          <div className='select-level'>
+            <h1 title='title'>Selecione um nível</h1>
+            <div className='level-frame'>
 
-            {[1, 2, 3, 4].map((level, index, array) => (
-              <div key={level} className='level-button-container'>
-                <button
-                  className={`circular-button`}
-                  onClick={() => handleButtonClick(`nivel-${level}`)}
-                  disabled={!data || !data.response || data.response.nivel < level}
-                >
-                  <Image
-                    className='circular-image'
-                    src={`/src/mapa/numero${level}${data && data.response && data.response.nivel >= level ? '' : 'ds'}.png`}
-                    fill
-                    alt={`numero${level}`}
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 40vw"
-                    priority
-                  />
-                </button>              
-                {index < array.length - 1 && (
-                  <div className={`line ${data && data.response && data.response.nivel > level ? 'active' : ''}`} />
-                )}
-              </div>
-            ))}
+              {[1, 2, 3, 4].map((level, index, array) => (
+                <div key={level} className='level-button-container'>
+                  <button
+                    className={`circular-button`}
+                    onClick={() => handleButtonClick(`nivel-${level}`)}
+                    disabled={!data || !data.response || data.response.nivel < level}
+                  >
+                    <Image
+                      className='circular-image'
+                      src={`/src/mapa/numero${level}${data && data.response && data.response.nivel >= level ? '' : 'ds'}.png`}
+                      fill
+                      alt={`numero${level}`}
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 40vw"
+                      priority
+                    />
+                  </button>              
+                  {index < array.length - 1 && (
+                    <div className={`line ${data && data.response && data.response.nivel > level ? 'active' : ''}`} />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
+
         </div>
       </Layout>
       <style jsx>{`
         .select-level {
-          position: relative;
-          width: 80%;
+          position: absolute;
+          width: 100%;
           height: 100%;
           display: flex;
           flex-direction: column;
@@ -117,7 +144,7 @@ export default function Jogar() {
           display: flex;
           align-items: center;
           gap: calc(100% / 7);
-          width: 100%;
+          width: 80%;
         }
 
         .level-button-container {
