@@ -5,6 +5,8 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo, dicaAluno, dicaProf
   const [etapa4, setEtapa4] = useState('');
   const [tempoRestante, setTempoRestante] = useState(600); 
   const [jogoEmAndamento, setJogoEmAndamento] = useState(true);
+  const [mostrarCustoProf, setMostrarCustoProf] = useState(false);
+  const [mostrarCustoAluno, setMostrarCustoAluno] = useState(false);
 
   useEffect(() => {
     if (jogoEmAndamento && tempoRestante > 0) {
@@ -80,9 +82,19 @@ function CompleteAsEtapa({frase1, frase2, onSucess, setInfo, dicaAluno, dicaProf
           />
         </div>
         <div className="button-container">
-          <button type="button" className="button button-dica" onClick={handleDicaAluno}>Dica Aluno</button>
+          <button type="button" className="button button-dica" onMouseEnter={() => setMostrarCustoAluno(true)} onMouseLeave={() => setMostrarCustoAluno(false)} onClick={handleDicaAluno}>Dica Aluno</button>
+          {mostrarCustoAluno && (
+            <div className='mensagem-custo'>
+              Custo da Dica: 5 moedas
+            </div>
+          )}
           <button type="submit" className="button">Enviar</button>
-          <button type="button" className="button button-dica" onClick={handleDicaProf}>Dica Professor</button>
+          <button type="button" className="button button-dica" onMouseEnter={() => setMostrarCustoProf(true)} onMouseLeave={() => setMostrarCustoProf(false)} onClick={handleDicaProf}>Dica Professor</button>
+          {mostrarCustoProf && (
+            <div className='mensagem-custo'>
+              Custo da Dica: 10 moedas
+            </div>
+          )}
         </div>
         <div style={{ display: 'flex', justifyContent: 'space-between', width: '80%', padding: '10px'}}>
           <div className="tempo-restante">

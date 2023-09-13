@@ -53,7 +53,7 @@ Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja 
           display: flex;
           align-items: center;
           justify-content: center;
-          z-index: 999999999;
+          z-index: 9999;
         }
 
         .info {
@@ -66,7 +66,7 @@ Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja 
           justify-content: center;
           align-items: center;
           background-color: #fff;
-          z-index: 9999999999;
+          z-index: 9999;
           position: relative;
           overflow-y: auto;
         }
@@ -75,7 +75,7 @@ Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja 
           position: absolute;
           transform: translateX(-50%);
           left: 50%;
-          z-index: 9999;
+          z-index: 99;
           cursor: pointer;
         }
         

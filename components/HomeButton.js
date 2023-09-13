@@ -18,7 +18,7 @@ const HomeButton = () => {
           position: absolute;
           transform: translateX(-50%);
           left: 50%;
-          z-index: 9999;
+          z-index: 99;
           cursor: pointer;
         }
         

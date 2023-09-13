@@ -169,3 +169,14 @@ html, body{ margin: 0}
   margin-bottom: 10px;
   }
 
+  .mensagem-custo {
+    position: absolute;
+    background-color: #ff9800;
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    top: 101%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1; 
+  }

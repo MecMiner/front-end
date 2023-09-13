@@ -45,7 +45,7 @@ const DialogScreen = ({tamanho, posicao, dialogText, cor, complete, posicaoY }) 
                     border-radius: 30px;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.9);
                     transform: translateY(-100%);
-                    max-height: ${posicaoY ? posicaoY : '40%'};
+                    max-height: ${posicaoY ? posicaoY : '30%'};
                     overflow-y: auto;
                   };
             `}</style>

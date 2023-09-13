@@ -37,7 +37,7 @@ export default function Menu() {
     const token = localStorage.getItem('token');
   
     if (!token) {
-      router.push('/');
+      router.push('/login');
     } else {
       const getUser = async () => {
         try {
@@ -45,7 +45,7 @@ export default function Menu() {
           setUser(user);
           console.log(user);
         } catch (error) {
-          router.push('/');
+          router.push('/login');
         }
       };
   
@@ -57,12 +57,12 @@ export default function Menu() {
     <div>
       <MyHead />
       <Layout>
+       <Loading/>
         <InfosGame user={user}/>
         <div className='renderPag'>
           <CheckUser onFunction={()=>{}}/>
           <Personagem img={'m1/imagem3'} posicao={'10%'} tamanho={'60'} inverter={true}/>
-          <DialogScreen tamanho={'20%'}  cor={config.mentor.cor} dialogText={'Olá, aqui você tem disponível alguns desafios.'} complete={() => ({})}/>
-          {isLoading && <Loading/>}
+          <DialogScreen tamanho={'20%'}  cor={config.mentor.cor} dialogText={'Olá, aqui você tem disponível alguns desafios.'} complete={() => ({})}/>    
           <div className="challenge-list">
             {data && data.dataDesafio && data.dataDesafio.map((item, index) => (
               <div className="challenge-item" key={index}>

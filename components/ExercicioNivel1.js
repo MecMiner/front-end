@@ -10,6 +10,7 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
     const [tentativaTwo, setTentativaTwo] = useState(false);
     const [tempoRestante, setTempoRestante] = useState(180); // 3 minutos (em segundos)
     const [jogoEmAndamento, setJogoEmAndamento] = useState(true);
+    const [mostrarCustoProf, setMostrarCustoProf] = useState(false);
 
 
     useEffect(() => {
@@ -147,10 +148,13 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
                     {(tempoRestante % 60).toString().padStart(2, '0')}
                 </div>
                 <div className="buttons-container">
-                    <button onClick={handleVerificarOrdem}>Conferir</button>
-                    <button className="dica-button" onClick={handleExibirDica}>
-                        Dica do Professor
-                    </button>
+                    <button className='button' onClick={handleVerificarOrdem}>Conferir</button>
+                    <button type="button" className="button button-dica" onMouseEnter={() => setMostrarCustoProf(true)} onMouseLeave={() => setMostrarCustoProf(false)} onClick={handleExibirDica}>Dica Professor</button>
+                    {mostrarCustoProf && (
+                        <div className='mensagem-custo'>
+                        Custo: 10 moedas
+                        </div>
+                    )}
                 </div>
                 <p className="erro-message">
                 {erroMsg ? 'Ops! A ordem está incorreta. Tente novamente.' : ''}
@@ -167,9 +171,11 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         align-items: center;
         position: absolute;
         left: 50%;
-        height: 100%;
+        height: 90%;
         width: 90%;
-        transform: translateX(-50%);       
+        top: 5%;
+        transform: translateX(-50%);      
+        border-radius: 4px; 
     }
 
     .quadros-frases {
@@ -239,29 +245,12 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         left:50%;
         top: 50%;
         display: flex;
+        width: 100%;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
       }
-      
-      button {
-        padding: 10px 20px;
-        background-color: green;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        margin: 5px;
-      }
-      
-      .dica-button {
-        background-color: #ff9800;
-      }
-      
-      button:hover {
-        transform: scale(1.2);
-      }
-      
+
       .erro-message {
         position: absolute;
         transform: translate(-50% , -100%);
@@ -269,6 +258,14 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         top: 80%;
         color: red;
         font-size: 14px; /* Ajuste o tamanho da fonte conforme necessário */
+      }
+
+      button {
+        margin: 5px;
+      }
+
+      .mensagem-custo{
+        left: 80%;
       }
     .title {
         color: #ff9800;
