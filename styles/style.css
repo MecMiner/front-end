@@ -26,13 +26,13 @@ html, body{ margin: 0}
 
 
 .ganhador-moedas {
-  position: fixed;
-  top: 30%;
+  position: absolute;
+  top: 20%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%);
   padding: 20px;
-  background-color: rgba(199, 196, 196, 0.566);
-  color: rgb(171, 171, 1);
+  background-color: rgba(2, 48, 71, 0.566);
+  color: rgb(255, 183, 3);
   font-size: 25px;
   border-radius: 8px;
   animation: fadeInOut 5s;
@@ -72,8 +72,7 @@ html, body{ margin: 0}
 
 
 ::-webkit-scrollbar {
-  width: 6px; /* Largura da barra de rolagem vertical */
-  height: 50px; /* Altura da barra de rolagem horizontal */
+  width: 6px;
 }
 
 ::-webkit-scrollbar-thumb {

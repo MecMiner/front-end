@@ -15,7 +15,8 @@ import BarradeProgresso from '@/components/BarradeProgresso';
 import ExibirDica from '@/components/ExibirDica';
 import InfosGame from '@/components/InfosGame';
 import Button from '@/components/Buttons';
-import { sendRequest } from './api/api';
+import { fetchUser, sendRequest, setCoin } from './api/api';
+import Image from 'next/image';
 
 
 export default function Jogar({ data }) {
@@ -60,39 +61,25 @@ export default function Jogar({ data }) {
   },[userGame])
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        router.push('/'); // Não tiver token, vai para página de login
-      } else {
+    const token = localStorage.getItem('token');
+  
+    if (!token) {
+      router.push('/');
+    } else {
+      const getUser = async () => {
         try {
-          const response = await fetch(`${apiUrl}/`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: token,
-            },
-          });
-  
-          const dados = await response.json();
-  
-          if (response.ok) {
-            setUser(dados.dataUsuario);
-            console.log(dados.dataUsuario);
-          } else {
-            router.push('/');
-            // Trate o erro de acordo com suas necessidades
-          }
+          const user = await fetchUser(token);
+          setUser(user);
+          console.log(user);
         } catch (error) {
-          console.error('Erro na requisição:', error);
-          // Trate o erro de acordo com suas necessidades
+          router.push('/');
         }
-      }
+      };
+  
+      getUser();
     }
+  }, [id]);
 
-    fetchUser();
-  },[id])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -242,8 +229,20 @@ export default function Jogar({ data }) {
       setShowMessage(false);
       setAnimationEnded(true);
       handleNextPag();
-    }, 3000); // Aguardar 3 segundos antes de avançar
+    }, 3000);
+    setUserBanco();
   };
+
+  const setUserBanco = async () => {
+    try {
+      const response = await sendRequest(`${apiUrl}/setPts`, 'POST', {}, user);
+      if (response.ok) {
+        console.log('Valores inseridos no banco')
+      }
+    } catch (error) {
+      console.log('Erro ao inserir no banco')
+    }
+  }
 
   const handleSetBanco = async () => {
     try {
@@ -271,13 +270,13 @@ export default function Jogar({ data }) {
   const exibirDica = (professor) => {
     if (professor) {
       if (!usouDicaProfessor){
-        setUser(prevState => ({ ...prevState, pontos: prevState.pontos - 10 }));
+        setCoin(setUser,-10,0)
         setUsouDicaProfessor(true)
       }
       setShowDicaProfessor(true);
     } else {
       if (!usouDicaColega){
-        setUser(prevState => ({ ...prevState, pontos: prevState.pontos - 5 }));
+        setCoin(setUser,-5,0)
         setUsouDicaColega(true)
       }
       setShowDicaColega(true);
@@ -304,7 +303,7 @@ export default function Jogar({ data }) {
     setUser(prevState => ({ ...prevState, colaboracao: prevState.colaboracao + 1 }));
     setInfo(prevState => ({ ...prevState, nivel: 3 }));
     setInfo(prevState => ({ ...prevState, resposta2: '' }));
-    handleSetCoin(10,5);
+    handleSetCoin(10,2);
   } 
 
 
@@ -350,6 +349,7 @@ export default function Jogar({ data }) {
             {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => handleSetCoin(10, 0)} onNo={() => { router.push('/') }} />}
             {showMessage && (
               <div className="ganhador-moedas">
+                <Image src={'/src/moeda.gif'} width={100} height={100} alt='moeda' priority />
                 Você ganhou 10 moedas
               </div>
             )}
@@ -614,6 +614,7 @@ export default function Jogar({ data }) {
             </div>
             {showMessage && (
               <div className="ganhador-moedas">
+                <Image src={'/src/moeda.gif'} width={100} height={100} alt='moeda' priority />
                 Você ganhou 10 moedas, 2 XP  e um Badge de Colaboração pela avaliação.
               </div>
             )}

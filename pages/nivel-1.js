@@ -15,6 +15,7 @@ import Button from '@/components/Buttons';
 import ExibirDica from '@/components/ExibirDica';
 import Image from 'next/image';
 import InfosGame from '@/components/InfosGame';
+import { fetchResponse, fetchUser } from './api/api';
 
 
 export default function Jogar({data}) {
@@ -44,67 +45,35 @@ export default function Jogar({data}) {
 
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem('token');
 
-      if (!token) {
-        router.push('/'); // Não tiver token, vai para página de login
-      } else {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      router.push('/');
+    } else {
+      const getUser = async () => {
         try {
-          const response = await fetch(`${apiUrl}/`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: token,
-            },
-          });
-  
-          const dados = await response.json();
-  
-          if (response.ok) {
-            setUser(dados.dataUsuario);
-            console.log(dados.dataUsuario);
-          } else {
-            router.push('/');
-          }
+          const user = await fetchUser();
+          setUser(user);
         } catch (error) {
-          console.error('Erro na requisição:', error);
+          router.push('/');
         }
-      }
+      };
+
+      const getInfo = async () => {
+        try {
+          const info = await fetchResponse(id);
+          setInfo(info);
+        } catch (error) {
+          router.push('/');
+        }
+      };
+
+      getInfo();
+      getUser();
     }
 
 
-    const fetchData = async () => {
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        router.push('/'); // Não tiver token, vai para página de login
-      } else {
-        try {
-          const response = await fetch(`${apiUrl}/respostas/${id}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: token,
-            },
-          });
-  
-          const dados = await response.json();
-  
-          if (response.ok) {
-            setInfo(dados.response);
-            console.log(dados.response);
-          } else {
-            router.push('/');
-          }
-        } catch (error) {
-          console.error('Erro na requisição:', error);
-        }
-      }
-    };
-  
-    fetchUser();
-    fetchData();
   }, [id]);
 
 
@@ -289,7 +258,7 @@ export default function Jogar({data}) {
             {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => handleSetCoin(10,0)} onNo={() => {router.push(`/selecao-nivel?id=${id}`)}} />}
             {showMessage && (
               <div className="ganhador-moedas">
-                
+                <Image src={'/src/moeda.gif'} width={100} height={100} alt='moeda' priority />
                 Você ganhou 10 moedas
               </div>
             )}
@@ -455,7 +424,7 @@ export default function Jogar({data}) {
       case 27:
         return (
           <div>
-            <ExercicioNivel1 frasesIniciais={linhas} onSuccess={handelCorrigirGame} dica={() => exibirDica()}/>
+            <ExercicioNivel1 frasesIniciais={linhas}  onSuccess={handelCorrigirGame} dica={() => exibirDica()}/>
             {showDica && (
                 <ExibirDica setExibirDica={setShowDica} dica={data.dataDesafio.dica}/>
             )}
@@ -478,10 +447,10 @@ export default function Jogar({data}) {
         </div>)
       case 31:
         return (
-          <div>
+          <div style={{padding: '10px'}}>
             {isSave && <Loading texto={'Salvando informações...'}/>}
-            {userGame.bomDesempenho && <Desempenho des={'bom'}/>}
-            {userGame.otimoDesempenho && <Desempenho des={'otimo'}/>}    
+            {userGame.bomDesempenho && <Desempenho des={'bom'} pontos={50} xp={10}/>}
+            {userGame.otimoDesempenho && <Desempenho des={'otimo'} pontos={50} xp={10}/>}    
             {!isSave && <Button onYes={() => saveGame()} texto1={'Salvar'} posicaoX={'43%'} posicaoY={'85%'}/>}   
             {isSave && <ButtonAdvance buttonClick={() => handleButtonClick()} />}         
           </div>)
@@ -545,23 +514,11 @@ export default function Jogar({data}) {
       <MyHead />
       <Layout>
         <InfosGame  user={user}/>
-        
         <div className='renderPag'>
           {renderPag()}
           <BarradeProgresso total={38} atual={pag}/>
-        </div>
-       
-        
-        
+        </div>       
       </Layout>
-      <style jsx>{`
-        .renderPag{
-          position: absolute;
-          left: 15%;
-          width: 85%;
-          height: 100%;
-        }
-      `}</style>
     </div>
   );
 }

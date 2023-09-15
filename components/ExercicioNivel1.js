@@ -11,6 +11,7 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
     const [tempoRestante, setTempoRestante] = useState(180); // 3 minutos (em segundos)
     const [jogoEmAndamento, setJogoEmAndamento] = useState(true);
     const [mostrarCustoProf, setMostrarCustoProf] = useState(false);
+    const [tentativas, setTentativas] = useState(3);
 
 
     useEffect(() => {
@@ -79,11 +80,13 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
                 setTentativaOne(true);
                 setErroMsg(true)
                 reiniciarJogo();
+                setTentativas(2)
             } else {
                 if(!tentativaTwo){
                     setTentativaTwo(true);
                     setErroMsg(true)
                     reiniciarJogo();
+                    setTentativas(1)
                 } else {
                     onSuccess(0,0,false,false,true);
                 }
@@ -143,9 +146,14 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
             </div>
             
             <div className="actions-container">
-                <div className='tempo-restante'>
-                    Tempo: {Math.floor(tempoRestante / 60)}:
-                    {(tempoRestante % 60).toString().padStart(2, '0')}
+                <div style={{ display: 'flex', justifyContent: 'space-between', width: '80%', padding: '10px'}}>
+                    <div className="tempo-restante">
+                        {`Você tem ${tentativas} tentativas`}
+                    </div>
+                    <div className='tempo-restante'>
+                        Tempo: {Math.floor(tempoRestante / 60)}:
+                        {(tempoRestante % 60).toString().padStart(2, '0')}
+                    </div>
                 </div>
                 <div className="buttons-container">
                     <button className='button' onClick={handleVerificarOrdem}>Conferir</button>
@@ -230,13 +238,6 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
         position: absolute;
         top: 80%;
 
-      }
-      
-      .tempo-restante {
-        position: absolute;
-        transform: translate(-50% , -50%);
-        top: 50%;
-        left:20%;
       }
 
       .buttons-container {

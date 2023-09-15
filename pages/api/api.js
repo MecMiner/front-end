@@ -22,7 +22,34 @@ export const sendRequest = async (url, method, headers, body) => {
     }
   };
 
-export const fetchUser = async (token) => {
+
+export  const fetchResponse = async (id) => {
+    const token = localStorage.getItem('token');
+    const apiUrl = config.apiUrl;
+
+    try {
+      const response = await fetch(`${apiUrl}/respostas/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        return data.response;
+      } else {
+        throw new Error('Erro na resposta da API');
+      }
+
+    } catch (error) {
+      console.error('Erro na requisição:', error);
+    }
+  };
+
+export const fetchUser = async () => {
+    const token = localStorage.getItem('token');
     const apiUrl = config.apiUrl;
     try {
       const response = await fetch(`${apiUrl}/`, {
@@ -45,3 +72,8 @@ export const fetchUser = async (token) => {
       throw error;
     }
   };
+
+  export const setCoin = (setUser, pontos, exp) => {
+    setUser(prevState => ({ ...prevState, pontos: prevState.pontos + pontos }));
+    setUser(prevState => ({ ...prevState, xp: prevState.xp + exp }));
+  }

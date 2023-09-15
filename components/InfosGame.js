@@ -54,7 +54,8 @@ const InfosGame = ({ user }) => {
                 left: 0%;
                 width: 15%;
                 height: 100%;
-                background-color: rgba(72, 151, 216, 0.432);
+                background-color: rgba(33, 158, 188, 0.432);
+                border-radius: 10px;
                 }
             `}</style>
         </div>

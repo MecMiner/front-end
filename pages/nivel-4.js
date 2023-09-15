@@ -14,6 +14,7 @@ import ExercicioNivel4 from '@/components/ExercicioNivel4';
 import BarradeProgresso from '@/components/BarradeProgresso';
 import { fetchUser, sendRequest } from './api/api';
 import InfosGame from '@/components/InfosGame';
+import Image from 'next/image';
 
 
 export default function Jogar({ data }) {
@@ -314,6 +315,7 @@ export default function Jogar({ data }) {
             {showButton && <ConfirmationBox posicaoX={'50%'} onYes={() => handleSetCoin(10, 0)} onNo={() => { router.push('/menu') }} />}
             {showMessage && (
               <div className="ganhador-moedas">
+                <Image src={'/src/moeda.gif'} width={100} height={100} alt='moeda' priority />
                 Você ganhou 10 moedas
               </div>
             )}
