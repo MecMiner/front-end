@@ -4,15 +4,12 @@ import MyHead from '@/components/MyHead';
 import Layout from '@/components/MyLayout';
 import { useRouter } from 'next/router';
 import Loading from '@/components/Loading';
-import config from '@/config';
-import { fetchUser } from './api/api';
+import { fetchResponse, fetchUser } from './api/api';
 import InfosGame from '@/components/InfosGame';
 
 
 export default function Jogar() {
-  const apiUrl = config.apiUrl;
   const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState();
 
   const router = useRouter();
@@ -20,64 +17,40 @@ export default function Jogar() {
 
   useEffect(() => {
     if (!id) {
-      router.push('/menu');
-    } else {
-      buscarId();
-    }
-  }, [id, router]);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-  
-    if (!token) {
       router.push('/');
     } else {
-      const getUser = async () => {
-        try {
-          const user = await fetchUser(token);
-          setUser(user);
-          console.log(user);
-        } catch (error) {
-          router.push('/');
-        }
-      };
-  
-      getUser();
-    }
-  }, [router]);
-
-  const buscarId = async () => {
-    setIsLoading(true);
-    try {
       const token = localStorage.getItem('token');
+
       if (!token) {
         router.push('/');
-        return;
-      }
-
-      const response = await fetch(`${apiUrl}/respostas/${id}`, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: token,
-        },
-      });
-
-      if (response.ok) {
-        const dados = await response.json();
-        if (dados) {
-          setData(dados);
-        } else {
-          router.push('/menu');
-        }
       } else {
-        console.error('Erro ao buscar dados:', response.status);
+        const getUser = async () => {
+          try {
+            const user = await fetchUser();
+            setUser(user);
+          } catch (error) {
+            router.push('/');
+          }
+        };
+  
+        const getInfo = async () => {
+          try {
+            const info = await fetchResponse(id);
+            console.log(info);
+            setData(info);
+          } catch (error) {
+            router.push('/');
+          }
+        };
+  
+        if (id){
+          getInfo();
+          getUser();
+        }      
       }
-
-    } catch (error) {
-      router.push('/menu');
-      console.error('Erro ao buscar dados:', error);
     }
-  };
+  }, [id]);
+
 
   const handleButtonClick = (name) => {
     router.push(`/${name}?id=${id}`);
@@ -99,11 +72,11 @@ export default function Jogar() {
                   <button
                     className={`circular-button`}
                     onClick={() => handleButtonClick(`nivel-${level}`)}
-                    disabled={!data || !data.response || data.response.nivel < level}
+                    disabled={!data || data.nivel < level}
                   >
                     <Image
                       className='circular-image'
-                      src={`/src/mapa/numero${level}${data && data.response && data.response.nivel >= level ? '' : 'ds'}.png`}
+                      src={`/src/mapa/numero${level}${data && data.nivel >= level ? '' : 'ds'}.png`}
                       fill
                       alt={`numero${level}`}
                       sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 40vw"
@@ -111,7 +84,7 @@ export default function Jogar() {
                     />
                   </button>              
                   {index < array.length - 1 && (
-                    <div className={`line ${data && data.response && data.response.nivel > level ? 'active' : ''}`} />
+                    <div className={`line ${data && data.nivel > level ? 'active' : ''}`} />
                   )}
                 </div>
               ))}

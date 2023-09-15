@@ -57,7 +57,7 @@ export default function Menu() {
     <div>
       <MyHead />
       <Layout>
-       <Loading/>
+       {isLoading && <Loading/>}
         <InfosGame user={user}/>
         <div className='renderPag'>
           <CheckUser onFunction={()=>{}}/>

@@ -77,3 +77,15 @@ export const fetchUser = async () => {
     setUser(prevState => ({ ...prevState, pontos: prevState.pontos + pontos }));
     setUser(prevState => ({ ...prevState, xp: prevState.xp + exp }));
   }
+
+  export const setBom = (setUser) => {
+    setUser(prevState => ({ ...prevState, bomDesempenho: prevState.bomDesempenho + 1}));
+  }
+
+  export const setOtm = (setUser) => {
+    setUser(prevState => ({ ...prevState, otimoDesempenho: prevState.otimoDesempenho + 1}));
+  }
+
+  export const setCol = (setUser) => {
+    setUser(prevState => ({ ...prevState, colaboracao: prevState.colaboracao + 1}));
+  }

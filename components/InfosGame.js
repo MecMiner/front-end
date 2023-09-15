@@ -1,20 +1,15 @@
-import BomDesempenho from "./BomDesempenho";
-import Coin from "./Coin";
-import Colaboracao from "./Colaboracao";
-import Copyright from "./Copyright";
+import { BomDesempenho, Coin, Colaboracao, Copyright, Nome, OtimoDesempenho, XP } from "./Elementos";
 import FullScren from "./FullScren";
 import HomeButton from "./HomeButton";
 import InfoButton from "./InfoButton";
-import OtimoDesempenho from "./OtimoDesempenho";
-import Name from "./UserName";
-import XP from "./Xp";
+
 
 const InfosGame = ({ user }) => {
 
     return (
         <div className='infos'>
             <div style={{ position: 'absolute', width: '100%', height: '10%' }}>
-                <Name name={user && user.nome ? user.nome : 'Nome'} />
+                <Nome name={user && user.nome ? user.nome : 'Nome'} />
             </div>
             <div style={{ position: 'absolute', width: '80%', left: '10%', height: '10%', top: '10%' }}>
                 <Coin info={user &&  user.pontos ? user.pontos: 0} />

@@ -14,15 +14,14 @@ import AvaliacaoStar from '@/components/AvaliacaoStar';
 import BarradeProgresso from '@/components/BarradeProgresso';
 import ExibirDica from '@/components/ExibirDica';
 import InfosGame from '@/components/InfosGame';
-import Button from '@/components/Buttons';
-import { fetchUser, sendRequest, setCoin } from './api/api';
+import { fetchResponse, fetchUser, setBom, setCoin, setCol, setOtm } from './api/api';
 import Image from 'next/image';
+import { SaveGame, SaveUser } from '@/components/SaveGame';
 
 
 export default function Jogar({ data }) {
-  const [pag, setPag] = useState(1);
+  const [pag, setPag] = useState(24);
   const [user,setUser] = useState({});
-  const apiUrl = config.apiUrl;
   const fraseGrande = data.dataDesafio.etapasSolucao
   const linhas = fraseGrande.split('\r\n');
   const [showMessage, setShowMessage] = useState(false);
@@ -47,19 +46,6 @@ export default function Jogar({ data }) {
   const tamanho = 60;  
   const [isSave, setIsSave] = useState(false);
 
-  useEffect(() =>{
-    const setDesempenho = () => {
-      if (userGame.bomDesempenho) {
-        setUser(prevState => ({ ...prevState, bomDesempenho: prevState.bomDesempenho + 1 }));
-      }
-      if (userGame.otimoDesempenho) {
-        setUser(prevState => ({ ...prevState, otimoDesempenho: prevState.otimoDesempenho + 1 }));
-      }    
-    }
-
-    setDesempenho();
-  },[userGame])
-
   useEffect(() => {
     const token = localStorage.getItem('token');
   
@@ -70,11 +56,12 @@ export default function Jogar({ data }) {
         try {
           const user = await fetchUser(token);
           setUser(user);
-          console.log(user);
         } catch (error) {
           router.push('/');
         }
       };
+
+
   
       getUser();
     }
@@ -89,51 +76,16 @@ export default function Jogar({ data }) {
         router.push('/login');
       } else {
         try {
-          const response = await fetch(`${apiUrl}/respostas/${id}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: token,
-            },
-          });
-
-          const dados = await response.json();
-
-          if (response.ok) {
-            if (dados.response.nivel >= 1) {
-              if (!dados.response.statusNivel2.jogou) {
-                setInfo(prevInfo => {
-                  const updatedStatusNivel2 = {
-                    ...prevInfo.statusNivel2,
-                    jogou: true,
-                    corrigido: false,
-                    certo: false,
-                    erros: 0,
-                    feedback: ""
-                  };
-
-                  return {
-                    ...prevInfo,
-                    statusNivel2: updatedStatusNivel2
-                  };
-                });
-              } else {
+          const dados = await fetchResponse(id);
+          console.log(dados);
+          setInfo(prevInfo => ({ ...prevInfo, statusNivel2: dados.statusNivel2 }));
+            if (dados.nivel >= 1) {
+              if (dados.statusNivel2.jogou){
                 setPag(26);
-                setInfo(prevInfo => ({ ...prevInfo, statusNivel2: dados.response.statusNivel2 }));
-
-                if (!dados.response.statusNivel2.corrigido) {
-
+                if (!dados.statusNivel2.corrigido) {
                   setCheckBanco(true);
                 }
-                if (dados.response.statusNivel2.corrigido) {
-                  if(dados.response.statusNivel2.certo) {
-                    if(dados.response.statusNivel2.erros == 0){
-                      setUserGame(prevState => ({...prevState, otimoDesempenho: true}));
-                    } else {
-                      setUserGame(prevState => ({...prevState, bomDesempenho: true}));
-                    }
-                  }
-                  setPag(26);
+                if (dados.statusNivel2.corrigido) {
                   setCheckBanco(false);
                   setShowButton(true);
                 }
@@ -141,9 +93,6 @@ export default function Jogar({ data }) {
             } else {
               router.push('/');
             }
-          } else {
-            router.push('/');
-          }
         } catch (error) {
           console.error('Erro na requisição:', error);
         }
@@ -163,19 +112,13 @@ export default function Jogar({ data }) {
   }, [id, checkBanco]);
 
 
-  const handleNextPag = () => {
+  const nextPag = (pag) => {
+    setShowButton(false);
     if (!animationEnded) {
-      setPag(prevPag => prevPag + 1);
+      setPag(prevPag => prevPag + (pag ? pag : 1));
       setAnimationEnded(false);
     }
   }
-
-  const advancePag = (atPg) => {
-    setShowButton(false)
-    setPag(prevPag => prevPag + atPg);
-  }
-
-
 
   const handleButtonClick = (mensagem) => {
     setShowButton(false);
@@ -184,12 +127,13 @@ export default function Jogar({ data }) {
       setTimeout(() => {
         setShowMessage(false);
         setAnimationEnded(true);
-        handleNextPag();
-      }, 3000); // Aguardar 3 segundos antes de avançar
+        nextPag();
+      }, 3000);
     } else {
-      handleNextPag();
+      nextPag();
     }
   }
+
 
   const handleResetGame = () => {
     setPag(1);
@@ -199,11 +143,11 @@ export default function Jogar({ data }) {
     setInfo(prevInfo => {
       const updatedStatusNivel2 = {
         ...prevInfo.statusNivel2,
-        jogou: info.statusNivel2.jogou,
+        jogou: false,
         corrigido: false,
         certo: false,
-        erros: info.statusNivel2.erros,
-        feedback: info.statusNivel2.feedback,
+        erros: 0,
+        feedback: "",
       };
 
       return {
@@ -214,57 +158,46 @@ export default function Jogar({ data }) {
     setPag(25);
   }
 
-  const onChaneResposta2 = (valor) => {
+  const onChangeResposta = (valor) => {
+    setInfo(prevInfo => {
+      const updatedStatusNivel2 = {
+        ...prevInfo.statusNivel2,
+        jogou: true,
+        corrigido: false,
+        certo: false,
+        erros: info.statusNivel2.erros,
+        feedback: "",
+      };
+
+      return {
+        ...prevInfo,
+        statusNivel2: updatedStatusNivel2
+      };
+    });
     setInfo(prevInfo => ({ ...prevInfo, resposta2: valor }));
+    console.log(info);
   };
 
 
-  const handleSetCoin = (valor, exp) => {
+  const handleSetUser = (valor, exp, otm, bom, col) => {
     setShowButton(false);
-    setUser(prevState => ({ ...prevState, pontos: prevState.pontos + valor }));
-    setUser(prevState => ({ ...prevState, xp: prevState.xp + exp }));
-    // Ocultar a mensagem após 3 segundos
+    setCoin(setUser, valor, exp);
+    if (otm) setOtm(setUser);
+    if (bom) setBom(setUser);
+    if (col) setCol(setUser);
     setShowMessage(true);
     setTimeout(() => {
       setShowMessage(false);
       setAnimationEnded(true);
-      handleNextPag();
+      nextPag();
     }, 3000);
-    setUserBanco();
   };
 
-  const setUserBanco = async () => {
-    try {
-      const response = await sendRequest(`${apiUrl}/setPts`, 'POST', {}, user);
-      if (response.ok) {
-        console.log('Valores inseridos no banco')
-      }
-    } catch (error) {
-      console.log('Erro ao inserir no banco')
-    }
-  }
-
-  const handleSetBanco = async () => {
-    try {
-      const response1 = await sendRequest(`${apiUrl}/respostas/${id}`, 'POST', {}, info);
-      const response2 = await sendRequest(`${apiUrl}/setPts`, 'POST', {}, user);
-      if (response1.ok && response2.ok) {
-        handleNextPag();
-      }
-    } catch (error) {
-      console.log('Erro ao inserir no banco')
-    }
-  };
-
-  const saveGame = () => {
-    setIsSave(true);
-    handleSetBanco();
-  }
 
   const handelCorrigirGame = () => {
-    setShowButton(false);
-    handleSetBanco();
     setCheckBanco(true);
+    setIsSave(true);
+    nextPag();
   }
 
   const exibirDica = (professor) => {
@@ -292,7 +225,7 @@ export default function Jogar({ data }) {
         corrigido: false,
         certo: false,
         erros: 0,
-        feedback: info.statusNivel2.feedback,
+        feedback: '',
       };
 
       return {
@@ -300,10 +233,8 @@ export default function Jogar({ data }) {
         statusNivel2: updatedStatusNivel2
       };
     });
-    setUser(prevState => ({ ...prevState, colaboracao: prevState.colaboracao + 1 }));
-    setInfo(prevState => ({ ...prevState, nivel: 3 }));
-    setInfo(prevState => ({ ...prevState, resposta2: '' }));
-    handleSetCoin(10,2);
+    setCol(setUser)
+    handleSetUser(10,2);
   } 
 
 
@@ -346,7 +277,7 @@ export default function Jogar({ data }) {
             <DialogoBox complete={() => setShowButton(true)} cor={mentor.cor} tamanho={"28%"} dialogText={"Estou muito bem, pronto para começar?"} />
             <Personagem img={"m2/imagem2"} tamanho={tamanho} posicao={"10%"} />
             <Personagem img={"p2/imagem4"} tamanho={tamanho} posicao={"50%"} />
-            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => handleSetCoin(10, 0)} onNo={() => { router.push('/') }} />}
+            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => handleSetUser(10, 0)} onNo={() => { router.push('/') }} />}
             {showMessage && (
               <div className="ganhador-moedas">
                 <Image src={'/src/moeda.gif'} width={100} height={100} alt='moeda' priority />
@@ -360,7 +291,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"28%"}  dialogText={`Então vamos lá. \nO problema que vamos ver hoje ocorreu no projeto ${data.dataDesafio.nomeProjeto}, já ouviu falar desse projeto?`} />
             <Personagem img={"m2/imagem6"} tamanho={tamanho} posicao={"10%"} />
             <Personagem img={"p2/imagem4"} tamanho={tamanho} posicao={"50%"}/>
-            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => advancePag(2)} onNo={() => handleButtonClick()} />}
+            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => nextPag(2)} onNo={() => handleButtonClick()} />}
           </div>)
       case 7:
         return (
@@ -369,7 +300,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={"50%"} tamanho={'10%'} dialogText={'Ok'} />
             <Personagem img={"m2/imagem2"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => advancePag(2)} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag(2)} />}
 
           </div>)
       case 8:
@@ -421,7 +352,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} tamanho={'20%'} complete={() => setShowButton(true)} dialogText={`Gostaria que eu repetisse essas informações?`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => handleButtonClick()} onNo={() => advancePag(2)} />}
+            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => handleButtonClick()} onNo={() => nextPag(2)} />}
           </div>)
       case 14:
         return (
@@ -452,7 +383,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"20%"} dialogText={`Tudo bem até aqui?`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => advancePag(3)} onNo={() => handleButtonClick()} />}
+            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => nextPag(3)} onNo={() => handleButtonClick()} />}
           </div>)
       case 18:
         return (
@@ -519,7 +450,7 @@ export default function Jogar({ data }) {
       case 25:
         return (
           <div>
-            <ExercicioNivel2 dicaProf={()=>exibirDica(true)} dicaAluno={()=>exibirDica(false)}  frase1={linhas[0]} frase2={linhas[2]} tentativas={3 - info.statusNivel2.erros} onSucess={handelCorrigirGame} setInfo={onChaneResposta2} />
+            <ExercicioNivel2 dicaProf={()=>exibirDica(true)} dicaAluno={()=>exibirDica(false)}  frase1={linhas[0]} frase2={linhas[2]} tentativas={3 - info.statusNivel2.erros} onSucess={handelCorrigirGame} setInfo={onChangeResposta} />
             {showDicaProfessor && (
               <ExibirDica dica={data.dataDesafio.dica} setExibirDica={setShowDicaProfessor}/>
             )}
@@ -531,6 +462,8 @@ export default function Jogar({ data }) {
       case 26:
         return (
           <div>
+            {isSave && <SaveGame id={id} info={info}/>}
+            {isSave && <SaveUser user={user}/>}
             <div style={{ transform: 'translateX(-50%)' ,height: '20%', border: '1px solid black', borderRadius: '4px', position: 'absolute', aspectRatio: '1/1', right: '10%', top: '70%' }}>
               {checkBanco && (
                 <Loading infinite={true} />
@@ -557,7 +490,7 @@ export default function Jogar({ data }) {
             )}
             {info.statusNivel2.corrigido && info.statusNivel2.certo && (
               <div>
-                <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} texto1={'Continuar'} onYes={() => {advancePag(2)}}/>
+                <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} texto1={'Continuar'} onYes={() => {nextPag(2)}}/>
                 <DialogoBox cor={mentor.cor} posicaoY={'70%'} posicao={'60%'} complete={() => { }} dialogText={info.statusNivel2.feedback} />
               </div>
             )}           
@@ -622,10 +555,11 @@ export default function Jogar({ data }) {
       case 33:
         return (
           <div style={{padding: '5%'}}>
-            {isSave && <Loading texto={'Salvando informações...'}/>}
-            {userGame.bomDesempenho && <Desempenho des={'bom'} col={true}/>}
-            {userGame.otimoDesempenho && <Desempenho des={'otimo'} col={true}/>} 
-            {!isSave && <Button onYes={() => saveGame()} texto1={'Salvar'} posicaoX={'43%'} posicaoY={'85%'}/>}            
+            <SaveGame id={id} info={info}/>
+            <SaveUser user={user}/>
+            {!info.statusNivel2.erros == 0 && <Desempenho des={'bom'} col={true}/>}
+            {info.statusNivel2.erros == 0 && <Desempenho des={'otimo'} col={true}/>} 
+            <ButtonAdvance buttonClick={() => handleButtonClick()} />
           </div>)
       case 34:
         return (
