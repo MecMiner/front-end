@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const Desempenho = ({ des, col, pontos, xp }) => {
+const Desempenho = ({ des, col}) => {
   return (
     <div className="container">
       <div className="imagesContainer">
@@ -25,14 +25,14 @@ const Desempenho = ({ des, col, pontos, xp }) => {
 
       </div>
       <p className="texto">{`Parabéns, você recebeu um Badge de ${des} Desempenho`}</p>
-      <div>
-        <p className="texto">{`${pontos} Moedas e ${xp} pontos de experiências`}</p>
-        <Image src={'/src/moeda.gif'} width={100} height={100} alt='moeda' priority /> 
-      </div>
       {col && <p className="texto">{`E um badge de colaboração`}</p>}
 
       <style jsx>{`
         .container {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
           display: flex;    
           flex-direction: column;
           align-items: center;

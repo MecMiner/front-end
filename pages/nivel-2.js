@@ -20,7 +20,7 @@ import { SaveGame, SaveUser } from '@/components/SaveGame';
 
 
 export default function Jogar({ data }) {
-  const [pag, setPag] = useState(24);
+  const [pag, setPag] = useState(0);
   const [user,setUser] = useState({});
   const fraseGrande = data.dataDesafio.etapasSolucao
   const linhas = fraseGrande.split('\r\n');
@@ -39,10 +39,7 @@ export default function Jogar({ data }) {
   const [showDicaColega, setShowDicaColega] = useState(false);
   const [usouDicaProfessor, setUsouDicaProfessor] = useState(false);
   const [usouDicaColega, setUsouDicaColega] = useState(false);
-  const [userGame, setUserGame] = useState({
-    bomDesempenho: false,
-    otimoDesempenho: false,
-  })
+
   const tamanho = 60;  
   const [isSave, setIsSave] = useState(false);
 
@@ -60,9 +57,6 @@ export default function Jogar({ data }) {
           router.push('/');
         }
       };
-
-
-  
       getUser();
     }
   }, [id]);
@@ -89,6 +83,8 @@ export default function Jogar({ data }) {
                   setCheckBanco(false);
                   setShowButton(true);
                 }
+              } else {
+                setPag(1);
               }
             } else {
               router.push('/');
@@ -120,26 +116,8 @@ export default function Jogar({ data }) {
     }
   }
 
-  const handleButtonClick = (mensagem) => {
-    setShowButton(false);
-    if (mensagem) {
-      setShowMessage(true);
-      setTimeout(() => {
-        setShowMessage(false);
-        setAnimationEnded(true);
-        nextPag();
-      }, 3000);
-    } else {
-      nextPag();
-    }
-  }
-
 
   const handleResetGame = () => {
-    setPag(1);
-  }
-
-  const handleErrorGame = () => {
     setInfo(prevInfo => {
       const updatedStatusNivel2 = {
         ...prevInfo.statusNivel2,
@@ -147,7 +125,7 @@ export default function Jogar({ data }) {
         corrigido: false,
         certo: false,
         erros: 0,
-        feedback: "",
+        feedback: '',
       };
 
       return {
@@ -155,7 +133,9 @@ export default function Jogar({ data }) {
         statusNivel2: updatedStatusNivel2
       };
     });
-    setPag(25);
+    console.log(info);
+    setIsSave(true);
+    setPag(1);
   }
 
   const onChangeResposta = (valor) => {
@@ -179,7 +159,7 @@ export default function Jogar({ data }) {
   };
 
 
-  const handleSetUser = (valor, exp, otm, bom, col) => {
+  const handleSetUser = (valor, exp, otm, bom, col,pag) => {
     setShowButton(false);
     setCoin(setUser, valor, exp);
     if (otm) setOtm(setUser);
@@ -189,7 +169,7 @@ export default function Jogar({ data }) {
     setTimeout(() => {
       setShowMessage(false);
       setAnimationEnded(true);
-      nextPag();
+      nextPag((pag ? pag : 1));
     }, 3000);
   };
 
@@ -217,42 +197,30 @@ export default function Jogar({ data }) {
     
   }
 
-  const handleAvaliacao = () =>{
-    setInfo(prevInfo => {
-      const updatedStatusNivel2 = {
-        ...prevInfo.statusNivel2,
-        jogou: false,
-        corrigido: false,
-        certo: false,
-        erros: 0,
-        feedback: '',
-      };
-
-      return {
-        ...prevInfo,
-        statusNivel2: updatedStatusNivel2
-      };
-    });
-    setCol(setUser)
-    handleSetUser(10,2);
-  } 
-
 
   const renderPag = () => {
     switch (pag) {
+      case 0:
+      return  (
+        <div>
+            <Loading texto={'Carregando...'}/>
+        </div>
+      )
       case 1:
         return (
           <div>
+            {isSave && <SaveGame id={id} info={info}/>}
+            {isSave && <SaveUser user={user}/>}
             <DialogoBox cor={personagem.cor} posicao={'20%'} posicaoY={'30%'} tamanho={'60%'} complete={() => setShowButton(true)} dialogText={`${personagem.nome} acabou de se formar, e está trabalhando em uma empresa como desenvolvedora Junior. Desde a faculdade, quando fez o trabalho sobre os projetos de SL, se interessou pelo assunto, chegou a se encontrar com ${mentor.nome} para obter mais informações, mas acabou não tendo tempo de se aprofundar depois do encontro.`} />
             <Personagem img={'p2/imagem5'} tamanho={tamanho} posicao={'50%'} />
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 2:
         return (
           <div>
             <DialogoBox cor={mentor.cor}  posicao={'30%'} posicaoY={'30%'}  complete={() => setShowButton(true)} tamanho={'40%'} dialogText={`${mentor.nome} resolveu ajudar ${personagem.nome} mais uma vez, e incentivá-la a continuar estudando sobre os projetos de SL.`} />
             <Personagem posicao={"50%"} tamanho={tamanho} img={"m2/imagem3"} />
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 3:
         return (
@@ -260,7 +228,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={personagem.cor} tamanho={'30%'} complete={() => setShowButton(true)} dialogText={`Como ${personagem.nome} está disposta a tentar de novo, ela e ${mentor.nome} marcaram novamente um encontro para falar sobre os projetos de SL.`} />
             <Personagem img={"p2/imagem1"} tamanho={tamanho} posicao={"50%"}/>
             <Personagem img={"m2/imagem2"} tamanho={tamanho} posicao={"10%"} />
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 4:
         return (
@@ -269,7 +237,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"200px"} dialogText={"Estou ótima, e você?"} posicao={"50%"} />
             <Personagem img={"m2/imagem2"} tamanho={tamanho} posicao={"10%"} />
             <Personagem tamanho={tamanho} img={"p2/imagem5"} posicao={"50%"} inverter={true} />
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 5:
         return (
@@ -291,7 +259,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"28%"}  dialogText={`Então vamos lá. \nO problema que vamos ver hoje ocorreu no projeto ${data.dataDesafio.nomeProjeto}, já ouviu falar desse projeto?`} />
             <Personagem img={"m2/imagem6"} tamanho={tamanho} posicao={"10%"} />
             <Personagem img={"p2/imagem4"} tamanho={tamanho} posicao={"50%"}/>
-            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => nextPag(2)} onNo={() => handleButtonClick()} />}
+            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => nextPag(2)} onNo={() => nextPag()} />}
           </div>)
       case 7:
         return (
@@ -310,7 +278,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={"50%"} tamanho={'10%'} dialogText={'Ok!'} />
             <Personagem img={"m2/imagem2"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
 
           </div>)
       case 9:
@@ -319,7 +287,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} tamanho={'70%'} complete={() => setShowButton(true)} dialogText={`${data.dataDesafio.dadosProj}`} />
             <Personagem img={"m2/imagem2"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem4"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 10:
         return (
@@ -328,7 +296,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={personagem.cor} tamanho={'10%'} posicao={"50%"} complete={() => setShowButton(true)} dialogText={`Ok, legal.`} />
             <Personagem img={"m2/imagem2"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem4"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 11:
         return (
@@ -337,14 +305,14 @@ export default function Jogar({ data }) {
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"200px"} posicao={"50%"} dialogText={"Está bem."} />
             <Personagem img={"m2/imagem1"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem3"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 12:
         return (
           <div>
             <DialogoBox cor={mentor.cor} tamanho={"60%"} complete={() => setShowButton(true)} dialogText={`${data.dataDesafio.descProblema}`} />
             <Personagem img={"m2/imagem2"} posicao={"80%"} tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 13:
         return (
@@ -352,14 +320,14 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} tamanho={'20%'} complete={() => setShowButton(true)} dialogText={`Gostaria que eu repetisse essas informações?`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => handleButtonClick()} onNo={() => nextPag(2)} />}
+            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => nextPag()} onNo={() => nextPag(2)} />}
           </div>)
       case 14:
         return (
           <div>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"60%"} dialogText={`Esta bem. Vamos lá: \n${data.dataDesafio.descProblema}`} />
             <Personagem img={"m2/imagem6"} posicao={"80%"} tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 15:
         return (
@@ -367,7 +335,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"20%"} dialogText={`Que bom, agora vamos ver esse problema na prática, dentro do projeto ${data.dataDesafio.nomeProjeto}.`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 16:
         return (
@@ -375,7 +343,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"70%"} dialogText={`${data.dataDesafio.contextoProblema}`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"} tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 17:
         return (
@@ -383,7 +351,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"20%"} dialogText={`Tudo bem até aqui?`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => nextPag(3)} onNo={() => handleButtonClick()} />}
+            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} onYes={() => nextPag(3)} onNo={() => nextPag()} />}
           </div>)
       case 18:
         return (
@@ -392,7 +360,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"20%"} posicao={"50%"} dialogText={"Ok, vamos lá!"} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 19:
         return (
@@ -410,7 +378,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"} dialogText={`Legal, então podemos continuar. Só relembrando, vimos o problema de uma forma genérica e vimos como ele ocorreu dentro do projeto do ${data.dataDesafio.nomeProjeto}, mas como você acha que esse problema foi solucionado pela comunidade que contribui para o projeto?`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 21:
         return (
@@ -419,7 +387,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} tamanho={"10%"} posicao={"50%"} dialogText={`Vamos lá!`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
 
           </div>)
       case 22:
@@ -428,7 +396,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={'60%'} dialogText={`${data.dataDesafio.solucao}`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 23:
         return (
@@ -436,7 +404,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"} dialogText={`Eu vou apresentar as etapas para você, mas eu tenho um desafio, você precisa completar as etapas de solução.`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 24:
         return (
@@ -445,7 +413,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={'20%'} posicaoY={'95%'} tamanho={"40%"} dialogText={`Etapa 1: ${linhas[0]}\n\nEtapa 3: ${linhas[2]}`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem4"} posicao={"50%"} tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 25:
         return (
@@ -481,19 +449,29 @@ export default function Jogar({ data }) {
             <Personagem img={"p2/imagem2"} posicao={"50%"} tamanho={tamanho}/>
             {info.statusNivel2.corrigido && !info.statusNivel2.certo && info.statusNivel2.erros < 3 && (
               <div>
-                <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} texto1={'Refazer'} texto2={'Reiniciar'} onYes={handleErrorGame} onNo={handleResetGame} />
+                <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} texto1={'Refazer'} texto2={'Reiniciar'} onYes={() => setPag(25)} onNo={handleResetGame} />
                 <DialogoBox cor={mentor.cor} posicaoY={'70%'} posicao={'60%'} complete={() => { }} tamanho={"30%"} dialogText={info.statusNivel2.feedback} />
               </div>
             )}
             {info.statusNivel2.corrigido && !info.statusNivel2.certo && info.statusNivel2.erros == 3 && (
-              <ButtonAdvance buttonClick={() => handleButtonClick()} />
+              <ButtonAdvance buttonClick={() => nextPag()} />
             )}
             {info.statusNivel2.corrigido && info.statusNivel2.certo && (
               <div>
-                <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} texto1={'Continuar'} onYes={() => {nextPag(2)}}/>
+                {showButton && <ButtonAdvance buttonClick={() => {
+                    if (info.statusNivel2.erros == 0) handleSetUser(50,10,false, false, false, 2);  
+                    if (info.statusNivel2.erros == 1) handleSetUser(40,8, false, false, false, 2);
+                    if (info.statusNivel2.erros == 2) handleSetUser(35,5, false, false, false, 2);
+                  }} />}
                 <DialogoBox cor={mentor.cor} posicaoY={'70%'} posicao={'60%'} complete={() => { }} dialogText={info.statusNivel2.feedback} />
               </div>
-            )}           
+            )} 
+            {showMessage && (
+              <div className="ganhador-moedas">
+                <Image src={'/src/moeda.gif'} width={100} height={100} alt='moeda' priority />
+                {`Você ganhou ${info.statusNivel2.erros == 0 ? 50 : (info.statusNivel2.erros == 1 ? 40 : 35)} moedas, ${info.statusNivel2.erros == 0 ? 10 : (info.statusNivel2.erros == 1 ? 8 : 5)} XP.`}
+              </div>
+            )}          
           </div>)
       case 27:
         return (
@@ -509,7 +487,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"} dialogText={`Isso aí, parabéns, sua resposta está correta.`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"} tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 29:
         return (
@@ -517,7 +495,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"20%"} dialogText={`Vou te mostrar novamente como ficam as estapas completas.`} />
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"40%"} tamanho={"40%"} dialogText={`${data.dataDesafio.etapasSolucao}`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 30:
         return (
@@ -526,7 +504,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={personagem.cor} complete={() => setShowButton(true)} posicao={"50%"} tamanho={"20%"} dialogText={`Está bem, vamos lá`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 31:
         return (
@@ -534,7 +512,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"70%"} dialogText={`${data.dataDesafio.resultado}`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"} tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
+            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
           </div>)
       case 32:
         return (
@@ -543,12 +521,12 @@ export default function Jogar({ data }) {
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"} tamanho={tamanho}/>
             <div style={{position: 'absolute', top: '60%', left: '60%'}}>
-              <AvaliacaoStar complete={() => handleAvaliacao()}/>
+              <AvaliacaoStar complete={() => handleSetUser(10,2,info.statusNivel2.erros == 0,!info.statusNivel2.erros == 0,true)}/>
             </div>
             {showMessage && (
               <div className="ganhador-moedas">
                 <Image src={'/src/moeda.gif'} width={100} height={100} alt='moeda' priority />
-                Você ganhou 10 moedas, 2 XP  e um Badge de Colaboração pela avaliação.
+                Você ganhou 10 moedas, 2 XP.
               </div>
             )}
           </div>)
@@ -557,14 +535,13 @@ export default function Jogar({ data }) {
           <div style={{padding: '5%'}}>
             <SaveGame id={id} info={info}/>
             <SaveUser user={user}/>
-            {!info.statusNivel2.erros == 0 && <Desempenho des={'bom'} col={true}/>}
-            {info.statusNivel2.erros == 0 && <Desempenho des={'otimo'} col={true}/>} 
-            <ButtonAdvance buttonClick={() => handleButtonClick()} />
+            {!info.statusNivel2.erros == 0 && <Desempenho des={'bom'} col={true} />}
+            {info.statusNivel2.erros == 0 && <Desempenho des={'otimo'} col={true} />} 
+            <ButtonAdvance buttonClick={() => nextPag()} />
           </div>)
       case 34:
         return (
           <div>
-            <Loading texto={'Salvando informações'}/>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"30%"} dialogText={`Obrigada por deixar sua avaliação, fico muito feliz em estar te ajudando nessa caminhada.`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"} tamanho={tamanho}/>
@@ -580,24 +557,12 @@ export default function Jogar({ data }) {
     <div>
       <MyHead />
       <Layout>
-        <InfosGame  user={user}/>
-        
+        <InfosGame  user={user}/>     
         <div className='renderPag'>
           {renderPag()}
           <BarradeProgresso total={38} atual={pag}/>
-        </div>
-       
-        
-        
+        </div> 
       </Layout>
-      <style jsx>{`
-        .renderPag{
-          position: absolute;
-          left: 15%;
-          width: 85%;
-          height: 100%;
-        }
-      `}</style>
     </div>
   );
 }
