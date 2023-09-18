@@ -342,7 +342,7 @@ export default function Jogar({ data }) {
       case 22:
         return (
           <div>
-            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={'30%'} dialogText={`Então podemos continuar, já vimos o problema de uma forma genérica e vimos como ele ocorreu dentro do projeto ${data.dataDesafio.materialComplementar}, mas como esse problema foi solucionado pela comunidade?`} />
+            <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={'30%'} dialogText={`Então podemos continuar, já vimos o problema de uma forma genérica e vimos como ele ocorreu dentro do projeto ${data.dataDesafio.nomeProjeto}, mas como esse problema foi solucionado pela comunidade?`} />
             <Personagem img={"m1/imagem1"} posicao={"10%"} tamanho={tamanhoP} />
             <Personagem img={"p1/imagem4"} posicao={"50%"} tamanho={tamanhoP} />
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}

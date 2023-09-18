@@ -70,7 +70,11 @@ export default function Jogar({ data }) {
           const dados = await fetchResponse(id);
           setInfo(prevInfo => ({ ...prevInfo, statusNivel3: dados.statusNivel3 }));
             if (dados.nivel >= 1) {
-              setPag(dados.statusNivel3.pag)
+              if(dados.statusNivel3.pag){
+                setPag(dados.statusNivel3.pag)
+              } else {
+                setPag(1);
+              }
               if (dados.statusNivel3.jogou){
                 if (!dados.statusNivel3.corrigido) {
                   setCheckBanco(true);
