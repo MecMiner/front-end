@@ -118,6 +118,7 @@ export default function Jogar({ data }) {
   };
 
   const handelCorrigirGame = (valor, exp, bom, otimo, errado) => {
+    setShowMessage(true);
     setUserGame(prevState => ({ ...prevState, pontos: valor }));
     setUserGame(prevState => ({ ...prevState, exp: exp }));
     setCoin(setUser, valor, exp);
@@ -419,6 +420,10 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"10%"} tamanho={"20%"} dialogText={`Isso ai, parabéns, sua resposta está correta.`} />
             <Personagem img={"m1/imagem1"} posicao={"10%"} tamanho={tamanhoP} />
             <Personagem img={"p1/imagem4"} posicao={"50%"} tamanho={tamanhoP} />
+            <div className="ganhador-moedas">
+                <Image src={'/src/moeda.gif'} width={100} height={100} alt='moeda' priority />
+                {`Você ganhou ${userGame.pontos} moedas e ${userGame.exp} XP.`}
+            </div>
             {showButton && <ButtonAdvance buttonClick={() => handleButtonClick()} />}
           </div>)
       case 33:
