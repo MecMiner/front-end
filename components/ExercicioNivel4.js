@@ -4,7 +4,7 @@ function ExercicioNivel4({onSucess, setInfo, linksite, tentativas}) {
   const [link, setlink] = useState('');
 
   useEffect(() =>{
-    setInfo('Link:' + link);
+    setInfo(link);
   },[link]);
 
   const handleInputChange = (event) => {

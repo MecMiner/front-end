@@ -156,7 +156,7 @@ export default function Jogar({ data }) {
       };
     });
     console.log(info);
-    setInfo(prevInfo => ({ ...prevInfo, resposta3: valor }));
+    setInfo(prevInfo => ({ ...prevInfo, resposta4: valor }));
 
   };
 
