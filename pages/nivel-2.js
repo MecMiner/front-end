@@ -369,7 +369,8 @@ export default function Jogar({ data }) {
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
             {showButton && (
-              <ConfirmationBox link={data.dataDesafio.materialComplementar} posicaoX={'50%'} textoLink={'Material Complementar'} tamanho={'300px'} onYes={() => handleNextPag()} texto1={"Pronto"}/>
+              <ConfirmationBox link={data.dataDesafio.materialComplementar} textoLink={'Material Complementar'} posicaoX={'50%'} tamanho={'300px'} onYes={() => nextPag()} texto1={"Pronto"}/>
+              //<ConfirmationBox link={data.dataDesafio.materialComplementar} posicaoX={'50%'} tamanho={'300px'} onYes={() => handleNextPag()} texto1={"Pronto"}/>
             )}
           </div>)
       case 20:

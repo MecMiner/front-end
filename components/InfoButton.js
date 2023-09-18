@@ -22,15 +22,16 @@ const InfoButton = () => {
             <div className='close-button' onClick={() => handleExit()}>
               X
             </div>
-            <p>{`Informações
+            <p><h3>{`Informações`}</h3></p>
 
-Cada desafio é composto por 4 níveis, e a medida que avança esses níveis são liberados. Em cada nível você será desafiado a resolver um problema, e terá 3 tentativas para fazer isso.
+<p>{`Cada desafio é composto por 4 níveis, e a medida que avança esses níveis são liberados.
+Em cada nível você será desafiado a resolver um problema, e terá 3 tentativas para fazer isso.`}</p>
 
-No decorrer do desafio você recebe algumas recompensas, sendo elas: moedas, XPs e badges.
+<p>{`No decorrer do desafio você recebe algumas recompensas, sendo elas: moedas, XPs e badges.
+As moedas podem ser utilizadas para comprar dicas, ou seja, para comprar informações que podem te ajudar a resolver os problemas propostos. 
+A dica do colega custa 5 moedas, e a do professor 10 moedas.`}</p>
 
-As moedas podem ser utilizadas para comprar dicas, ou seja, para comprar informações que podem te ajudar a resolver os problemas propostos.
-
-Os XPs e badges indicam sua evolução dentro da plataforma. Existem 3 badges distintos:
+<p>{`Os XPs e badges indicam sua evolução dentro da plataforma. Existem 3 badges distintos:
 Ótimo desempenho: recebe quando acerta as respostas na primeira tentativa.
 Bom desempenho: recebe quando acerta a resposta na segunda ou terceira tentativa.
 Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja avaliando os conteúdos, ou até mesmo criando novos exemplos.`}</p>
