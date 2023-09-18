@@ -71,23 +71,24 @@ export default function Jogar({ data }) {
       } else {
         try {
           const dados = await fetchResponse(id);
-          console.log(dados);
           setInfo(prevInfo => ({ ...prevInfo, statusNivel2: dados.statusNivel2 }));
             if (dados.nivel >= 1) {
+              if(dados.statusNivel2.pag){
+                setPag(dados.statusNivel2.pag)
+              } else {
+                setPag(1);
+              }
               if (dados.statusNivel2.jogou){
-                setPag(26);
-                if (!dados.statusNivel2.corrigido) {                  
+                if (!dados.statusNivel2.corrigido) {
                   setCheckBanco(true);
                 }
                 if (dados.statusNivel2.corrigido) {
                   if (dados.statusNivel2.certo) {
-                    setInfo(prevState => ({ ...prevState, nivel: 3 }));
+                    setInfo(prevState => ({ ...prevState, nivel: 4 }));
                   }
                   setCheckBanco(false);
                   setShowButton(true);
                 }
-              } else {
-                setPag(1);
               }
             } else {
               router.push('/');
@@ -111,14 +112,21 @@ export default function Jogar({ data }) {
   }, [id, checkBanco]);
 
 
-  const nextPag = (pag) => {
+  const nextPag = (pular) => {
+    setInfo(prevInfo => ({
+      ...prevInfo,
+      statusNivel2: {
+        ...prevInfo.statusNivel2,
+        pag: pag + (pular ? pular : 1),
+      },
+    }))
     setShowButton(false);
     if (!animationEnded) {
-      setPag(prevPag => prevPag + (pag ? pag : 1));
+      setPag(prevPag => prevPag + (pular ? pular : 1));
       setAnimationEnded(false);
     }
-  }
 
+  }
 
   const handleResetGame = () => {
     setInfo(prevInfo => {
@@ -129,6 +137,7 @@ export default function Jogar({ data }) {
         certo: false,
         erros: 0,
         feedback: '',
+        pag: 1,
       };
 
       return {
@@ -137,7 +146,6 @@ export default function Jogar({ data }) {
       };
     });
     console.log(info);
-    setIsSave(true);
     setPag(1);
   }
 
@@ -212,8 +220,7 @@ export default function Jogar({ data }) {
       case 1:
         return (
           <div>
-            {isSave && <SaveGame id={id} info={info}/>}
-            {isSave && <SaveUser user={user}/>}
+            <SaveGame id={id} info={info}/>
             <DialogoBox cor={personagem.cor} posicao={'20%'} posicaoY={'30%'} tamanho={'60%'} complete={() => setShowButton(true)} dialogText={`${personagem.nome} acabou de se formar, e está trabalhando em uma empresa como desenvolvedora Junior. Desde a faculdade, quando fez o trabalho sobre os projetos de SL, se interessou pelo assunto, chegou a se encontrar com ${mentor.nome} para obter mais informações, mas acabou não tendo tempo de se aprofundar depois do encontro.`} />
             <Personagem img={'p2/imagem5'} tamanho={tamanho} posicao={'50%'} />
             {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
@@ -259,6 +266,8 @@ export default function Jogar({ data }) {
       case 6:
         return (
           <div>
+            <SaveGame id={id} info={info}/>
+            <SaveUser user={user}/>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"28%"}  dialogText={`Então vamos lá. \nO problema que vamos ver hoje ocorreu no projeto ${data.dataDesafio.nomeProjeto}, já ouviu falar desse projeto?`} />
             <Personagem img={"m2/imagem6"} tamanho={tamanho} posicao={"10%"} />
             <Personagem img={"p2/imagem4"} tamanho={tamanho} posicao={"50%"}/>
@@ -546,6 +555,8 @@ export default function Jogar({ data }) {
       case 34:
         return (
           <div>
+            <SaveGame id={id} info={info}/>
+            <SaveUser user={user}/>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"5%"} tamanho={"30%"} dialogText={`Obrigada por deixar sua avaliação, fico muito feliz em estar te ajudando nessa caminhada.`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"} tamanho={tamanho}/>
