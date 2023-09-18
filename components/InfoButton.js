@@ -19,22 +19,32 @@ const InfoButton = () => {
       {showInfo && (
         <div className='info-overlay'>
           <div className='info'>
-            <div className='close-button' onClick={() => handleExit()}>
-              X
+            <div className="info-title-container">
+              <h3 className="info-title">{`Informações`}</h3>
+              <div
+                className='close-button'
+                onClick={() => handleExit()}
+              >
+                X
+              </div>
             </div>
-            <p><h3>{`Informações`}</h3></p>
+            <div>
+              <p>{`Cada desafio é composto por 4 níveis, e a medida que avança esses níveis são liberados. Em cada nível você será desafiado a resolver um problema, e terá 3 tentativas para fazer isso`}</p>
 
-<p>{`Cada desafio é composto por 4 níveis, e a medida que avança esses níveis são liberados.
-Em cada nível você será desafiado a resolver um problema, e terá 3 tentativas para fazer isso.`}</p>
+              <p>{`No decorrer do desafio você recebe algumas recompensas, sendo elas: moedas, XPs e badges.:`}</p>
 
-<p>{`No decorrer do desafio você recebe algumas recompensas, sendo elas: moedas, XPs e badges.
-As moedas podem ser utilizadas para comprar dicas, ou seja, para comprar informações que podem te ajudar a resolver os problemas propostos. 
-A dica do colega custa 5 moedas, e a do professor 10 moedas.`}</p>
+              <ul>
+                <li>{`💰 Moedas: Use suas moedas para adquirir dicas valiosas que podem ajudá-lo a superar os obstáculos. Lembre-se, a dica de um colega custa apenas 5 moedas, enquanto a dica do professor requer 10 moedas.`}</li>
+                <li>{`🌟 XPs: Acumule XPs para demonstrar sua habilidade e experiência na plataforma.`}</li>
+                <li>{`🏆 Badges: Colete distintivos que representam suas conquistas. Há três tipos de distintivos disponíveis:`}</li>
+                <ul>
+                  <li>{`🥇 Ótimo Desempenho: Ganhe este distintivo ao acertar respostas na primeira tentativa.`}</li>
+                  <li>{`🥈 Bom Desempenho: Mostre sua perseverança e conquiste este distintivo ao acertar a resposta na segunda ou terceira tentativa.`}</li>
+                  <li>{`🤝 Colaboração: Contribua para a comunidade avaliando conteúdos e criando novos exemplos. Este distintivo é uma recompensa pela sua generosidade.`}</li>
+                </ul>
+              </ul>
+            </div>
 
-<p>{`Os XPs e badges indicam sua evolução dentro da plataforma. Existem 3 badges distintos:
-Ótimo desempenho: recebe quando acerta as respostas na primeira tentativa.
-Bom desempenho: recebe quando acerta a resposta na segunda ou terceira tentativa.
-Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja avaliando os conteúdos, ou até mesmo criando novos exemplos.`}</p>
           </div>
         </div>
       )}
@@ -48,8 +58,8 @@ Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja 
           position: fixed;
           top: 0;
           left: 0;
-          width: 100vw;
-          height: 100vh;
+          width: 100%;
+          height: 100%;
           background-color: rgba(0, 0, 0, 0.7);
           display: flex;
           align-items: center;
@@ -58,18 +68,48 @@ Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja 
         }
 
         .info {
-          width: 50%;
-          height: 50%;
+          position: relative;
+          width: 80%;
+          height: 80%;
           border: 2px solid #000;
           border-radius: 10px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
           background-color: #fff;
           z-index: 9999;
-          position: relative;
           overflow-y: auto;
+          padding: 20px;
+        }
+
+        .info-title-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 10px;
+        }
+
+        .info-title {
+          font-size: 24px;
+        }
+
+        .close-button {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          font-size: 24px;
+          color: red;
+          cursor: pointer;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: #ddd;
+          }
+
+          &:active {
+            color: #ddd;
+          }
+        }
+
+        .info-content {
+          padding: 10px;
         }
 
         .homeButton {
@@ -79,7 +119,7 @@ Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja 
           z-index: 99;
           cursor: pointer;
         }
-        
+
         .linkContainer {
           display: flex;
           align-items: center;
@@ -91,28 +131,10 @@ Colaboração: recebe quando contribui com a plataforma de alguma maneira, seja 
           box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
           transition: background-color 0.3s;
         }
-        
+
         .linkContainer:hover {
           background-color: #f0f0f0;
         }
-
-        .close-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 24px;
-            color: red;
-            cursor: pointer;
-            transition: color 0.3s ease;
-            
-            &:hover {
-              color: #ddd;
-            }
-            
-            &:active {
-              color: #ddd;
-            }
-          }
       `}</style>
     </div>
   );

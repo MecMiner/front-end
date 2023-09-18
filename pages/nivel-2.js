@@ -76,10 +76,13 @@ export default function Jogar({ data }) {
             if (dados.nivel >= 1) {
               if (dados.statusNivel2.jogou){
                 setPag(26);
-                if (!dados.statusNivel2.corrigido) {
+                if (!dados.statusNivel2.corrigido) {                  
                   setCheckBanco(true);
                 }
                 if (dados.statusNivel2.corrigido) {
+                  if (dados.statusNivel2.certo) {
+                    setInfo(prevState => ({ ...prevState, nivel: 3 }));
+                  }
                   setCheckBanco(false);
                   setShowButton(true);
                 }

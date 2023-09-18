@@ -68,20 +68,20 @@ export default function Jogar({ data }) {
       } else {
         try {
           const dados = await fetchResponse(id);
-          console.log(dados);
           setInfo(prevInfo => ({ ...prevInfo, statusNivel3: dados.statusNivel3 }));
             if (dados.nivel >= 1) {
+              setPag(dados.statusNivel3.pag)
               if (dados.statusNivel3.jogou){
-                setPag(26);
                 if (!dados.statusNivel3.corrigido) {
                   setCheckBanco(true);
                 }
                 if (dados.statusNivel3.corrigido) {
+                  if (dados.statusNivel2.certo) {
+                    setInfo(prevState => ({ ...prevState, nivel: 4 }));
+                  }
                   setCheckBanco(false);
                   setShowButton(true);
                 }
-              } else {
-                setPag(1);
               }
             } else {
               router.push('/');
@@ -105,12 +105,24 @@ export default function Jogar({ data }) {
   }, [id, checkBanco]);
 
 
-  const nextPag = (pag) => {
+  const nextPag = (pular) => {
+    setInfo(prevInfo => ({
+      ...prevInfo,
+      statusNivel3: {
+        ...prevInfo.statusNivel3,
+        pag: pag + (pular ? pular : 1),
+      },
+    }))
     setShowButton(false);
     if (!animationEnded) {
-      setPag(prevPag => prevPag + (pag ? pag : 1));
+      setPag(prevPag => prevPag + (pular ? pular : 1));
       setAnimationEnded(false);
     }
+
+  }
+
+  const zerarValor = () => {
+
   }
 
 
@@ -123,6 +135,7 @@ export default function Jogar({ data }) {
         certo: false,
         erros: 0,
         feedback: '',
+        pag: 1,
       };
 
       return {
@@ -130,7 +143,6 @@ export default function Jogar({ data }) {
         statusNivel3: updatedStatusNivel3
       };
     });
-    console.log(info);
     setIsSave(true);
     setPag(1);
   }
@@ -152,7 +164,7 @@ export default function Jogar({ data }) {
       };
     });
     setInfo(prevInfo => ({ ...prevInfo, resposta3: valor }));
-    console.log(info);
+
   };
 
 
@@ -205,8 +217,8 @@ export default function Jogar({ data }) {
       case 1:
         return (
           <div>
-            {isSave && <SaveGame id={id} info={info}/>}
-            {isSave && <SaveUser user={user}/>}
+            <SaveGame id={id} info={info}/>
+            <SaveUser user={user}/>
             <DialogoBox cor={personagem.cor} tamanho={'50%'} posicao={'25%'} posicaoY={'30%'} complete={() => setShowButton(true)} dialogText={`${personagem.nome} foi promovida na empresa em que trabalha. Tal empresa está interessada em ingressar no mundo dos projetos de SL, mas para isso precisam avaliar se é uma boa opção e entender mais sobre como as comunidades funcionam. ${personagem.nome} ficou encarregada de tomar a frente do projeto, diante do contato que já teve com o mundo dos projetos de SL. Desta forma, deve estudar mais e posteriormente passar o conhecimento adquirido`} />
             <Personagem img={'p3/imagem5'} tamanho={tamanho} posicao={'50%'} />
             {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
@@ -214,8 +226,6 @@ export default function Jogar({ data }) {
       case 2:
         return (
           <div>
-            {isSave && <SaveGame id={id} info={info}/>}
-            {isSave && <SaveUser user={user}/>}
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={'50%'} posicao={'25%'} posicaoY={'30%'} dialogText={`${mentor.nome} está de volta para ajudar ${personagem.nome} mais uma vez, e incentivá-la a continuar estudando sobre os projetos de SL.`} />
             <Personagem posicao={"50%"} tamanho={tamanho} img={"m3/imagem3"} />
             {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
@@ -254,6 +264,8 @@ export default function Jogar({ data }) {
       case 6:
         return (
           <div>
+            <SaveGame id={id} info={info}/>
+            <SaveUser user={user}/>
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"300px"}  dialogText={`Vamos lá. \nO problema que vamos ver hoje ocorreu no projeto ${data.dataDesafio.nomeProjeto}, já ouviu falar desse projeto?`} />
             <Personagem img={"m3/imagem6"} tamanho={tamanho} posicao={"10%"} />
             <Personagem img={"p3/imagem4"} tamanho={tamanho} posicao={"50%"} />

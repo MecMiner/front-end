@@ -66,8 +66,23 @@ export default function Jogar() {
           <div className='select-level'>
             <h1 title='title'>Selecione um nível</h1>
             <div className='level-frame'>
-
-              {[1, 2, 3, 4].map((level, index, array) => (
+              <div  className='level-button-container'>
+                  <button
+                    className={`circular-button`}
+                    onClick={() => handleButtonClick(`nivel-1`)}
+                  >
+                    <Image
+                      className='circular-image'
+                      src={`/src/mapa/numero1.png`}
+                      fill
+                      alt={`numero1`}
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 80vw, 40vw"
+                      priority
+                    />
+                  </button>              
+                    <div className={`line ${data && data.nivel > 1 ? 'active' : ''}`} />
+                </div>
+              {[2, 3, 4].map((level, index, array) => (
                 <div key={level} className='level-button-container'>
                   <button
                     className={`circular-button`}
