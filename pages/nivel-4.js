@@ -62,6 +62,7 @@ export default function Jogar({ data }) {
         try {
           const dados = await fetchResponse(id);
           setInfo(prevInfo => ({ ...prevInfo, statusNivel4: dados.statusNivel4 }));
+          console.log(dados);
             if (dados.nivel >= 1) {
               if(dados.statusNivel4.pag){
                 setPag(dados.statusNivel4.pag)
@@ -73,9 +74,6 @@ export default function Jogar({ data }) {
                   setCheckBanco(true);
                 }
                 if (dados.statusNivel4.corrigido) {
-                  if (dados.statusNivel2.certo) {
-                    setInfo(prevState => ({ ...prevState, nivel: 4 }));
-                  }
                   setCheckBanco(false);
                   setShowButton(true);
                 }
@@ -110,6 +108,7 @@ export default function Jogar({ data }) {
         pag: pag + (pular ? pular : 1),
       },
     }))
+    console.log(info);
     setShowButton(false);
     if (!animationEnded) {
       setPag(prevPag => prevPag + (pular ? pular : 1));
@@ -135,7 +134,7 @@ export default function Jogar({ data }) {
         statusNivel4: updatedstatusNivel4
       };
     });
-    setIsSave(true);
+    setIsSave(false);
     setPag(1);
   }
 
@@ -148,6 +147,7 @@ export default function Jogar({ data }) {
         certo: false,
         erros: info.statusNivel4.erros,
         feedback: "",
+        pag: info.statusNivel4.pag,
       };
 
       return {
@@ -180,23 +180,6 @@ export default function Jogar({ data }) {
     setCheckBanco(true);
     setIsSave(true);
     nextPag();
-  }
-
-  const exibirDica = (professor) => {
-    if (professor) {
-      if (!usouDicaProfessor){
-        setCoin(setUser,-10,0)
-        setUsouDicaProfessor(true)
-      }
-      setShowDicaProfessor(true);
-    } else {
-      if (!usouDicaColega){
-        setCoin(setUser,-5,0)
-        setUsouDicaColega(true)
-      }
-      setShowDicaColega(true);
-    }
-    
   }
 
 
@@ -396,7 +379,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"10%"} tamanho={"30%"} dialogText={`Infelizmente sua resposta não está correta, mas o importante é que você tentou.`} />
             <Personagem img={"m4/imagem7"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p4/imagem2"} posicao={'50%'} tamanho={tamanho}/>
-            {showButton && <ConfirmationBox texto1={'Reiniciar'} texto2={'Sair'} onYes={() => { router.reload() }} onNo={() => { router.push('/menu') }} />}
+            {showButton && <ConfirmationBox texto1={'Reiniciar'} texto2={'Sair'} onYes={() => handleResetGame} onNo={() => { router.push('/menu') }} />}
           </div>)
       case 18:
         return (
@@ -412,7 +395,7 @@ Peço que aguarde até que meu amigo responda, e te devolva um feedback.`} />
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} posicao={"10%"} tamanho={"20%"} dialogText={`Você foi muito bem! E vai alcançar todos os objetivos que deseja.`} />
             <Personagem img={"m4/imagem7"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p4/imagem2"} posicao={"50%"} tamanho={tamanho}/>
-            {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}
+            {showButton && <ButtonAdvance buttonClick={() => handleSetUser(0,0,info.statusNivel4.erros == 0, !info.statusNivel4.erros == 0, true)} />}
           </div>)
       case 20:
         return (

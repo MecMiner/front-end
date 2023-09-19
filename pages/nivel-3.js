@@ -147,7 +147,7 @@ export default function Jogar({ data }) {
         statusNivel3: updatedStatusNivel3
       };
     });
-    setIsSave(true);
+    setIsSave(false);
     setPag(1);
   }
 
@@ -222,7 +222,6 @@ export default function Jogar({ data }) {
         return (
           <div>
             <SaveGame id={id} info={info}/>
-            <SaveUser user={user}/>
             <DialogoBox cor={personagem.cor} tamanho={'50%'} posicao={'25%'} posicaoY={'30%'} complete={() => setShowButton(true)} dialogText={`${personagem.nome} foi promovida na empresa em que trabalha. Tal empresa está interessada em ingressar no mundo dos projetos de SL, mas para isso precisam avaliar se é uma boa opção e entender mais sobre como as comunidades funcionam. ${personagem.nome} ficou encarregada de tomar a frente do projeto, diante do contato que já teve com o mundo dos projetos de SL. Desta forma, deve estudar mais e posteriormente passar o conhecimento adquirido`} />
             <Personagem img={'p3/imagem5'} tamanho={tamanho} posicao={'50%'} />
             {showButton && <ButtonAdvance buttonClick={() => nextPag()} />}

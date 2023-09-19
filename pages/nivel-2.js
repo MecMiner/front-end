@@ -84,7 +84,7 @@ export default function Jogar({ data }) {
                 }
                 if (dados.statusNivel2.corrigido) {
                   if (dados.statusNivel2.certo) {
-                    setInfo(prevState => ({ ...prevState, nivel: 4 }));
+                    setInfo(prevState => ({ ...prevState, nivel: 3 }));
                   }
                   setCheckBanco(false);
                   setShowButton(true);
@@ -103,7 +103,7 @@ export default function Jogar({ data }) {
 
     if (!checkBanco) {
       fetchData();
-      clearInterval(interval); // Limpar o intervalo quando a verificação não estiver habilitada
+      clearInterval(interval);
     }
 
     return () => {
@@ -125,7 +125,6 @@ export default function Jogar({ data }) {
       setPag(prevPag => prevPag + (pular ? pular : 1));
       setAnimationEnded(false);
     }
-
   }
 
   const handleResetGame = () => {
@@ -492,7 +491,7 @@ export default function Jogar({ data }) {
             <DialogoBox cor={mentor.cor} complete={() => setShowButton(true)} tamanho={"30%"} dialogText={`Infelizmente sua resposta não está correta, mas o importante é que você tentou.`} />
             <Personagem img={"m2/imagem6"} posicao={"10%"} tamanho={tamanho}/>
             <Personagem img={"p2/imagem2"} posicao={"50%"}tamanho={tamanho}/>
-            {showButton && <ConfirmationBox texto1={'Reiniciar'} texto2={'Sair'} onYes={() => { router.reload() }} onNo={() => { router.push('/') }} />}
+            {showButton && <ConfirmationBox texto1={'Reiniciar'} texto2={'Sair'} onYes={() => handleResetGame} onNo={() => { router.push('/') }} />}
           </div>)
       case 28:
         return (

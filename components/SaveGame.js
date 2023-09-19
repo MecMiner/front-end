@@ -24,7 +24,7 @@ const SaveGame = ({ id, info }) => {
 
     useEffect(() => {
         saveToDatabase();
-    }, []);
+    }, [info]);
 
     return null;
 };
@@ -52,7 +52,7 @@ const SaveUser = ({ user }) => {
 
     useEffect(() => {
         saveToDatabase();
-    }, []);
+    }, [user]);
 
     return null;
 };

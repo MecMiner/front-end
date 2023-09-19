@@ -6,12 +6,10 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
     const [ordemCorreta, setOrdemCorreta] = useState([]);
     const [verificar, setVerificar] = useState(false);
     const [erroMsg, setErroMsg] = useState(false);
-    const [tentativaOne, setTentativaOne] = useState(false);
-    const [tentativaTwo, setTentativaTwo] = useState(false);
-    const [tempoRestante, setTempoRestante] = useState(180); // 3 minutos (em segundos)
+    const [tempoRestante, setTempoRestante] = useState(180);
     const [jogoEmAndamento, setJogoEmAndamento] = useState(true);
     const [mostrarCustoProf, setMostrarCustoProf] = useState(false);
-    const [tentativas, setTentativas] = useState(3);
+    const [tentativas, setTentativas] = useState(1);
 
 
     useEffect(() => {
@@ -21,7 +19,6 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
             }, 1000);
             return () => clearInterval(timer);
         } else if (tempoRestante === 0) {
-            // Se o tempo acabar, marque o jogo como encerrado e verifique a ordem
             setJogoEmAndamento(false);
             handleVerificarOrdem();
         }
@@ -29,14 +26,12 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
 
 
     useEffect(() => {
-        // Embaralhar as frases recebidas como parâmetro
         const shuffledFrases = shuffleArray(frasesIniciais);
         setFrases(shuffledFrases);
         setOrdemCorreta([...frasesIniciais]);
-    }, [frasesIniciais]);
+    }, []);
 
     const shuffleArray = (array) => {
-        // Embaralhar o array utilizando o algoritmo Fisher-Yates
         const newArray = [...array];
         for (let i = newArray.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -65,10 +60,10 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
 
     const handleVerificarOrdem = () => {
         if (JSON.stringify(frasesOrdenadas) === JSON.stringify(ordemCorreta)) {
-            if(!tentativaOne){
+            if(tentativas === 1){
                 onSuccess(50,10,false,true,false);
             } else {
-                if(!tentativaTwo){
+                if(tentativas === 2){
                     onSuccess(45,5,true,false,false)
                 } else {
                     onSuccess(30,3,true,false,false)
@@ -76,17 +71,15 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
             }
             
         } else {
-            if(!tentativaOne){
-                setTentativaOne(true);
+            if(tentativas === 1){
+                setTentativas(2);
                 setErroMsg(true)
                 reiniciarJogo();
-                setTentativas(2)
             } else {
-                if(!tentativaTwo){
-                    setTentativaTwo(true);
+                if(tentativas === 2){
                     setErroMsg(true)
                     reiniciarJogo();
-                    setTentativas(1)
+                    setTentativas(3)
                 } else {
                     onSuccess(0,0,false,false,true);
                 }
@@ -96,16 +89,14 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
     };
 
     const reiniciarJogo = () => {
-        setTempoRestante(180); // Reiniciar o tempo para 3 minutos
+        setTempoRestante(180);
         setFrases(shuffleArray(frasesIniciais));
         setFrasesOrdenadas([]);
         setVerificar(false);
-        setJogoEmAndamento(true); // Marcar o jogo como em andamento novamente
+        setJogoEmAndamento(true);
     };
 
     const handleExibirDica = () => {
-        setFrases(shuffleArray(frasesIniciais));
-        setFrasesOrdenadas([]);
         dica();
     };
 
@@ -148,7 +139,7 @@ const ExercicioNivel1 = ({ onSuccess, frasesIniciais, dica }) => {
             <div className="actions-container">
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '80%', padding: '10px'}}>
                     <div className="tempo-restante">
-                        {`Você tem ${tentativas} tentativas`}
+                        {`Você tem ${4 - tentativas} tentativas`}
                     </div>
                     <div className='tempo-restante'>
                         Tempo: {Math.floor(tempoRestante / 60)}:
