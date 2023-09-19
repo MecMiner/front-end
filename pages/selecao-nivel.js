@@ -36,7 +36,6 @@ export default function Jogar() {
         const getInfo = async () => {
           try {
             const info = await fetchResponse(id);
-            console.log(info);
             setData(info);
           } catch (error) {
             router.push('/');

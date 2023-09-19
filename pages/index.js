@@ -43,7 +43,6 @@ export default function Menu() {
         try {
           const user = await fetchUser(token);
           setUser(user);
-          console.log(user);
         } catch (error) {
           router.push('/login');
         }
