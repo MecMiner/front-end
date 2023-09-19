@@ -15,7 +15,6 @@ const SaveGame = ({ id, info }) => {
                 body: JSON.stringify(info),
             });
             if (response.ok) {
-                console.log('Valores inseridos no banco');
             }
         } catch (error) {
             console.error('Erro ao fazer a requisição:', error);
@@ -43,7 +42,6 @@ const SaveUser = ({ user }) => {
                 body: JSON.stringify(user),
             })
             if (response.ok) {
-                console.log('Valores inseridos no banco');
             }
         } catch (error) {
             console.error('Erro ao fazer a requisição:', error);

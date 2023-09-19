@@ -62,7 +62,6 @@ export default function Jogar({ data }) {
         try {
           const dados = await fetchResponse(id);
           setInfo(prevInfo => ({ ...prevInfo, statusNivel4: dados.statusNivel4 }));
-          console.log(dados);
             if (dados.nivel >= 1) {
               if(dados.statusNivel4.pag){
                 setPag(dados.statusNivel4.pag)
@@ -108,7 +107,6 @@ export default function Jogar({ data }) {
         pag: pag + (pular ? pular : 1),
       },
     }))
-    console.log(info);
     setShowButton(false);
     if (!animationEnded) {
       setPag(prevPag => prevPag + (pular ? pular : 1));
@@ -155,7 +153,6 @@ export default function Jogar({ data }) {
         statusNivel4: updatedstatusNivel4
       };
     });
-    console.log(info);
     setInfo(prevInfo => ({ ...prevInfo, resposta4: valor }));
 
   };

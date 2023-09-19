@@ -67,7 +67,7 @@ export default function Jogar({ data }) {
         try {
           const info = await fetchResponse(id);
           setInfo(info);
-          setPag(26);
+          setPag(1);
         } catch (error) {
           router.push('/');
         }

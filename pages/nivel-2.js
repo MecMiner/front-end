@@ -144,7 +144,6 @@ export default function Jogar({ data }) {
         statusNivel2: updatedStatusNivel2
       };
     });
-    console.log(info);
     setPag(1);
   }
 
@@ -165,7 +164,6 @@ export default function Jogar({ data }) {
       };
     });
     setInfo(prevInfo => ({ ...prevInfo, resposta2: valor }));
-    console.log(info);
   };
 
 
