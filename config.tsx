@@ -13,7 +13,7 @@ interface Config {
 
 //apiUrl: 'https://workedexamplesgamification-b-38407a42cd98.herokuapp.com',
 const config: Config = {
-    apiUrl: 'http://localhost:8080',
+    apiUrl: 'https://workedexamplesgamification-b-38407a42cd98.herokuapp.com/',
     personagem: {nome: 'Maria', cor: '#f1f1f1'},
     mentor: {
       nome: 'Ana',
