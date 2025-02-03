@@ -8,9 +8,10 @@ type ExercicioNivel3Props = {
     dicaAluno: string,
     onSucess: (respostasnivel3: string) => void
     setUser: React.Dispatch<React.SetStateAction<Usuario>>
+    tentativas: number
 }
 
-function ExercicioNivel3({ dicaAluno, dicaProfessor, onSucess, setUser }: ExercicioNivel3Props) {
+function ExercicioNivel3({ dicaAluno, dicaProfessor, onSucess, setUser, tentativas }: ExercicioNivel3Props) {
     const [etapa2, setEtapa2] = useState('');
     const [res, setRes] = useState('')
     const [etapa4, setEtapa4] = useState('');
@@ -79,32 +80,36 @@ function ExercicioNivel3({ dicaAluno, dicaProfessor, onSucess, setUser }: Exerci
                 <div className="min-w-[600px] w-full flex flex-col items-center mb-5">
                     <textarea
                         className="w-4/5 p-2.5 border border-gray-300 rounded resize-y min-h-[30px] overflow-auto"
-                        placeholder="Digite a etapa 1"
+                        placeholder="Enter step 1"
                         value={etapa1}
+                        required
                         onChange={(e) => setEtapa1(e.target.value)}
                     />
                 </div>
                 <div className="min-w-[600px] w-full flex flex-col items-center mb-5">
                     <textarea
                         className="w-4/5 p-2.5 border border-gray-300 rounded resize-y min-h-[30px] overflow-auto"
-                        placeholder="Digite a etapa 2"
+                        placeholder="Enter step 2"
                         value={etapa2}
+                        required
                         onChange={(e) => setEtapa2(e.target.value)}
                     />
                 </div>
                 <div className="min-w-[600px] w-full flex flex-col items-center mb-5">
                     <textarea
                         className="w-4/5 p-2.5 border border-gray-300 rounded resize-y min-h-[30px] overflow-auto"
-                        placeholder="Digite a etapa 3"
+                        placeholder="Enter step 3"
                         value={etapa4}
+                        required
                         onChange={(e) => setEtapa4(e.target.value)}
                     />
                 </div>
                 <div className="min-w-[600px] w-full flex flex-col items-center mb-5">
                     <textarea
                         className="w-4/5 p-2.5 border border-gray-300 rounded resize-y min-h-[30px] overflow-auto"
-                        placeholder="Digite a etapa 4"
+                        placeholder="Enter step 4"
                         value={etapa3}
+                        required
                         onChange={(e) => setEtapa3(e.target.value)}
                     />
                 </div>
@@ -133,20 +138,20 @@ function ExercicioNivel3({ dicaAluno, dicaProfessor, onSucess, setUser }: Exerci
                     </button>
                 </div>
                 <div className="flex justify-between w-4/5 p-2.5">
-                    <div className="text-sm font-bold mb-2.5">{`Você tem  tentativas`}</div>
+                    <div className="text-sm font-bold mb-2.5">{`You have ${tentativas} attempts`}</div>
                     <div className="text-sm font-bold mb-2.5">
-                        Tempo restante: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
+                        Remaining time: {Math.floor(tempoRestante / 60)}:{(tempoRestante % 60).toString().padStart(2, '0')}
                     </div>
                 </div>
             </form>
             {mostrarCustoProf && (
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-2.5 py-0.5 rounded z-10">
-                    Custo da Dica: 10 moedas
+                    Tip Cost: 10 coins
                 </div>
             )}
             {mostrarCustoAluno && (
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-2.5 py-0.5 rounded z-10">
-                    Custo da Dica: 5 moedas
+                    Tip Cost: 5 coins
                 </div>
             )}
             {showDicaColega && <ExibirDica dica={dicaAluno} setExibirDica={setShowDicaColega} />}

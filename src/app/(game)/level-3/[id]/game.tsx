@@ -3,19 +3,17 @@ import AdvanceButton from "@/app/components/AdvanceButton";
 import ConfirmationBox from "@/app/components/ConfirmationBox";
 import Desempenho from "@/app/components/Desempenho";
 import DialogScreen from "@/app/components/DialogScreen";
-import ExercicioNivel2 from "@/app/components/ExercicioNivel2";
 import ExercicioNivel3 from "@/app/components/ExercicioNivel3";
 import InfosGame from "@/app/components/InfosGame";
 import MostrarPontos from "@/app/components/MostrarPontos";
 import Personagem from "@/app/components/Personagens";
 import ProgressBar from "@/app/components/ProgressBar";
-import StarRating from "@/app/components/StarRating";
-import { DesafioNivel2, DesafioNivel3e4, GamePts, Respostas, Usuario } from "@/app/interfaces/interfaces";
+import { DesafioNivel3e4, GamePts, Respostas, Usuario } from "@/app/interfaces/interfaces";
 import { revalidateRespostas } from "@/app/utils/fetching";
 import { saveGame, saveUser } from "@/app/utils/save";
-import textos3, { textos2 } from "@/app/utils/textos";
+import textos3 from "@/app/utils/textos";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
@@ -30,11 +28,9 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
   const [usuario, setUsuario] = useState(user)
   const [currentDialog, setCurrentDialog] = useState(
     respostas.statusNivel3.jogou ? 30 :
-      20
+      0
   );
   const [randomImg, setRandomImg] = useState('imagem1');
-  const fraseGrande = data.etapasSolucao
-  const linhas = fraseGrande.split(';');
   const textos = textos3(data, respostas.statusNivel3.feedback)
   const [showDialog, setShowDialog] = useState(true)
   const [showGame, setShowGame] = useState(false)
@@ -122,7 +118,8 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
     }, 3000);
   };
 
-  const handleCorrigirGame = () => {
+  const handleCorrigirGame = async () => {
+    console.log('teste')
     setUserGame({
       bomDesempenho: respostas.statusNivel3.erros === 1,
       otimoDesempenho: respostas.statusNivel3.erros === 0,
@@ -131,11 +128,13 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
       col: false
     })
 
-    saveUser({
+    await saveGame(id, {nivel: 4})
+
+    await saveUser({
       otimoDesempenho: respostas.statusNivel3.erros < 1 ? 1 : 0,
       bomDesempenho: respostas.statusNivel3.erros < 2 ? 1 : 0,
     })
-
+    handleResetGame()
     handleSetUser(
       (respostas.statusNivel3.erros < 1 ? 50 : respostas.statusNivel3.erros < 2 ? 45 : 30),
       (respostas.statusNivel3.erros < 1 ? 10 : respostas.statusNivel3.erros < 2 ? 5 : 3),
@@ -195,7 +194,7 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
         return (
           <div>
             {showButton && (
-              <ConfirmationBox link={data.materialComplementar} textoLink="Complementary materail" posicaoX={'50%'} tamanho={'300px'} onYes={() => handleNextDialog()} texto1={"Pronto"} />
+              <ConfirmationBox link={data.materialComplementar} textoLink="Complementary materail" posicaoX={'50%'} tamanho={'300px'} onYes={() => handleNextDialog()} texto1={"Ready"} />
             )}
           </div>
         )
@@ -204,7 +203,7 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
         return (
           <div>
             {showButton && <AdvanceButton buttonClick={() => handleStartGame()} />}
-            {showGame && <ExercicioNivel3 setUser={setUsuario} dicaProfessor={data.dica} dicaAluno={data.dicaColega} onSucess={handleSubmit} />}
+            {showGame && <ExercicioNivel3 tentativas={(3 - respostas.statusNivel3.erros)} setUser={setUsuario} dicaProfessor={data.dica} dicaAluno={data.dicaColega} onSucess={handleSubmit} />}
           </div>
         )
       case 30:
@@ -229,7 +228,7 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
             </div>}
             {respostas.statusNivel3.certo &&
               <div>
-                <AdvanceButton buttonClick={() => handleCorrigirGame} />
+                <AdvanceButton buttonClick={handleCorrigirGame} />
               </div>}
             {showMessage && <MostrarPontos
               moeda={respostas.statusNivel3.erros < 1 ? 50 : respostas.statusNivel3.erros < 2 ? 45 : 30}
@@ -239,9 +238,50 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
       case 32:
         return (
           <div>
-                {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} texto1={'Restart'} texto2={'Exit'} onNo={() =>router.push("/")} onYes={() => handleResetGame(true)} />}
+            {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} texto1={'Restart'} texto2={'Exit'} onNo={() => router.push("/")} onYes={() => handleResetGame(true)} />}
           </div>
         )
+
+      case 39:
+        return (
+          <div>
+            {showButton && <ConfirmationBox posicaoX={'50%'} onYes={() => handleNextDialog(2)} onNo={() => handleNextDialog()} />}
+          </div>
+        )
+      case 42:
+        return (
+          <div>
+            {showButton && <ConfirmationBox posicaoX={'50%'} onYes={() => handleNextDialog(2)} onNo={() => handleNextDialog()} />}
+          </div>
+        )
+      case 43:
+        return (
+          <div>
+            {showButton && <ConfirmationBox posicaoX={'50%'} texto1="Restart" texto2="Exit" onYes={() => 
+              setCurrentDialog(0)
+            } onNo={() => {
+              router.push('/')
+            }} />}
+        </div>
+        )
+      case 44: 
+        return (
+          <div>
+            {showButton && (
+              <ConfirmationBox link={'https://forms.gle/unuZ7k5GkZ6bCzKN8'} textoLink="Evaluation form" posicaoX={'50%'} tamanho={'300px'} onYes={handleColab} texto1={"Ready"} />
+            )}
+          </div>
+        )
+      case 46: 
+      return (
+          <div>
+            {showButton && <ConfirmationBox posicaoX={'50%'} texto1="Restart" texto2="Exit" onYes={() => 
+              setCurrentDialog(0)
+            } onNo={() => {
+              router.push('/')
+            }} />}
+        </div>
+      )
       default:
         return (
           <div>
@@ -271,7 +311,6 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
 
           </div>
         }
-
         {showReward &&
           <div>
             <Desempenho gamePontos={userGame} />
@@ -283,9 +322,9 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
             }} />
           </div>
         }
+    
         {!showReward && renderButton()}
-        <span className="font-bold text-xl">{currentDialog}</span>
-        {!showGame && <ProgressBar total={43} atual={currentDialog} />}
+        {!showGame && <ProgressBar total={46} atual={currentDialog} />}
       </div>
 
     </div>

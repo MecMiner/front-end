@@ -11,20 +11,26 @@ const Desempenho: React.FC<DesempenhoProps> = ({gamePontos}: DesempenhoProps) =>
       <div className="flex justify-center flex-row gap-4">
         <Image
           src={`/src/personagens/${gamePontos.bomDesempenho ? 'bom' : 'otimo'}Desempenho.png`}
-          width={150}
-          height={150}
+          width={100}
+          height={0}
           alt={`${gamePontos.bomDesempenho ? 'bom' : 'otimo'}`}
           priority
           className="mx-12"
+          style={{
+            height: 'auto'
+          }}
         />
         {gamePontos.col && (
           <Image
             src={`/src/personagens/colaboracao.png`}
-            width={150}
-            height={150}
+            width={100}
+            height={0}
             alt="colaboracao"
             priority
             className="mx-12"
+            style={{
+              height: 'auto'
+            }}
           />
         )}
       </div>
