@@ -75,7 +75,7 @@ function ExercicioNivel3({ dicaAluno, dicaProfessor, onSucess, setUser, tentativ
 
     return (
         <div className="absolute top-2 left-1/2 -translate-x-1/2 shadow-lg w-8/12 border bg-white rounded flex flex-col items-center font-sans ">
-            <h1 className="font-medium text-yellow-400 text-xl mb-4">Complete as Etapas</h1>
+            <h1 className="font-medium text-yellow-400 text-xl mb-4">Complete the sentences</h1>
             <form className="flex flex-col items-center" onSubmit={handleSubmit}>
                 <div className="min-w-[600px] w-full flex flex-col items-center mb-5">
                     <textarea

@@ -63,12 +63,12 @@ function ExercicioNivel2({ dicaAluno, dicaProfessor, onSucess }: ExercicioNivel2
 
     return (
         <div className="absolute right-4 bottom-8 shadow-lg w-8/12 border bg-white rounded flex flex-col items-center font-sans ">
-            <h1 className="font-medium text-yellow-400 text-xl mb-4">Complete as Etapas</h1>
+            <h1 className="font-medium text-yellow-400 text-xl mb-4">Complete the sentences</h1>
             <form className="flex flex-col items-center" onSubmit={handleSubmit}>
                 <div className="min-w-[600px] w-full flex flex-col items-center mb-5">
                     <textarea
                         className="w-4/5 p-2.5 border border-gray-300 rounded resize-y min-h-[30px] overflow-auto"
-                        placeholder="Digite a etapa 2"
+                        placeholder="Enter the step 2"
                         value={etapa2}
                         onChange={(e) => setEtapa2(e.target.value)}
                     />
@@ -76,7 +76,7 @@ function ExercicioNivel2({ dicaAluno, dicaProfessor, onSucess }: ExercicioNivel2
                 <div className="min-w-[600px] w-full flex flex-col items-center mb-5">
                     <textarea
                         className="w-4/5 p-2.5 border border-gray-300 rounded resize-y min-h-[30px] overflow-auto"
-                        placeholder="Digite a etapa 4"
+                        placeholder="Enter the step 4"
                         value={etapa4}
                         onChange={(e) => setEtapa4(e.target.value)}
                     />
@@ -114,12 +114,12 @@ function ExercicioNivel2({ dicaAluno, dicaProfessor, onSucess }: ExercicioNivel2
             </form>
             {mostrarCustoProf && (
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-2.5 py-0.5 rounded z-10">
-                    Custo da Dica: 10 moedas
+                    Tip cost: 10 coins
                 </div>
             )}
             {mostrarCustoAluno && (
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 bg-orange-500 text-white px-2.5 py-0.5 rounded z-10">
-                    Custo da Dica: 5 moedas
+                    Tip cost: 5 coins
                 </div>
             )}
             {showDicaColega && <ExibirDica dica={dicaAluno} setExibirDica={setShowDicaColega} />}
