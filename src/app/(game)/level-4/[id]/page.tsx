@@ -2,9 +2,10 @@
 import { fetchUserData } from "@/app/utils/auth";
 import { fecthDataDesafio2, fecthDataDesafio3, fecthRespostas } from "@/app/utils/fetching";
 import { redirect } from "next/navigation";
+import GameLevelFour from "./game";
 
 interface Props {
-    params: {id: string}
+    params: Promise<{id: string}>
 }
 
  export default async function LevelOne({params} : Props) {
@@ -17,6 +18,7 @@ interface Props {
 
     return (
         <div>
+                <GameLevelFour id={id} user={user} data={data} respostas={res}/>
         </div>
     )  
 }

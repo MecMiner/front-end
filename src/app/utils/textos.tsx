@@ -106,9 +106,9 @@ export function textos2(data: DesafioNivel2, feedback: string, linhas: string[])
 
 export default function textos3(data: DesafioNivel3e4, feedback: string){
     const textos = [
-        { id: 1, name: "Maria", person: 3, texto: `Ana was promoted at the company where she works. This company is interested in entering the world of SL projects, but for that, they need to evaluate if it is a good option and understand more about how communities work. Ana has been tasked with leading the project, given her previous contact with the world of SL projects. Therefore, she must study more and later pass on the knowledge she has acquired.` },
-        { id: 2, name: "Maria", person: 3, texto: `Maria is back to help Ana once again and encourage her to continue studying SL projects.` },
-        { id: 3, name: "Maria", person: 3, texto: `Ana needs Maria's help again, and they have scheduled a meeting to talk about SL projects.` },
+        { id: 1, name: null, person: 3, texto: `Ana was promoted at the company where she works. This company is interested in entering the world of SL projects, but for that, they need to evaluate if it is a good option and understand more about how communities work. Ana has been tasked with leading the project, given her previous contact with the world of SL projects. Therefore, she must study more and later pass on the knowledge she has acquired.` },
+        { id: 2, name: null, person: 3, texto: `Maria is back to help Ana once again and encourage her to continue studying SL projects.` },
+        { id: 3, name: null, person: 3, texto: `Ana needs Maria's help again, and they have scheduled a meeting to talk about SL projects.` },
         { id: 4, name: "Maria", person: 3, texto: `Hey, Ana, how are you?` },
         { id: 5, name: "Ana", person: 3, texto: `I'm good, and you, how are you?` },
         { id: 6, name: "Maria", person: 3, texto: `I'm great, ready for another challenge?` },
@@ -155,5 +155,35 @@ export default function textos3(data: DesafioNivel3e4, feedback: string){
         { id: 46, name: "Maria", person: 3, texto: `Thank you for participating in our game.` },
     ];
 
+    return textos;
+}
+
+export function textos4(feedback: string){
+    const textos = [
+        { id: 1, name: "Maria", person: 3, texto: "Ana trabalha na mesma empresa de software há mais de 18 anos, e possui uma vasta experiência. No entanto, está tentando um emprego em uma grande fundação de código aberto, e para conseguir a vaga precisa se aprofundar mais no mundo dos projetos de SL." },
+        { id: 2, name: "Maria", person: 3, texto: "Maria está de volta para ajudá-la nessa missão." },
+        { id: 3, name: "Maria", person: 3, texto: "E ai, Ana, como vai?" },
+        { id: 4, name: "Ana", person: 3, texto: "Estou bem, e você, como vai?" },
+        { id: 5, name: "Maria", person: 3, texto: "Estou ótima." },
+        { id: 6, name: "Ana", person: 3, texto: "Que bom!" },
+        { id: 7, name: "Maria", person: 3, texto: "Hoje vamos fazer algo diferente para encerrarmos nossa jornada juntos. Está preparada?" },
+        { id: 8, name: "Maria", person: 3, texto: "Ok, legal. Até aqui eu era responsável por trazer um cenário com um problema que ocorreu em um projeto de SL, e estudávamos esse cenário juntos. Hoje vamos fazer diferente." },
+        { id: 9, name: "Maria", person: 3, texto: "Minha proposta é que você explore o mundo dos projetos de SL e crie um exemplo como o que vimos durante nossas interações." },
+        { id: 10, name: "Ana", person: 3, texto: "Esse é um grande desafio." },
+        { id: 11, name: "Maria", person: 3, texto: "Mas com o que vimos até aqui, acho que vai ser moleza para você." },
+        { id: 12, name: "Ana", person: 3, texto: "Está bem, vamos lá." },
+        { id: 13, name: "Maria", person: 3, texto: "Para te ajudar vou te fornecer o link de um commit com um cenário e sua missão vai ser entende-lo e criar um exemplo." },
+        { id: 14, name: "Ana", person: 3, texto: "Ok." },
+        { id: 15, name: "Maria", person: 3, texto: "Aqui está o link, basta clicar para ter acesso ao commit!" },
+        { id: 16, name: "Maria", person: 3, texto: "Para criar o exemplo você deve utilizar o formulário disponível neste link. Para acessá-lo é necessário fazer login no sistema" },
+        { id: 17, name: "Maria", person: 3, texto: "Para criar o exemplo vou te fornecer algumas diretrizes. Essas diretrizes são encontradas no padrão disponível neste link. Fique atento a elas ao criar seu exemplo." },
+        { id: 18, name: "Maria", person: 3, texto: "Para melhorar, você pode pedir a ajuda de outros colegas nessa tarefa." },
+        { id: 19, name: "Maria", person: 3, texto: "Boa sorte nesta missão, você tem 7 dias para completar esse desafio." },
+        { id: 20, name: "Maria", person: 3, texto: "Agora vou pedir a ajuda de um amigo mais experiente para verificar se a sua proposta de solução está correta, ok. Peço que aguarde até que meu amigo responda, e te devolva um feedback." },
+        {id: 21, name: "Maria", person: 3, texto: `Feedback: ${feedback}`},
+        { id: 22, name: "Maria", person: 3, texto: "Infelizmente sua resposta não está correta, mas o importante é que você tentou." },
+        { id: 23, name: "Maria", person: 3, texto: "Isso aí, parabéns, sua resposta está correta." },
+        { id: 24, name: "Maria", person: 3, texto: "Você foi muito bem! E vai alcançar todos os objetivos que deseja." }
+      ];
     return textos;
 }

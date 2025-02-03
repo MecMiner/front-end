@@ -5,9 +5,8 @@ import { redirect } from "next/navigation";
 import GameLevelThree from "./game";
 
 interface Props {
-    params: {id: string}
+    params: Promise<{id: string}>
 }
-
  export default async function LevelOne({params} : Props) {
      const {id} = await params;
      const user = await fetchUserData()

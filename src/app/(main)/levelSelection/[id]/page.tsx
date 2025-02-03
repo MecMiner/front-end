@@ -3,7 +3,7 @@ import { fecthRespostas } from "@/app/utils/fetching"
 import Fases from "./fases"
 
 interface Props {
-    params: {id: number}
+    params: Promise<{id: number}>
 }
 
 export default async function LevelSelection({params} : Props) {

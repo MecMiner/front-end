@@ -3,7 +3,7 @@ import AdvanceButton from "@/app/components/AdvanceButton";
 import ConfirmationBox from "@/app/components/ConfirmationBox";
 import Desempenho from "@/app/components/Desempenho";
 import DialogScreen from "@/app/components/DialogScreen";
-import ExercicioNivel3 from "@/app/components/ExercicioNivel3";
+import ExercicioNivel4 from "@/app/components/ExercícioNivel4";
 import InfosGame from "@/app/components/InfosGame";
 import MostrarPontos from "@/app/components/MostrarPontos";
 import Personagem from "@/app/components/Personagens";
@@ -11,27 +11,27 @@ import ProgressBar from "@/app/components/ProgressBar";
 import { DesafioNivel3e4, GamePts, Respostas, Usuario } from "@/app/interfaces/interfaces";
 import { revalidateRespostas } from "@/app/utils/fetching";
 import { saveGame, saveUser } from "@/app/utils/save";
-import textos3 from "@/app/utils/textos";
+import { textos4 } from "@/app/utils/textos";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
-type GameLevelTwoProps = {
+type GameLevelFourProps = {
   id: string,
   data: DesafioNivel3e4,
   respostas: Respostas,
   user: Usuario
 }
 
-export default function GameLevelThree({ id, data, respostas, user }: GameLevelTwoProps) {
+export default function GameLevelFour({ id, data, respostas, user }: GameLevelFourProps) {
   const [usuario, setUsuario] = useState(user)
   const [currentDialog, setCurrentDialog] = useState(
-    respostas.statusNivel3.jogou ? 30 :
-      0
+    respostas.statusNivel4.jogou ? 19 :
+      20
   );
   const [randomImg, setRandomImg] = useState('imagem1');
-  const textos = textos3(data, respostas.statusNivel3.feedback)
+  const textos = textos4(respostas.statusNivel4.feedback)
   const [showDialog, setShowDialog] = useState(true)
   const [showGame, setShowGame] = useState(false)
   const [showReward, setShowReward] = useState(false)
@@ -48,14 +48,14 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
   }, [currentDialog]);
 
   useEffect(() => {
-    if (!respostas.statusNivel3.jogou || respostas.statusNivel3.corrigido) return;
+    if (!respostas.statusNivel4.jogou || respostas.statusNivel4.corrigido) return;
     const interval = setInterval(async () => {
       console.log("revalidando respostas");
       await revalidateRespostas();
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [respostas.statusNivel3.corrigido]);
+  }, [respostas.statusNivel4.corrigido]);
 
   const handleNextDialog = (valor?: number) => {
     setShowButton(false);
@@ -68,7 +68,7 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
 
   const handleResetGame = async (restart?: boolean) => {
     const res = await saveGame(id, {
-      nivel: 2, statusNivel3: {
+      nivel: 2, statusNivel4: {
         jogou: false,
         corrigido: false,
         certo: false,
@@ -90,7 +90,7 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
 
   const handleSubmit = async (res: string) => {
     const response = await saveGame(id as string, {
-      respostanivel3: res, statusNivel3: {
+      respostanivel4: res, statusNivel4: {
         certo: false,
         corrigido: false,
         jogou: true
@@ -121,23 +121,20 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
   const handleCorrigirGame = async () => {
     console.log('teste')
     setUserGame({
-      bomDesempenho: respostas.statusNivel3.erros === 1,
-      otimoDesempenho: respostas.statusNivel3.erros === 0,
-      pontos: respostas.statusNivel3.erros < 1 ? 50 : respostas.statusNivel3.erros < 2 ? 45 : 30,
-      exp: respostas.statusNivel3.erros < 1 ? 10 : respostas.statusNivel3.erros < 2 ? 5 : 3,
+      bomDesempenho: respostas.statusNivel4.erros === 1,
+      otimoDesempenho: respostas.statusNivel4.erros === 0,
+      pontos: respostas.statusNivel4.erros < 1 ? 50 : respostas.statusNivel4.erros < 2 ? 45 : 30,
+      exp: respostas.statusNivel4.erros < 1 ? 10 : respostas.statusNivel4.erros < 2 ? 5 : 3,
       col: false
     })
-
-    await saveGame(id, {nivel: 4})
-
     await saveUser({
-      otimoDesempenho: respostas.statusNivel3.erros < 1 ? 1 : 0,
-      bomDesempenho: respostas.statusNivel3.erros < 2 ? 1 : 0,
+      otimoDesempenho: respostas.statusNivel4.erros < 1 ? 1 : 0,
+      bomDesempenho: respostas.statusNivel4.erros < 2 ? 1 : 0,
     })
     handleResetGame()
     handleSetUser(
-      (respostas.statusNivel3.erros < 1 ? 50 : respostas.statusNivel3.erros < 2 ? 45 : 30),
-      (respostas.statusNivel3.erros < 1 ? 10 : respostas.statusNivel3.erros < 2 ? 5 : 3),
+      (respostas.statusNivel4.erros < 1 ? 50 : respostas.statusNivel4.erros < 2 ? 45 : 30),
+      (respostas.statusNivel4.erros < 1 ? 10 : respostas.statusNivel4.erros < 2 ? 5 : 3),
       2
     )
   }
@@ -154,134 +151,94 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
   }
 
   const handleStartGame = () => {
+    setShowButton(false)
     setShowGame(true),
-      setShowDialog(false)
+    setShowDialog(false)
   }
 
 
   const renderButton = () => {
     switch (currentDialog) {
-      case 5:
-        return (
-          <div>
-            {showButton && <ConfirmationBox posicaoX={'50%'} onYes={() => handleSetUser(10)} onNo={() => { router.push('/') }} />}
-            {showMessage && <MostrarPontos moeda={10} />}
-          </div>
-        )
-
       case 6:
         return (
           <div>
-            {showButton && <ConfirmationBox posicaoX={'50%'} onYes={() => handleNextDialog(3)} onNo={() => handleNextDialog()} />}
+            {showButton && <ConfirmationBox posicaoX={'50%'} onYes={() => handleSetUser(10)} onNo={() => router.push('/')} />}
+            {showMessage &&
+              <MostrarPontos moeda={10}/>
+            }
           </div>
         )
 
+      case 14:
+        return (
+          <div>
+            <ConfirmationBox onYes={() => handleNextDialog()} texto1={'Ready'} link={data.linkNivel} textoLink={'Link to committ'}  posicaoX={'50%'} />
+          </div>
+        )
       case 15:
         return (
           <div>
-            {showButton && <ConfirmationBox posicaoX={'50%'} onYes={() => handleNextDialog()} onNo={() => handleNextDialog(3)} />}
+            <ConfirmationBox  link={'https://portalworkedexamples.herokuapp.com/Login/Logado/Formulario/formulario.php'} textoLink={'Example Creation Form'} posicaoX={'50%'} onYes={() => handleNextDialog()} texto1="Ready"/>
           </div>
         )
-
+        case 16:
+          return (
+            <div>
+              {showButton && <ConfirmationBox  link={'https://portalworkedexamples.herokuapp.com/padrao.php'} textoLink={'Guidelines for Creating Examples'} posicaoX={'50%'} onYes={() => handleNextDialog()} texto1="Ready"/>}
+            </div>
+          )
+        case 18: 
+          return (
+            <div>
+              {showButton && <AdvanceButton buttonClick={handleStartGame}/>}
+                {showGame && <ExercicioNivel4 linksite={data.linkNivel} setUser={setUsuario} onSucess={handleSubmit} tentativas={(3-respostas.statusNivel4.erros)}/>}
+            </div>
+          )
+        
+      case 19:
+        return (
+          <div>
+            {respostas.statusNivel4.corrigido && <AdvanceButton buttonClick={() => handleNextDialog()} />}
+          </div>
+        )
+      
       case 20:
         return (
           <div>
-            {showButton && <ConfirmationBox posicaoX={'50%'} onYes={() => handleNextDialog(4)} onNo={() => handleNextDialog(0)} />}
-          </div>
-        )
-
-      case 23:
-        return (
-          <div>
-            {showButton && (
-              <ConfirmationBox link={data.materialComplementar} textoLink="Complementary materail" posicaoX={'50%'} tamanho={'300px'} onYes={() => handleNextDialog()} texto1={"Ready"} />
-            )}
-          </div>
-        )
-
-      case 29:
-        return (
-          <div>
-            {showButton && <AdvanceButton buttonClick={() => handleStartGame()} />}
-            {showGame && <ExercicioNivel3 tentativas={(3 - respostas.statusNivel3.erros)} setUser={setUsuario} dicaProfessor={data.dica} dicaAluno={data.dicaColega} onSucess={handleSubmit} />}
-          </div>
-        )
-      case 30:
-        return (
-          <div>
-            {respostas.statusNivel3.corrigido && <AdvanceButton buttonClick={() => handleNextDialog()} />}
-          </div>
-        )
-      case 31:
-        return (
-          <div>
-            {!respostas.statusNivel3.certo && <div>
-              {respostas.statusNivel3.erros < 3 ? (
+            {!respostas.statusNivel4.certo && <div>
+              {respostas.statusNivel4.erros < 3 ? (
                 <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} texto1={'Repeat'} texto2={'Restart'} onYes={() => {
                   setShowGame(true)
                   setShowDialog(false)
-                  setCurrentDialog(29)
+                  setCurrentDialog(18)
                 }} onNo={handleResetGame} />
               ) : (
                 <AdvanceButton buttonClick={() => handleNextDialog()} />
               )}
             </div>}
-            {respostas.statusNivel3.certo &&
+            {!respostas.statusNivel4.certo &&
               <div>
                 <AdvanceButton buttonClick={handleCorrigirGame} />
               </div>}
             {showMessage && <MostrarPontos
-              moeda={respostas.statusNivel3.erros < 1 ? 50 : respostas.statusNivel3.erros < 2 ? 45 : 30}
-              exp={respostas.statusNivel3.erros < 1 ? 10 : respostas.statusNivel3.erros < 2 ? 5 : 3} />}
+              moeda={respostas.statusNivel4.erros < 1 ? 50 : respostas.statusNivel4.erros < 2 ? 45 : 30}
+              exp={respostas.statusNivel4.erros < 1 ? 10 : respostas.statusNivel4.erros < 2 ? 5 : 3} />}
           </div>
         )
-      case 32:
+
+      case 22:
+        return (
+          <div>
+            {showButton && <AdvanceButton buttonClick={() => handleColab()} />}
+          </div>
+        )
+      
+      case 23:
         return (
           <div>
             {showButton && <ConfirmationBox posicaoY={'50%'} posicaoX={'50%'} texto1={'Restart'} texto2={'Exit'} onNo={() => router.push("/")} onYes={() => handleResetGame(true)} />}
           </div>
         )
-
-      case 39:
-        return (
-          <div>
-            {showButton && <ConfirmationBox posicaoX={'50%'} onYes={() => handleNextDialog(2)} onNo={() => handleNextDialog()} />}
-          </div>
-        )
-      case 42:
-        return (
-          <div>
-            {showButton && <ConfirmationBox posicaoX={'50%'} onYes={() => handleNextDialog(2)} onNo={() => handleNextDialog()} />}
-          </div>
-        )
-      case 43:
-        return (
-          <div>
-            {showButton && <ConfirmationBox posicaoX={'50%'} texto1="Restart" texto2="Exit" onYes={() => 
-              setCurrentDialog(0)
-            } onNo={() => {
-              router.push('/')
-            }} />}
-        </div>
-        )
-      case 44: 
-        return (
-          <div>
-            {showButton && (
-              <ConfirmationBox link={'https://forms.gle/unuZ7k5GkZ6bCzKN8'} textoLink="Evaluation form" posicaoX={'50%'} tamanho={'300px'} onYes={handleColab} texto1={"Ready"} />
-            )}
-          </div>
-        )
-      case 46: 
-      return (
-          <div>
-            {showButton && <ConfirmationBox posicaoX={'50%'} texto1="Restart" texto2="Exit" onYes={() => 
-              setCurrentDialog(0)
-            } onNo={() => {
-              router.push('/')
-            }} />}
-        </div>
-      )
       default:
         return (
           <div>
@@ -304,8 +261,8 @@ export default function GameLevelThree({ id, data, respostas, user }: GameLevelT
             {textos[currentDialog].person === 2 && <Personagem img={`p3/${randomImg}`} right={20} />}
             {textos[currentDialog].person === 3 &&
               <div>
-                <Personagem img={`m3/${randomImg}`} left={20} />
-                <Personagem img={`p3/${randomImg}`} right={20} />
+                <Personagem img={`m4/${randomImg}`} left={20} />
+                <Personagem img={`p4/${randomImg}`} right={20} />
               </div>
             }
 

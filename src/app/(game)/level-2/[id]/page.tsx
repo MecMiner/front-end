@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import GameLevelTwo from "./game";
 
 interface Props {
-    params: {id: string}
+    params: Promise<{id: string}>
 }
 
  export default async function LevelOne({params} : Props) {

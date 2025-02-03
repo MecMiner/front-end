@@ -6,7 +6,7 @@ import { fecthDataDesafio1, fecthRespostas } from "@/app/utils/fetching";
 import { redirect } from "next/navigation";
 
 interface Props {
-    params: {id: string}
+    params: Promise<{id: string}>
 }
 
  export default async function LevelOne({params} : Props) {
