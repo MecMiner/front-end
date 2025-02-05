@@ -28,7 +28,7 @@ export default function GameLevelFour({ id, data, respostas, user }: GameLevelFo
   const [usuario, setUsuario] = useState(user)
   const [currentDialog, setCurrentDialog] = useState(
     respostas.statusNivel4.jogou ? 19 :
-      20
+      0
   );
   const [randomImg, setRandomImg] = useState('imagem1');
   const textos = textos4(respostas.statusNivel4.feedback)

@@ -29,7 +29,7 @@ export default function GameLevelTwo({id, data, respostas, user }: GameLevelTwoP
     const [usuario, setUsuario] = useState(user)
     const [currentDialog, setCurrentDialog] = useState(
         respostas.statusNivel2.jogou ? 33:
-        42
+        0
     );
     const [randomImg, setRandomImg] = useState('imagem1');
     const fraseGrande = data.etapasSolucao
